@@ -350,6 +350,60 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
 .recap-table span{background:#F7F2E2;border-radius:10px;padding:6px 10px;text-align:center;}
 .recap-table span.ok{background:#EAF7EA;color:#3E8E3E;}
 .recap-table span.raté{background:#FBE9E9;color:#C0392B;}
+.quiz-compteur.chrono{background:#FFF3D6;color:#8A6D1A;border:2px solid #F0DFA8;}
+.chrono-q{display:flex;align-items:center;gap:10px;max-width:420px;margin:0 auto 14px;}
+.cq-track{flex:1;height:12px;background:#F0E8CC;border-radius:8px;overflow:hidden;}
+.cq-track i{display:block;height:100%;background:linear-gradient(90deg,#F2C14E,#E8A33D);border-radius:8px;transition:width .1s linear;}
+.cq-track i.urgent{background:linear-gradient(90deg,#FF6B6B,#E74C3C);}
+.chrono-q b{font-family:'Fredoka';font-size:1.3rem;color:#8A6D1A;min-width:2ch;text-align:center;}
+.chrono-q b.urgent{color:#E74C3C;animation:pulseNum .5s infinite alternate;}
+@keyframes pulseNum{from{transform:scale(1);}to{transform:scale(1.25);}}
+.micro-bulle{transition:transform .08s linear, box-shadow .08s linear;}
+.micro-bulle.parle{border-color:#5CB85C;background:#EEF9EC;}
+.mode-reco{display:inline-block;font-size:.65rem;font-weight:800;padding:2px 8px;border-radius:8px;margin-top:6px;background:#EFEAD6;color:#8A7A50;}
+.mode-reco.locale{background:#EAF7EA;color:#3E8E3E;}
+.chrono-q .fige{font-size:.9rem;margin-left:4px;}
+.recit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;max-width:460px;margin:0 auto 16px;}
+.ligne-recit{background:#F7F2E2;border:2px solid transparent;border-radius:12px;padding:8px 12px;font-family:'Fredoka';font-size:1.05rem;color:#8A7A50;display:flex;justify-content:space-between;align-items:center;transition:all .2s;}
+.ligne-recit.active{background:#FFF;border-color:#2AA5D6;color:#2A2416;box-shadow:0 3px 10px rgba(42,165,214,.2);transform:scale(1.04);}
+.ligne-recit.ok{background:#EAF7EA;color:#3E8E3E;}
+.ligne-recit.ok .lr-rep::after{content:' ✓';}
+.ligne-recit.rate{background:#FBE9E9;color:#C0392B;}
+.lr-rep{font-weight:700;min-width:2.2ch;text-align:right;}
+.defi-carte{display:flex;align-items:center;gap:14px;background:linear-gradient(120deg,#E8743B,#D4552A);color:#fff;border-radius:16px;padding:16px 18px;cursor:pointer;box-shadow:0 6px 16px rgba(212,85,42,.35);transition:transform .15s;margin-top:14px;}
+.defi-carte:hover{transform:translateY(-2px);}
+.defi-carte.fait{background:linear-gradient(120deg,#5CB85C,#3E8E3E);box-shadow:0 6px 16px rgba(62,142,62,.3);}
+.defi-ico{font-size:2rem;background:rgba(255,255,255,.2);border-radius:12px;padding:8px 12px;}
+.defi-txt{flex:1;}
+.defi-txt h3{font-family:'Fredoka';font-size:1.1rem;margin:0;}
+.defi-txt p{margin:2px 0 0;font-size:.78rem;opacity:.92;}
+.defi-stats{display:flex;flex-direction:column;gap:4px;font-size:.75rem;font-weight:800;text-align:right;}
+.defi-stats b{font-family:'Fredoka';}
+.lecture-banniere{background:linear-gradient(120deg,#8B6FC7,#6C519E);box-shadow:0 6px 16px rgba(139,111,199,.35);margin-top:12px;}
+.atelier textarea{width:100%;min-height:220px;box-sizing:border-box;font-family:'Nunito';font-size:1.05rem;line-height:1.7;padding:16px;border:3px solid #E3D9F2;border-radius:14px;background:#FDFBFF;color:#2A2416;resize:vertical;}
+.atelier textarea:focus{outline:none;border-color:#8B6FC7;}
+.red-barre{display:flex;justify-content:space-between;font-weight:800;font-size:.85rem;color:#8A7A50;margin:8px 2px 12px;}
+.red-barre .assez{color:#3E8E3E;}
+.red-checks{background:#F7F3FC;border-radius:12px;padding:12px 14px;margin-bottom:12px;font-weight:700;font-size:.9rem;}
+.red-checks label{display:flex;gap:8px;align-items:flex-start;margin:6px 0;cursor:pointer;color:#4A3E63;}
+.red-checks input{accent-color:#8B6FC7;width:18px;height:18px;flex-shrink:0;margin-top:1px;}
+.red-checks .auto{display:flex;gap:8px;margin:6px 0;color:#4A3E63;}
+.red-checks .auto.ok{color:#3E8E3E;}
+.red-checks .auto.non{color:#B0687A;}
+.fluence-texte{background:#FBF7EC;border-radius:14px;padding:18px;line-height:2.1;font-size:1.12rem;color:#B8AD8E;}
+.fluence-texte .fmot{transition:all .15s;border-radius:5px;padding:1px 2px;}
+.fluence-texte .fmot.courant{background:#FFF3D6;color:#2A2416;box-shadow:0 0 0 2px #E8C86A;}
+.fluence-texte .fmot.lu{color:#2E7D46;font-weight:700;}
+.fluence-texte .fmot.saute{color:#C9B7BC;text-decoration:line-through;}
+.fluence-hud{display:flex;gap:10px;justify-content:center;margin:14px 0;flex-wrap:wrap;}
+.mclm-grand{font-family:'Fredoka';font-size:3rem;color:#6C519E;line-height:1;}
+.mclm-medaille{font-size:2.4rem;}
+.jour-card.verrou{opacity:.55;filter:grayscale(.5);cursor:default;background:#F4EEDA;}
+.jour-card.verrou:hover{transform:none;box-shadow:0 3px 10px rgba(90,74,32,.08);}
+.verrou-info{font-size:.72rem;font-weight:800;color:#A08F63;margin-top:8px;background:#EFE7CC;border-radius:8px;padding:4px 8px;display:inline-block;}
+.jour-card.aujourdhui{border-color:#C4A962;box-shadow:0 6px 18px rgba(196,169,98,.35);}
+.auj-chip{font-size:.6rem;background:#C4A962;color:#fff;border-radius:8px;padding:2px 8px;vertical-align:middle;font-family:'Nunito';font-weight:800;}
+.sem-verrou{font-size:.72rem;color:#A08F63;font-weight:800;margin-left:8px;}
 </style>
 </head>
 <body>
@@ -379,13 +433,20 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
     <div class="tables-banniere" onclick="ouvrirTables()">
       <span class="tb-ico">✖️</span>
       <div class="tb-txt"><h3>Le coin des tables</h3><p>Teste-toi par écrit ✏️ ou récite tes tables à voix haute 🎤</p></div>
+      <div class="tb-prog" id="tb-serie" style="display:none"><b>🔥 0</b><small>jours<br>de suite</small></div>
       <div class="tb-prog"><b id="tables-compteur">0/8</b><small>tables<br>maîtrisées</small></div>
+      <span class="tb-fleche">→</span>
+    </div>
+    <div class="tables-banniere lecture-banniere" onclick="ouvrirLecture()">
+      <span class="tb-ico">📚</span>
+      <div class="tb-txt"><h3>Lire &amp; écrire</h3><p>Comprendre 🔍, rédiger ✍️ et lire à voix haute 🎙️</p></div>
+      <div class="tb-prog"><b id="lecture-compteur">0/15</b><small>missions<br>faites</small></div>
       <span class="tb-fleche">→</span>
     </div>
     <div id="semaines"></div>
     <h3 class="badges-titre">🏆 Mes badges</h3>
     <div class="badges" id="badges"></div>
-    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil.<br>
+    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v14 ·</b><br>
     <button onclick="toutEffacer()">Recommencer le cahier à zéro</button></p>
   </section>
 
@@ -396,11 +457,27 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
     <div class="missions" id="missions"></div>
   </section>
 
+  <!-- ═══════ VUE LIRE & ÉCRIRE ═══════ -->
+  <section class="vue" id="vue-lecture">
+    <button class="btn-retour" onclick="montrerVue('vue-home');renduGlobal()">← Retour au cahier</button>
+    <div class="jour-entete"><h2>📚 Lire &amp; écrire</h2>
+      <p>Cinq textes à comprendre, cinq textes à écrire. Tes rédactions sont <b>enregistrées</b> : tu peux les relire et les améliorer quand tu veux.</p></div>
+    <h3 class="badges-titre">🔍 Je comprends un texte</h3>
+    <div class="missions" id="lect-comp"></div>
+    <h3 class="badges-titre" style="margin-top:22px;">✍️ J’écris</h3>
+    <div class="missions" id="lect-red"></div>
+    <h3 class="badges-titre" style="margin-top:22px;">🎙️ Je lis à voix haute</h3>
+    <p style="font-size:.85rem;color:#8A7A50;font-weight:700;margin:-6px 0 10px;">Lis le texte au micro : les mots se colorient au fil de ta voix, et tu obtiens ta vitesse de lecture en mots par minute (fluence). Objectif fin de 6ᵉ : 130 !</p>
+    <div class="missions" id="lect-flu"></div>
+  </section>
+
   <!-- ═══════ VUE COIN DES TABLES ═══════ -->
   <section class="vue" id="vue-tables">
     <button class="btn-retour" onclick="montrerVue('vue-home');renduGlobal()">← Retour au cahier</button>
     <div class="jour-entete"><h2>✖️ Le coin des tables</h2>
       <p>Pour maîtriser une table : réussis le <b>test écrit</b> ✏️ <u>et</u> la <b>récitation à voix haute</b> 🎤 (8/10 minimum).</p></div>
+    <div id="defi-quotidien"></div>
+    <h3 class="badges-titre" style="margin-top:22px;">Mes tables une par une</h3>
     <div class="tables-grid" id="tables-grid"></div>
     <p class="pied" id="micro-note"></p>
   </section>
@@ -1208,6 +1285,104 @@ const JOURS = [
 
 const MATIERES = {maths:{nom:'Maths',ico:'📐'},anglais:{nom:'Anglais',ico:'🇬🇧'},francais:{nom:'Français',ico:'📖'}};
 
+/* ── LIRE & ÉCRIRE 📚 ── */
+const LECTURE = {
+C1:{hub:true,mat:'francais',titre:'La pirogue de grand-père',duree:'15 min',type:'quiz',
+lecon:`<h3>🛶 Lis attentivement ce texte</h3>
+<p style="font-style:italic;background:#FBF7EC;padding:14px;border-radius:12px;line-height:1.8;">Ce matin-là, le fleuve était couleur de café au lait. Awa serrait le bord de la pirogue pendant que grand-père Baptiste guidait le moteur d’une main tranquille. « Regarde, petite », dit-il en montrant la rive. Entre les palétuviers, un héron blanc se tenait immobile comme une statue. Awa retint son souffle. Elle venait de la ville et c’était la première fois qu’elle remontait le Maroni jusqu’au village de sa grand-mère. Soudain, une pluie chaude et drue s’abattit sur eux. Grand-père éclata de rire : « Le fleuve te souhaite la bienvenue ! » Trempée mais heureuse, Awa comprit qu’elle allait aimer ces vacances-là plus que toutes les autres.</p>
+<div class="astuce">💡 Pour bien répondre : cherche les indices <b>dans le texte</b>, et parfois <b>entre les lignes</b> (ce que l’auteur suggère sans le dire).</div>`,
+questions:[
+{q:'Où se passe cette histoire ?',c:['Sur un fleuve, le Maroni','À la mer','Dans une ville','Sur un lac de montagne'],a:0,e:'Le texte dit qu’Awa « remontait le Maroni », un grand fleuve de Guyane.'},
+{q:'Qui guide la pirogue ?',c:['Awa','Grand-père Baptiste','La grand-mère','Un héron'],a:1,e:'C’est « grand-père Baptiste » qui « guidait le moteur d’une main tranquille ».'},
+{q:'« Le fleuve était couleur de café au lait » signifie que l’eau était…',c:['chaude','marron clair','sucrée','transparente'],a:1,e:'C’est une comparaison : l’eau a la couleur du café au lait, donc brun clair — pas son goût !'},
+{q:'Que comprend-on quand Awa « retint son souffle » ?',c:['Elle a peur de tomber','Elle est émerveillée par le héron','Elle est fatiguée','Elle veut plonger'],a:1,e:'C’est de l’implicite : elle retient son souffle d’émerveillement devant le héron immobile, pour ne pas le faire fuir.'},
+{q:'Pourquoi ce voyage est-il spécial pour Awa ?',c:['Elle déteste la pluie','C’est la première fois qu’elle remonte le fleuve','Elle conduit la pirogue','Elle part à l’étranger'],a:1,e:'Le texte précise : « c’était la première fois qu’elle remontait le Maroni ».'},
+{q:'À la fin, quel sentiment domine chez Awa ?',c:['La tristesse','La colère','Le bonheur','L’ennui'],a:2,e:'« Trempée mais heureuse » : malgré la pluie, elle est joyeuse et sent qu’elle va aimer ces vacances.'}]},
+C2:{hub:true,mat:'francais',titre:'Les tortues luth de Yalimapo',duree:'15 min',type:'quiz',
+lecon:`<h3>🐢 Lis ce texte documentaire</h3>
+<p style="background:#FBF7EC;padding:14px;border-radius:12px;line-height:1.8;">La tortue luth est la plus grande tortue marine du monde : elle peut mesurer deux mètres et peser plus de 500 kilos. Chaque année, entre avril et juillet, des centaines de femelles viennent pondre sur les plages de Guyane, notamment à Yalimapo, près de l’embouchure du Maroni. La nuit, chaque femelle creuse un nid dans le sable avec ses nageoires arrière et y dépose environ 80 œufs, avant de repartir vers l’océan. Deux mois plus tard, les petites tortues éclosent et se précipitent vers la mer, guidées par la lumière de l’horizon. Hélas, une sur mille seulement atteindra l’âge adulte : crabes, oiseaux et filets de pêche menacent leur long voyage. C’est pourquoi la ponte des tortues est aujourd’hui protégée et surveillée.</p>
+<div class="astuce">💡 Dans un texte documentaire, repère les <b>chiffres</b> et les <b>mots précis</b> : ce sont souvent eux qu’on te demande.</div>`,
+questions:[
+{q:'Quel type de texte viens-tu de lire ?',c:['Un conte','Un texte documentaire','Une lettre','Un poème'],a:1,e:'Ce texte donne des informations réelles et précises (chiffres, lieux) : c’est un texte documentaire.'},
+{q:'Quand les tortues luth viennent-elles pondre en Guyane ?',c:['Entre avril et juillet','En décembre','Toute l’année','En septembre'],a:0,e:'Le texte indique « entre avril et juillet ».'},
+{q:'Combien d’œufs une femelle dépose-t-elle environ ?',c:['8','80','800','500'],a:1,e:'« y dépose environ 80 œufs ». Attention à ne pas confondre avec les 500 kilos !'},
+{q:'Qu’est-ce qui guide les bébés tortues vers la mer ?',c:['Le bruit des vagues','Leur mère','La lumière de l’horizon','Le vent'],a:2,e:'Elles sont « guidées par la lumière de l’horizon » — c’est pour ça que les lampes des villes peuvent les perdre.'},
+{q:'« Une sur mille atteindra l’âge adulte » : cela veut dire que…',c:['presque toutes survivent','très peu survivent','mille tortues survivent','aucune ne survit'],a:1,e:'Sur 1000 bébés tortues, un seul devient adulte : la survie est très rare.'},
+{q:'Pourquoi la ponte est-elle protégée ?',c:['Parce que les tortues sont dangereuses','Parce que très peu de tortues survivent','Pour vendre les œufs','Pour attirer les touristes'],a:1,e:'Comme les menaces sont nombreuses et la survie rare, on protège la ponte pour aider l’espèce.'}]},
+C3:{hub:true,mat:'francais',titre:'Le Corbeau et le Renard',duree:'15 min',type:'quiz',
+lecon:`<h3>🦊 Lis cette fable de Jean de La Fontaine (1668)</h3>
+<p style="font-style:italic;background:#FBF7EC;padding:14px;border-radius:12px;line-height:1.9;">Maître Corbeau, sur un arbre perché,<br>Tenait en son bec un fromage.<br>Maître Renard, par l’odeur alléché,<br>Lui tint à peu près ce langage :<br>« Hé ! bonjour, Monsieur du Corbeau.<br>Que vous êtes joli ! que vous me semblez beau !<br>Sans mentir, si votre ramage<br>Se rapporte à votre plumage,<br>Vous êtes le Phénix des hôtes de ces bois. »<br>À ces mots le Corbeau ne se sent pas de joie ;<br>Et pour montrer sa belle voix,<br>Il ouvre un large bec, laisse tomber sa proie.<br>Le Renard s’en saisit, et dit : « Mon bon Monsieur,<br>Apprenez que tout flatteur<br>Vit aux dépens de celui qui l’écoute :<br>Cette leçon vaut bien un fromage, sans doute. »<br>Le Corbeau, honteux et confus,<br>Jura, mais un peu tard, qu’on ne l’y prendrait plus.</p>`,
+questions:[
+{q:'Que tient le Corbeau dans son bec au début ?',c:['Un fromage','Un poisson','Une noix','Un ver'],a:0,e:'« Tenait en son bec un fromage » — c’est l’objet de toute la ruse !'},
+{q:'Qu’est-ce qui attire le Renard ?',c:['Le chant du Corbeau','L’odeur du fromage','La couleur de l’arbre','La pluie'],a:1,e:'« par l’odeur alléché » : alléché veut dire attiré par une bonne odeur.'},
+{q:'« Ramage » désigne…',c:['le plumage','le chant de l’oiseau','le bec','les ailes'],a:1,e:'Le ramage, c’est le chant. Le Renard dit : si ton chant est aussi beau que tes plumes…'},
+{q:'Quelle est la ruse du Renard ?',c:['Il menace le Corbeau','Il flatte le Corbeau pour le faire chanter','Il grimpe à l’arbre','Il vole le fromage en cachette'],a:1,e:'Il couvre le Corbeau de compliments pour qu’il ouvre le bec en chantant… et lâche le fromage.'},
+{q:'Quelle est la morale de la fable ?',c:['Il ne faut pas voler','Tout flatteur vit aux dépens de celui qui l’écoute','Les corbeaux chantent mal','Il faut partager son fromage'],a:1,e:'C’est le Renard lui-même qui la donne : celui qui flatte profite de celui qui le croit.'},
+{q:'À la fin, le Corbeau est « honteux et confus » : il se sent…',c:['fier et joyeux','gêné d’avoir été trompé','en colère contre l’arbre','affamé mais content'],a:1,e:'Il a honte de s’être fait piéger par de simples compliments — mais il jure qu’on ne l’y reprendra plus !'}]},
+C4:{hub:true,mat:'francais',titre:'La lettre de Manon',duree:'15 min',type:'quiz',
+lecon:`<h3>✉️ Lis cette lettre</h3>
+<p style="font-style:italic;background:#FBF7EC;padding:14px;border-radius:12px;line-height:1.8;">Kourou, le 12 juillet<br><br>Chère Mamie,<br><br>Je t’écris depuis la colonie de vacances, et tu ne devineras jamais ce que j’ai vu hier soir : le lancement d’une fusée ! Le ciel entier est devenu orange, puis un grondement énorme a fait trembler le sol sous nos pieds. Même Théo, qui fait toujours le malin, en est resté bouche bée. Sinon, la vie ici est chouette : le matin on fait du canoë, et l’après-midi, des grands jeux dans la forêt. La cuisine de la cantine, par contre, ne vaut pas ton gratin de christophines… Tu me manques. Promis, je t’apprendrai le nom des étoiles quand je rentrerai : notre monitrice nous les montre chaque soir.<br><br>Grosse bises,<br>Manon</p>`,
+questions:[
+{q:'Qui écrit cette lettre, et à qui ?',c:['Mamie écrit à Manon','Manon écrit à sa grand-mère','Théo écrit à Manon','Manon écrit à sa monitrice'],a:1,e:'La lettre commence par « Chère Mamie » et se termine par la signature « Manon ».'},
+{q:'D’où Manon écrit-elle ?',c:['De chez elle','De Kourou, en colonie de vacances','De l’école','De chez Mamie'],a:1,e:'L’en-tête indique « Kourou, le 12 juillet » et elle dit écrire « depuis la colonie de vacances ».'},
+{q:'Qu’a vu Manon hier soir ?',c:['Un feu d’artifice','Un lancement de fusée','Un orage','Une éclipse'],a:1,e:'« le lancement d’une fusée ! » — à Kourou se trouve le Centre spatial guyanais.'},
+{q:'« Théo en est resté bouche bée » signifie qu’il était…',c:['déçu','stupéfait, très impressionné','endormi','affamé'],a:1,e:'Rester bouche bée = rester la bouche ouverte de surprise, être très impressionné.'},
+{q:'Que pense Manon de la nourriture de la cantine ?',c:['Elle la trouve moins bonne que la cuisine de Mamie','Elle l’adore','Elle n’en parle pas','Elle la trouve trop épicée'],a:0,e:'« ne vaut pas ton gratin de christophines » : une façon gentille de dire que Mamie cuisine mieux !'},
+{q:'Quelle promesse Manon fait-elle à sa grand-mère ?',c:['De lui rapporter un cadeau','De lui apprendre le nom des étoiles','De lui écrire tous les jours','De faire du canoë avec elle'],a:1,e:'« Promis, je t’apprendrai le nom des étoiles quand je rentrerai. »'}]},
+C5:{hub:true,mat:'francais',titre:'La porte du grenier',duree:'15 min',type:'quiz',
+lecon:`<h3>🗝️ Lis ce début de récit fantastique</h3>
+<p style="font-style:italic;background:#FBF7EC;padding:14px;border-radius:12px;line-height:1.8;">La maison de tante Rose sentait la cire et les vieux livres. Interdiction formelle de monter au grenier : c’était la seule règle. Alors, forcément, Élio ne pensait plus qu’à ça. Un mercredi d’orage, pendant que sa tante téléphonait, il gravit l’escalier de bois qui gémissait sous chaque pas. La porte du grenier n’était pas fermée à clé. Elle s’ouvrit toute seule, sans grincer, comme si elle l’attendait. À l’intérieur, pas de poussière, pas de toiles d’araignée : une pièce impeccable, éclairée par une lampe que personne n’avait pu allumer. Et sur le mur du fond, une seconde porte, minuscule, à hauteur de genou, d’où filtrait une lumière verte. Élio entendit alors, très distinctement, une petite voix murmurer son prénom.</p>
+<div class="astuce">💡 Dans un récit fantastique, relève les détails <b>impossibles ou étranges</b> : ce sont eux qui créent le mystère.</div>`,
+questions:[
+{q:'Quelle est la seule règle chez tante Rose ?',c:['Ne pas toucher aux livres','Ne pas monter au grenier','Ne pas téléphoner','Se coucher tôt'],a:1,e:'« Interdiction formelle de monter au grenier : c’était la seule règle. »'},
+{q:'Pourquoi Élio ne pense-t-il « plus qu’à ça » ?',c:['Parce que l’interdit donne envie','Parce qu’il a peur','Parce qu’il cherche un livre','Parce qu’il s’ennuie de sa tante'],a:0,e:'C’est de l’implicite : ce qui est interdit devient irrésistible — « Alors, forcément… ».'},
+{q:'Quel moment choisit Élio pour monter ?',c:['La nuit','Pendant que sa tante téléphone','Pendant le dîner','Quand sa tante dort'],a:1,e:'« pendant que sa tante téléphonait » : il profite qu’elle soit occupée.'},
+{q:'Quel détail de la porte est étrange ?',c:['Elle est fermée à clé','Elle s’ouvre toute seule, comme si elle l’attendait','Elle est rouge','Elle grince très fort'],a:1,e:'Une porte qui s’ouvre seule « comme si elle l’attendait » : premier signe du fantastique.'},
+{q:'Qu’est-ce qui est surprenant dans le grenier lui-même ?',c:['Il est plein de poussière','Il est impeccable et éclairé par une lampe que personne n’a allumée','Il est vide','Il est rempli de jouets'],a:1,e:'On attend un grenier sale et sombre : celui-ci est propre et éclairé mystérieusement. L’auteur joue avec nos attentes.'},
+{q:'Le texte s’arrête quand une voix murmure son prénom. Quel effet cela produit-il ?',c:['Cela fait rire','Cela crée du suspense et donne envie de connaître la suite','Cela explique tout','Cela termine l’histoire'],a:1,e:'C’est une fin ouverte pleine de suspense… et justement, tu écriras la suite dans l’atelier d’écriture R4 ! ✍️'}]},
+R1:{hub:true,mat:'francais',titre:'Le portrait',duree:'20 min',type:'redaction',min:40,
+lecon:`<h3>✍️ À toi d’écrire : le portrait</h3>
+<p><b>Consigne :</b> fais le portrait d’une personne que tu aimes bien (quelqu’un de ta famille, un ami, ou même un personnage inventé). Décris son <b>physique</b> (visage, taille, allure) et son <b>caractère</b>.</p>
+<div class="astuce">🧰 <b>Boîte à outils :</b> utilise au moins 3 adjectifs (grand, souriante, malicieux, généreuse…), et varie tes débuts de phrases : « Ses yeux… », « Quand il rit… », « Ce que j’aime chez elle… »</div>`,
+criteres:['J’ai décrit le physique ET le caractère','J’ai utilisé au moins 3 adjectifs différents','Je me suis relu(e) pour corriger les fautes']},
+R2:{hub:true,mat:'francais',titre:'Un souvenir de vacances',duree:'20 min',type:'redaction',min:60,
+lecon:`<h3>✍️ À toi d’écrire : le souvenir</h3>
+<p><b>Consigne :</b> raconte un souvenir de vacances qui t’a marqué(e) (un moment drôle, impressionnant ou émouvant). Raconte au <b>passé</b> : imparfait pour le décor (« il faisait chaud »), passé composé pour les actions (« soudain, j’ai vu… »).</p>
+<div class="astuce">🧰 <b>Boîte à outils :</b> situe le moment et le lieu dès le début, puis raconte dans l’ordre : d’abord, ensuite, soudain, finalement. Termine par ce que tu as ressenti.</div>`,
+criteres:['J’ai raconté au passé (imparfait + passé composé)','On sait où et quand ça se passe','J’ai dit ce que j’ai ressenti à la fin']},
+R3:{hub:true,mat:'francais',titre:'La lettre',duree:'20 min',type:'redaction',min:60,
+lecon:`<h3>✍️ À toi d’écrire : la lettre</h3>
+<p><b>Consigne :</b> comme Manon (texte C4), écris une lettre à quelqu’un que tu aimes pour lui raconter tes vacances. Respecte la présentation : <b>lieu et date</b>, <b>formule d’ouverture</b> (« Chère… / Cher… »), corps de la lettre, <b>formule de fin</b> et <b>signature</b>.</p>
+<div class="astuce">🧰 <b>Boîte à outils :</b> raconte une ou deux choses précises (pas tout !), pose une question à ton destinataire, et pense au registre : à Mamie on n’écrit pas comme à un copain.</div>`,
+criteres:['Ma lettre a un lieu, une date, une ouverture, une fin et une signature','Je raconte au moins une chose précise','J’ai posé une question à mon destinataire']},
+R4:{hub:true,mat:'francais',titre:'La suite du récit',duree:'25 min',type:'redaction',min:80,
+lecon:`<h3>✍️ À toi d’écrire : la suite de « La porte du grenier »</h3>
+<p><b>Consigne :</b> Élio vient d’entendre une petite voix murmurer son prénom derrière la porte minuscule (texte C5)… <b>Écris la suite !</b> Que fait-il ? Qui parle ? Que cache la lumière verte ? Garde l’ambiance mystérieuse du texte et écris à la <b>3ᵉ personne</b> (« Élio », « il »).</p>
+<div class="astuce">🧰 <b>Boîte à outils :</b> fais durer le suspense (bruits, hésitations, détails étranges) avant de révéler quelque chose. Tu peux finir sur une nouvelle surprise !</div>`,
+criteres:['Ma suite est cohérente avec le début (Élio, le grenier, la petite porte)','J’écris à la 3ᵉ personne','J’ai gardé du mystère ou du suspense']},
+R5:{hub:true,mat:'francais',titre:'Si j’étais invisible…',duree:'25 min',type:'redaction',min:80,
+lecon:`<h3>✍️ À toi d’écrire : l’imagination au conditionnel</h3>
+<p><b>Consigne :</b> imagine que tu deviennes invisible pendant une journée entière. Que ferais-tu ? Où irais-tu ? Raconte ta journée au <b>conditionnel</b> (« je ferais », « j’irais », « je pourrais »).</p>
+<div class="astuce">🧰 <b>Boîte à outils :</b> organise ta journée (le matin…, ensuite…, le soir…) et n’oublie pas : que ressentirais-tu ? Y aurait-il un inconvénient à être invisible ?</div>`,
+criteres:['J’ai utilisé le conditionnel (je ferais, j’irais…)','Ma journée est organisée dans l’ordre','J’ai parlé de ce que je ressentirais']}
+};
+Object.assign(ACTIVITES, LECTURE);
+
+/* ── LECTURE À VOIX HAUTE 🎙️ (fluence) ── */
+const FLUENCE = {
+L1:{hub:true,mat:'francais',type:'fluence',titre:'La pirogue de grand-père',duree:'5 min',
+texte:`Ce matin-là, le fleuve était couleur de café au lait. Awa serrait le bord de la pirogue pendant que grand-père Baptiste guidait le moteur d’une main tranquille. Regarde, petite, dit-il en montrant la rive. Entre les palétuviers, un héron blanc se tenait immobile comme une statue. Awa retint son souffle. Elle venait de la ville et c’était la première fois qu’elle remontait le Maroni jusqu’au village de sa grand-mère. Soudain, une pluie chaude et drue s’abattit sur eux. Grand-père éclata de rire. Le fleuve te souhaite la bienvenue ! Trempée mais heureuse, Awa comprit qu’elle allait aimer ces vacances-là plus que toutes les autres.`},
+L2:{hub:true,mat:'francais',type:'fluence',titre:'Les tortues luth de Yalimapo',duree:'5 min',
+texte:`La tortue luth est la plus grande tortue marine du monde : elle peut mesurer deux mètres et peser plus de cinq cents kilos. Chaque année, entre avril et juillet, des centaines de femelles viennent pondre sur les plages de Guyane, notamment à Yalimapo, près de l’embouchure du Maroni. La nuit, chaque femelle creuse un nid dans le sable avec ses nageoires arrière et y dépose environ quatre-vingts œufs, avant de repartir vers l’océan. Deux mois plus tard, les petites tortues éclosent et se précipitent vers la mer, guidées par la lumière de l’horizon. Hélas, une sur mille seulement atteindra l’âge adulte : crabes, oiseaux et filets de pêche menacent leur long voyage.`},
+L3:{hub:true,mat:'francais',type:'fluence',titre:'Le Corbeau et le Renard',duree:'5 min',
+texte:`Maître Corbeau, sur un arbre perché, tenait en son bec un fromage. Maître Renard, par l’odeur alléché, lui tint à peu près ce langage : Hé ! bonjour, Monsieur du Corbeau. Que vous êtes joli ! que vous me semblez beau ! Sans mentir, si votre ramage se rapporte à votre plumage, vous êtes le Phénix des hôtes de ces bois. À ces mots le Corbeau ne se sent pas de joie ; et pour montrer sa belle voix, il ouvre un large bec, laisse tomber sa proie. Le Renard s’en saisit, et dit : Mon bon Monsieur, apprenez que tout flatteur vit aux dépens de celui qui l’écoute : cette leçon vaut bien un fromage, sans doute. Le Corbeau, honteux et confus, jura, mais un peu tard, qu’on ne l’y prendrait plus.`},
+L4:{hub:true,mat:'francais',type:'fluence',titre:'La lettre de Manon',duree:'5 min',
+texte:`Chère Mamie, je t’écris depuis la colonie de vacances, et tu ne devineras jamais ce que j’ai vu hier soir : le lancement d’une fusée ! Le ciel entier est devenu orange, puis un grondement énorme a fait trembler le sol sous nos pieds. Même Théo, qui fait toujours le malin, en est resté bouche bée. Sinon, la vie ici est chouette : le matin on fait du canoë, et l’après-midi, des grands jeux dans la forêt. La cuisine de la cantine, par contre, ne vaut pas ton gratin de christophines. Tu me manques. Promis, je t’apprendrai le nom des étoiles quand je rentrerai : notre monitrice nous les montre chaque soir. Grosses bises, Manon.`},
+L5:{hub:true,mat:'francais',type:'fluence',titre:'La porte du grenier',duree:'5 min',
+texte:`La maison de tante Rose sentait la cire et les vieux livres. Interdiction formelle de monter au grenier : c’était la seule règle. Alors, forcément, Élio ne pensait plus qu’à ça. Un mercredi d’orage, pendant que sa tante téléphonait, il gravit l’escalier de bois qui gémissait sous chaque pas. La porte du grenier n’était pas fermée à clé. Elle s’ouvrit toute seule, sans grincer, comme si elle l’attendait. À l’intérieur, pas de poussière, pas de toiles d’araignée : une pièce impeccable, éclairée par une lampe que personne n’avait pu allumer. Et sur le mur du fond, une seconde porte, minuscule, à hauteur de genou, d’où filtrait une lumière verte. Élio entendit alors, très distinctement, une petite voix murmurer son prénom.`}
+};
+Object.assign(ACTIVITES, FLUENCE);
+
 const BADGES = [
 {id:'premier',ico:'🌅',nom:'Premier pas',desc:'1 mission validée',test:s=>Object.keys(s.done).length>=1},
 {id:'jour1',ico:'📮',nom:'Premier tampon',desc:'1 journée complète',test:s=>nbTampons(s)>=1},
@@ -1219,6 +1394,10 @@ const BADGES = [
 {id:'parfait',ico:'💯',nom:'Sans faute',desc:'Un quiz réussi à 100 %',test:s=>Object.values(s.done).some(d=>d.pct===100)},
 {id:'tables-test',ico:'✖️',nom:'Reine des tables',desc:'Les 8 tables validées au test',test:s=>[2,3,4,5,6,7,8,9].every(t=>s.tables&&s.tables[t]&&s.tables[t].test>=80)},
 {id:'tables-voix',ico:'🎤',nom:'Voix d\'or',desc:'Les 8 tables récitées à voix haute',test:s=>[2,3,4,5,6,7,8,9].every(t=>s.tables&&s.tables[t]&&s.tables[t].voix>=80)},
+{id:'flamme7',ico:'🔥',nom:'Flamme de la semaine',desc:'7 jours de récitation d\'affilée',test:s=>s.quotidien&&s.quotidien.serie>=7},
+{id:'lectrice',ico:'🔍',nom:'Fine lectrice',desc:'Les 5 textes de compréhension réussis',test:s=>['C1','C2','C3','C4','C5'].every(k=>s.done[k])},
+{id:'ecrivaine',ico:'🖋️',nom:'Écrivaine en herbe',desc:'Les 5 rédactions rendues',test:s=>s.redactions&&['R1','R2','R3','R4','R5'].every(k=>s.redactions[k])},
+{id:'fluence130',ico:'🎙️',nom:'Lecture de 5ᵉ',desc:'Lire à 130 mots par minute',test:s=>s.fluence&&Object.values(s.fluence).some(f=>f.mclm>=130)},
 {id:'cap',ico:'🎓',nom:'Cap sur la 5ème !',desc:'Les 15 tampons du cahier',test:s=>nbTampons(s)>=15}];
 
 /* ═══════════════════════════════════════════════
@@ -1229,14 +1408,24 @@ let etat = charger();
 let jourCourant = 0, actCourante = null, timerJeu = null;
 
 function charger(){
-  try{ const s = JSON.parse(localStorage.getItem(CLE)); if(s && s.done){ if(!s.tables) s.tables={}; return s; } }catch(e){}
-  return {xp:0, done:{}, badges:[], tables:{}};
+  try{ const s = JSON.parse(localStorage.getItem(CLE)); if(s && s.done){ if(!s.tables) s.tables={}; if(!s.quotidien) s.quotidien={dernier:'',serie:0,palier:1}; if(!s.redactions) s.redactions={}; if(!s.fluence) s.fluence={}; if(!s.debut) s.debut=aujourdHui(); return s; } }catch(e){}
+  return {xp:0, done:{}, badges:[], tables:{}, quotidien:{dernier:'',serie:0,palier:1}, redactions:{}, fluence:{}, debut:aujourdHui()};
 }
 function sauver(){ localStorage.setItem(CLE, JSON.stringify(etat)); }
 function toutEffacer(){
-  if(confirm('Tout effacer et recommencer le cahier à zéro ?')){ localStorage.removeItem(CLE); etat={xp:0,done:{},badges:[],tables:{}}; renduGlobal(); montrerVue('vue-home'); }
+  if(confirm('Tout effacer et recommencer le cahier à zéro ?')){ localStorage.removeItem(CLE); etat={xp:0,done:{},badges:[],tables:{},quotidien:{dernier:'',serie:0,palier:1},redactions:{},fluence:{},debut:aujourdHui()}; renduGlobal(); montrerVue('vue-home'); }
 }
 function jourComplet(s,j){ return JOURS[j].acts.every(a=>s.done[a]); }
+function joursEcoules(){
+  const d=new Date(etat.debut+'T00:00:00'), n=new Date(aujourdHui()+'T00:00:00');
+  return Math.max(0, Math.round((n-d)/86400000));
+}
+function jourDebloque(j){ return j<=joursEcoules() || jourComplet(etat,j); }
+function dateDeblocage(j){
+  const d=new Date(etat.debut+'T00:00:00');
+  d.setDate(d.getDate()+j);
+  return d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+}
 function nbTampons(s){ return JOURS.reduce((n,_,j)=>n+(jourComplet(s,j)?1:0),0); }
 function niveau(xp){ return Math.floor(xp/200)+1; }
 
@@ -1259,7 +1448,44 @@ function montrerVue(id){
   document.getElementById(id).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
 }
-function retourJour(){ ouvrirJour(jourCourant); }
+let provenance='jour';
+function retourJour(){
+  if(typeof stopFluence==='function') stopFluence();
+  provenance==='hub' ? ouvrirLecture() : ouvrirJour(jourCourant);
+}
+function ouvrirLecture(){
+  const rend=(ids,cont,estRed)=>{
+    const el=document.getElementById(cont); el.innerHTML='';
+    ids.forEach(id=>{
+      const a=ACTIVITES[id];
+      const fait = estRed ? etat.redactions[id] : etat.done[id];
+      const div=document.createElement('div');
+      div.className='mission francais';
+      div.onclick=()=>ouvrirActivite(id,'hub');
+      const detail = estRed
+        ? (fait?`rendue · ${fait.mots} mots — clique pour relire ou améliorer`:`objectif : ${a.min} mots minimum`)
+        : (fait?`réussi à ${fait.pct} %`:'6 questions sur le texte');
+      div.innerHTML=`<span class="ico">${estRed?'✍️':'🔍'}</span>
+        <div><h3>${a.titre}</h3><small>${a.duree} · ${detail}</small></div>
+        <span class="etat">${fait?'✅':'▶️'}</span>`;
+      el.appendChild(div);
+    });
+  };
+  rend(['C1','C2','C3','C4','C5'],'lect-comp',false);
+  rend(['R1','R2','R3','R4','R5'],'lect-red',true);
+  const el=document.getElementById('lect-flu'); el.innerHTML='';
+  ['L1','L2','L3','L4','L5'].forEach(id=>{
+    const a=ACTIVITES[id], rec=etat.fluence[id];
+    const div=document.createElement('div');
+    div.className='mission francais';
+    div.onclick=()=>ouvrirActivite(id,'hub');
+    div.innerHTML=`<span class="ico">🎙️</span>
+      <div><h3>${a.titre}</h3><small>${rec?`record : ${rec.mclm} mots/min ${rec.mclm>=130?'🥇':rec.mclm>=110?'🥈':rec.mclm>=90?'🥉':''} — clique pour le battre !`:'objectif 5ᵉ : 130 mots/min'}</small></div>
+      <span class="etat">${rec&&rec.mclm>=90?'✅':'▶️'}</span>`;
+    el.appendChild(div);
+  });
+  montrerVue('vue-lecture');
+}
 
 /* ── Rendu global ── */
 function renduGlobal(){
@@ -1270,8 +1496,22 @@ function renduGlobal(){
   document.getElementById('xp-fill').style.width = (dansNiveau/200*100)+'%';
   document.getElementById('xp-note').textContent = `Encore ${200-dansNiveau} XP pour le niveau ${niveau(etat.xp)+1}`;
   document.getElementById('tables-compteur').textContent = [2,3,4,5,6,7,8,9].filter(t=>tableMaitrisee(t)).length+'/8';
+  const nLect = ['C1','C2','C3','C4','C5'].filter(k=>etat.done[k]).length
+    + ['R1','R2','R3','R4','R5'].filter(k=>etat.redactions[k]).length
+    + ['L1','L2','L3','L4','L5'].filter(k=>etat.fluence[k]&&etat.fluence[k].mclm>=90).length;
+  const zl=document.getElementById('lecture-compteur'); if(zl) zl.textContent=nLect+'/15';
+  const zs = document.getElementById('tb-serie');
+  if(zs){
+    const q=etat.quotidien;
+    if(q.serie>0 || !defiFaitAujourdhui()){
+      zs.style.display='';
+      zs.innerHTML = defiFaitAujourdhui()
+        ? '<b>🔥 '+q.serie+'</b><small>jours<br>de suite</small>'
+        : '<b>🔥 à faire !</b><small>récitation<br>du jour</small>';
+    } else zs.style.display='none';
+  }
   ['maths','anglais','francais'].forEach(m=>{
-    const tous = Object.keys(ACTIVITES).filter(k=>ACTIVITES[k].mat===m);
+    const tous = Object.keys(ACTIVITES).filter(k=>ACTIVITES[k].mat===m && !ACTIVITES[k].hub);
     const faits = tous.filter(k=>etat.done[k]).length;
     document.getElementById('prog-'+m).style.width = (faits/tous.length*100)+'%';
     document.getElementById('prog-'+m+'-txt').textContent = faits+'/'+tous.length+' missions';
@@ -1279,16 +1519,26 @@ function renduGlobal(){
   // Semaines
   const cont = document.getElementById('semaines'); cont.innerHTML='';
   for(let sem=0; sem<3; sem++){
-    const lab = document.createElement('div'); lab.className='semaine-label'; lab.textContent='Semaine '+(sem+1);
+    const lab = document.createElement('div'); lab.className='semaine-label';
+    const semVerrouillee = ![0,1,2,3,4].some(k=>jourDebloque(sem*5+k));
+    lab.innerHTML = 'Semaine '+(sem+1)+(semVerrouillee?' <span class="sem-verrou">🔒 à partir du '+dateDeblocage(sem*5)+'</span>':'');
     cont.appendChild(lab);
     const grid = document.createElement('div'); grid.className='jours-grid';
     for(let j=sem*5; j<sem*5+5; j++){
       const d = JOURS[j];
-      const card = document.createElement('div'); card.className='jour-card';
-      card.onclick=()=>ouvrirJour(j);
+      const debloque = jourDebloque(j);
+      const card = document.createElement('div');
+      card.className='jour-card'+(debloque?'':' verrou')+(j===joursEcoules()&&!jourComplet(etat,j)?' aujourdhui':'');
       let past = d.acts.map(a=>`<span class="pastille ${ACTIVITES[a].mat}${etat.done[a]?' ok':''}"></span>`).join('');
-      card.innerHTML = `<h4>Jour ${j+1}</h4><div class="theme">${d.t}</div><div class="pastilles">${past}</div>`;
-      if(jourComplet(etat,j)) card.innerHTML += `<div class="tampon"><span>☀️</span>Validé !</div>`;
+      if(debloque){
+        card.onclick=()=>ouvrirJour(j);
+        card.innerHTML = `<h4>Jour ${j+1}${j===joursEcoules()&&!jourComplet(etat,j)?' <span class="auj-chip">aujourd\u2019hui</span>':''}</h4><div class="theme">${d.t}</div><div class="pastilles">${past}</div>`;
+        if(jourComplet(etat,j)) card.innerHTML += `<div class="tampon"><span>☀️</span>Validé !</div>`;
+      } else {
+        const dans = j - joursEcoules();
+        card.innerHTML = `<h4>🔒 Jour ${j+1}</h4><div class="theme">${d.t}</div>
+          <div class="verrou-info">${dans===1?'débloqué demain':'débloqué '+dateDeblocage(j)}</div>`;
+      }
       grid.appendChild(card);
     }
     cont.appendChild(grid);
@@ -1303,6 +1553,15 @@ function renduGlobal(){
 
 /* ── Vue jour ── */
 function ouvrirJour(j){
+  if(!jourDebloque(j)){
+    const m=document.getElementById('modale');
+    m.innerHTML=`<div class="emoji">🔒</div><h2>Patience !</h2>
+      <p>Le <b>jour ${j+1}</b> se débloquera <b>${j-joursEcoules()===1?'demain':dateDeblocage(j)}</b>.</p>
+      <p>Un jour à la fois : c\u2019est comme ça qu\u2019on retient pour de bon. En attendant, tu peux refaire une mission, battre un record de lecture 🎙️ ou faire ta récitation du jour 🔥 !</p>
+      <button class="btn-principal" onclick="document.getElementById('voile').classList.remove('visible')">D\u2019accord !</button>`;
+    document.getElementById('voile').classList.add('visible');
+    return;
+  }
   jourCourant = j;
   document.getElementById('jour-titre').textContent = 'Jour '+(j+1);
   document.getElementById('jour-theme').textContent = JOURS[j].t;
@@ -1321,7 +1580,8 @@ function ouvrirJour(j){
 }
 
 /* ── Vue activité ── */
-function ouvrirActivite(id){
+function ouvrirActivite(id, prov='jour'){
+  provenance = prov;
   actCourante = id;
   const a = ACTIVITES[id];
   document.getElementById('act-chip').className = 'chip '+a.mat;
@@ -1332,6 +1592,44 @@ function ouvrirActivite(id){
   if(a.type==='quiz'){
     cont.innerHTML = `<div class="lecon">${a.lecon}</div>
       <button class="btn-principal" onclick="lancerQuiz()">C'est parti pour les exercices ! ✏️</button>`;
+  } else if(a.type==='fluence'){
+    const rec = etat.fluence[id];
+    cont.innerHTML = `<div class="lecon">
+        <h3>🎙️ Lis ce texte à voix haute</h3>
+        <p>Lis <b>bien fort et distinctement</b>, à un rythme naturel : les mots se colorient en vert au fil de ta lecture. À la fin, tu obtiens ta vitesse en <b>mots par minute</b> — l’objectif d’un élève de 5ᵉ, c’est <b>130</b> !</p>
+        ${rec?`<div class="astuce">🏅 Ton record sur ce texte : <b>${rec.mclm} mots/min</b>. Essaie de le battre !</div>`:''}
+      </div>
+      <div class="fluence-texte" id="fluence-texte"></div>
+      <div class="fluence-hud">
+        <div class="hud-item">⏱ <b id="fl-temps">0:00</b></div>
+        <div class="hud-item score">📖 <b id="fl-lus">0</b> mots lus</div>
+      </div>
+      <div class="micro-zone" id="fl-micro" style="display:none;">
+        <div class="micro-bulle ecoute" id="micro-bulle">🎤</div>
+        <div class="micro-statut" id="micro-statut">Lis à ton rythme, je te suis !</div>
+      </div>
+      <button class="btn-secondaire" id="fl-ecouter" onclick="lireTexteFR()">🔊 Écouter le texte lu par l’ordinateur</button>
+      <button class="btn-principal" id="fl-start" onclick="lancerFluence()">Je lis à voix haute ! 🎙️</button>
+      <button class="btn-principal" id="fl-fin" style="display:none" onclick="finFluence()">J’ai fini ma lecture ✔</button>`;
+    preparerFluence();
+  } else if(a.type==='redaction'){
+    const sauv = etat.redactions[id];
+    cont.innerHTML = `<div class="lecon">${a.lecon}</div>
+      <div class="atelier">
+        <textarea id="red-texte" lang="fr" spellcheck="true" placeholder="Écris ton texte ici… Prends ton temps, un brouillon d’abord dans ta tête ! (Les mots soulignés en rouge par le navigateur sont sûrement mal orthographiés.)"></textarea>
+        <div class="red-barre"><span id="red-mots">0 mot</span><span>objectif : ${a.min} mots minimum</span></div>
+        <div class="red-checks" id="red-auto"></div>
+        <div class="red-checks">${a.criteres.map(c=>`<label><input type="checkbox" class="red-crit"> ${c}</label>`).join('')}</div>
+        <button class="btn-secondaire" onclick="verifierMaRedaction()">🔎 Vérifier l’orthographe et la grammaire</button>
+        <div class="red-checks" id="red-ortho" style="display:none;"></div>
+        <button class="btn-principal" onclick="validerRedaction()">Je rends ma copie ! ✍️</button>
+        <div class="explication" id="red-fb" style="margin-top:10px;"></div>
+      </div>`;
+    const ta=document.getElementById('red-texte');
+    if(sauv) ta.value=sauv.texte;
+    redVerifiee=false;
+    ta.addEventListener('input', ()=>{ redVerifiee=false; const z=document.getElementById('red-ortho'); if(z) z.style.display='none'; majRedaction(); });
+    majRedaction();
   } else if(a.type==='memory'){
     cont.innerHTML = `<div class="lecon"><p>${a.consigne}</p></div>
       <button class="btn-principal" onclick="lancerMemory()">Jouer ! 🎴</button>`;
@@ -1383,6 +1681,263 @@ function questionSuivante(){
   qIdx++;
   if(qIdx<a.questions.length) afficherQuestion();
   else terminerActivite(qScore, a.questions.length);
+}
+
+/* ═══════ LECTURE À VOIX HAUTE 🎙️ ═══════ */
+let flMots=[], flPos=0, flCorrect=0, flActive=false, flStart=0, flTimer=null, flReco=null, ttsEnCours=false;
+function normMot(w){
+  return w.toLowerCase().replace(/’/g,"'").normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9']/g,'');
+}
+function preparerFluence(){
+  const a=ACTIVITES[actCourante];
+  flMots = a.texte.split(/\s+/).map(w=>({brut:w, n:normMot(w)})).filter(m=>m.n);
+  flPos=0; flCorrect=0; flActive=false;
+  const zone=document.getElementById('fluence-texte');
+  zone.innerHTML = flMots.map((m,i)=>`<span class="fmot" id="fw-${i}">${m.brut}</span>`).join(' ');
+}
+function lireTexteFR(){
+  // Lecture modèle par la synthèse vocale (pour entendre le texte avant de le lire)
+  if(!('speechSynthesis' in window)) return;
+  if(ttsEnCours){ speechSynthesis.cancel(); ttsEnCours=false; document.getElementById('fl-ecouter').textContent='🔊 Écouter le texte lu par l\u2019ordinateur'; return; }
+  const u=new SpeechSynthesisUtterance(ACTIVITES[actCourante].texte);
+  u.lang='fr-FR'; u.rate=0.95;
+  const v=speechSynthesis.getVoices().find(v=>v.lang.startsWith('fr'));
+  if(v) u.voice=v;
+  u.onend=()=>{ ttsEnCours=false; const b=document.getElementById('fl-ecouter'); if(b) b.textContent='🔊 Écouter le texte lu par l\u2019ordinateur'; };
+  ttsEnCours=true;
+  document.getElementById('fl-ecouter').textContent='⏹ Arrêter la lecture';
+  speechSynthesis.speak(u);
+}
+function lancerFluence(){
+  if(!SRClass){ alert('La lecture suivie a besoin de Chrome, Edge ou Safari !'); return; }
+  if(avertirAndroidFile('lancerFluence()')) return;
+  speechSynthesis.cancel(); ttsEnCours=false;
+  document.getElementById('fl-start').style.display='none';
+  document.getElementById('fl-micro').style.display='';
+  verifierMicro('ouvrirActivite(\''+actCourante+'\',\'hub\')').then(async ok=>{
+    const dispo = await verifierRecoLocale();
+    modeLocal = (dispo==='available');
+    flActive=true; flStart=Date.now();
+    document.getElementById('fl-fin').style.display='';
+    document.getElementById('fw-0').classList.add('courant');
+    demarrerVumetre();
+    flTimer=setInterval(()=>{
+      const sec=Math.round((Date.now()-flStart)/1000);
+      const el=document.getElementById('fl-temps');
+      if(el) el.textContent=Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');
+    },500);
+    flReco = new SRClass();
+    flReco.lang='fr-FR'; flReco.interimResults=true; flReco.maxAlternatives=1; flReco.continuous=true;
+    if(modeLocal){ try{ flReco.processLocally=true; }catch(e){ modeLocal=false; } }
+    flReco.onresult = e=>{
+      if(!flActive) return;
+      let txt='';
+      for(let i=e.resultIndex;i<e.results.length;i++) txt+=e.results[i][0].transcript+' ';
+      txt.split(/\s+/).map(normMot).filter(Boolean).forEach(consommerMotLu);
+      const el=document.getElementById('fl-lus');
+      if(el) el.textContent=flCorrect;
+      if(flPos>=flMots.length) finFluence();
+    };
+    flReco.onerror = e=>{
+      if(e.error==='not-allowed'||e.error==='service-not-allowed'){ flActive=false;
+        const st=document.getElementById('micro-statut');
+        if(st) st.innerHTML='⚠️ Reconnaissance bloquée ici.<br><b>PC :</b> ouvre le fichier directement dans Chrome/Edge. <b>Tablette :</b> Chrome → ⋮ → Paramètres des sites → Micro : autorisé (+ permission Micro de l\u2019app Google dans Android).';
+      }
+    };
+    flReco.onend = ()=>{ if(flActive && flReco){ setTimeout(()=>{ try{ flReco.start(); }catch(err){} },10); } };
+    try{ flReco.start(); }catch(err){}
+  });
+}
+function consommerMotLu(tk){
+  // Aligne le mot reconnu sur le texte, avec une fenêtre de tolérance de 3 mots
+  if(flPos>=flMots.length) return;
+  for(let k=0;k<4 && flPos+k<flMots.length;k++){
+    if(flMots[flPos+k].n===tk){
+      for(let j=0;j<k;j++){ const el=document.getElementById('fw-'+(flPos+j)); if(el){ el.classList.remove('courant'); el.classList.add('saute'); } }
+      const lu=document.getElementById('fw-'+(flPos+k));
+      if(lu){ lu.classList.remove('courant'); lu.classList.add('lu'); }
+      flCorrect++;
+      flPos+=k+1;
+      const cour=document.getElementById('fw-'+flPos);
+      if(cour) cour.classList.add('courant');
+      if(flPos===flMots.length-1 || (flPos%12===0)){
+        const z=document.getElementById('fluence-texte');
+        if(cour && z) cour.scrollIntoView({block:'center',behavior:'smooth'});
+      }
+      return;
+    }
+  }
+}
+function stopFluence(){
+  flActive=false;
+  clearInterval(flTimer); flTimer=null;
+  if(flReco){ try{ flReco.onresult=null; flReco.onend=null; flReco.onerror=null; flReco.abort(); }catch(e){} flReco=null; }
+  arreterVumetre();
+  if(fluxMicro){ try{ fluxMicro.getTracks().forEach(tr=>tr.stop()); }catch(e){} fluxMicro=null; }
+  if('speechSynthesis' in window){ speechSynthesis.cancel(); ttsEnCours=false; }
+}
+function finFluence(){
+  if(!flStart) return;
+  const minutes=Math.max((Date.now()-flStart)/60000, 0.15);
+  stopFluence();
+  const mclm=Math.round(flCorrect/minutes);
+  const precision=flMots.length?Math.round(flCorrect/flMots.length*100):0;
+  const rec=etat.fluence[actCourante];
+  const record=!rec || mclm>rec.mclm;
+  const premiere=!rec;
+  let gainXP = premiere ? (mclm>=130?60:mclm>=110?45:mclm>=90?35:15) : (record?12:5);
+  etat.xp+=gainXP;
+  if(record) etat.fluence[actCourante]={mclm, precision, date:aujourdHui()};
+  sauver();
+  const nouveauxBadges = BADGES.filter(b=>!etat.badges.includes(b.id) && b.test(etat));
+  nouveauxBadges.forEach(b=>etat.badges.push(b.id));
+  sauver();
+  const med = mclm>=130?['🥇','Niveau 5ᵉ atteint : bravo !']:mclm>=110?['🥈','Excellente lecture, tu y es presque !']:mclm>=90?['🥉','Belle lecture, continue de t\u2019entraîner !']:['📖','Chaque lecture te fait progresser !'];
+  const m=document.getElementById('modale');
+  let html=`<div class="emoji">${med[0]}</div><h2>Lecture terminée !</h2>
+    <div class="mclm-grand">${mclm}</div>
+    <p><b>mots par minute</b> ${record&&!premiere?'— nouveau record ! 🚀':rec?'(record : '+rec.mclm+')':''}</p>
+    <p>Précision : <b>${precision} %</b> des mots du texte reconnus (${flCorrect}/${flMots.length})</p>
+    <p>${med[1]}</p>
+    <p class="gain">+ ${gainXP} XP ☀️</p>`;
+  nouveauxBadges.forEach(b=>{ html += `<p>🏆 Nouveau badge : <b>${b.ico} ${b.nom}</b> !</p>`; });
+  html+=`<button class="btn-principal" onclick="fermerModale()">Continuer</button>
+    <button class="btn-secondaire" onclick="fermerModale(true)" style="margin-top:10px;">Relire ce texte 🔄</button>`;
+  m.innerHTML=html;
+  document.getElementById('voile').classList.add('visible');
+  flStart=0;
+}
+
+/* ═══════ CORRECTEUR ORTHOGRAPHE & GRAMMAIRE 🔎 ═══════ */
+const LEXIQUE_FAUTES = {
+'beacoup':'beaucoup','bocoup':'beaucoup','boccoup':'beaucoup','toujour':'toujours','aujourdhui':'aujourd\u2019hui',
+'malgres':'malgré','malgrés':'malgré','parmis':'parmi','bientot':'bientôt','apres':'après','tres':'très',
+'etre':'être','etait':'était','etais':'étais','ecole':'école','eleve':'élève','francais':'français',
+'voila':'voilà','deja':'déjà','plutot':'plutôt','biensur':'bien sûr','commeme':'quand même',
+'vraimant':'vraiment','maintenent':'maintenant','maintenan':'maintenant','dificile':'difficile',
+'apeler':'appeler','apelle':'appelle','interessant':'intéressant','different':'différent','meme':'même',
+'frere':'frère','mere':'mère','pere':'père','derriere':'derrière','premiere':'première','lumiere':'lumière',
+'foret':'forêt','fenetre':'fenêtre','tete':'tête','reve':'rêve','plage ou':'plage où'};
+const NOMS_EN_E = ['café','bébé','été','côté','thé','canapé','karaté','ciné','fée','idée','journée','matinée','soirée','année','arrivée','musée','lycée','poupée','allée','pensée','vallée','cheminée','araignée','poignée','fusée'];
+const MOTS_EN_ER = ['hier','fer','mer','cher','hiver','dernier','premier','janvier','février','cahier','escalier','papier','panier','quartier','sentier','rocher','clocher','plancher','goûter','dîner','déjeuner','super','fier','air'];
+function verifierOrthographe(txt){
+  const rem=[];
+  const ajouter=(extrait,conseil)=>{ if(rem.length<8) rem.push({extrait,conseil}); };
+  const bas=txt.toLowerCase();
+  // 1. Lexique des fautes fréquentes (accents oubliés, mots déformés)
+  for(const [faute,ok] of Object.entries(LEXIQUE_FAUTES)){
+    const re=new RegExp('(^|[^a-zàâäéèêëîïôöùûüç])('+faute+')(?=$|[^a-zàâäéèêëîïôöùûüç])','i');
+    const m=bas.match(re);
+    if(m) ajouter('« '+m[2]+' »','s\u2019écrit « <b>'+ok+'</b> »');
+  }
+  // 2. Infinitif après préposition : « pour mangé » → « pour manger »
+  const L='a-zàâäéèêëîïôöùûüç';
+  let re=new RegExp('(?:^|[^'+L+'])(de|pour|sans|à)\\s+(['+L+']{3,}é)(?=$|[^'+L+'])','gi'), m;
+  while((m=re.exec(txt))){
+    if(!NOMS_EN_E.includes(m[2].toLowerCase())) ajouter('« '+m[1]+' '+m[2]+' »','après « '+m[1]+' », le verbe se termine par <b>-er</b> (ex. : pour mang<b>er</b>) — sauf si c\u2019est un nom !');
+  }
+  // 3. Participe passé après avoir : « j'ai manger » → « j'ai mangé »
+  re=new RegExp('(?:^|[^'+L+'])(j\u2019ai|j\'ai|ai|as|a|avons|avez|ont)\\s+(['+L+']{3,}er)(?=$|[^'+L+'])','gi');
+  while((m=re.exec(txt))){
+    if(!MOTS_EN_ER.includes(m[2].toLowerCase())) ajouter('« '+m[1]+' '+m[2]+' »','après « avoir », le participe se termine par <b>-é</b> (ex. : j\u2019ai mang<b>é</b>)');
+  }
+  // 3 bis. Participe après être : « je suis aller » → « je suis allé(e) »
+  re=new RegExp('(?:^|[^'+L+'])(suis|es|est|sommes|êtes|sont)\\s+(['+L+']{3,}er)(?=$|[^'+L+'])','gi');
+  while((m=re.exec(txt))){
+    if(!MOTS_EN_ER.includes(m[2].toLowerCase())) ajouter('« '+m[1]+' '+m[2]+' »','après « être », le participe s\u2019accorde : <b>-é / -ée / -és / -ées</b> (ex. : elle est all<b>ée</b>)');
+  }
+  // 4. « sa » au lieu de « ça »
+  re=/\bsa\s+(va|fait|sera|serait|se\b|me\b|te\b|suffit|marche)/gi;
+  while((m=re.exec(txt))) ajouter('« sa '+m[1]+' »','ici c\u2019est « <b>ça</b> » (cela) — « sa » = la sienne');
+  // 5. Mot répété : « le le »
+  re=/\b([a-zàâéèêîôûç]{2,})\s+\1\b/gi;
+  while((m=re.exec(txt))) ajouter('« '+m[1]+' '+m[1]+' »','mot répété deux fois');
+  // 6. Majuscule après un point
+  re=/[.!?]\s+([a-zàâéèêîôûç][a-zàâéèêîôûç\u2019']*)/g;
+  while((m=re.exec(txt))) ajouter('« … '+m[1]+' »','après un point, il faut une <b>majuscule</b>');
+  // 7. Espace avant virgule/point, ou virgule collée
+  if(/\s+[,.]/.test(txt)) ajouter('espace avant « , » ou « . »','pas d\u2019espace <b>avant</b> la virgule et le point');
+  if(/,(?=[a-zàâéèêîôûçA-Z])/.test(txt)) ajouter('virgule collée','mets un <b>espace après</b> la virgule');
+  // 8. Phrase trop longue
+  const phrases=txt.split(/[.!?…]+/);
+  for(const ph of phrases){
+    const n=ph.trim().split(/\s+/).filter(Boolean).length;
+    if(n>35){ ajouter('une phrase de '+n+' mots','elle est très longue : coupe-la avec un point ou une virgule'); break; }
+  }
+  return rem;
+}
+let redVerifiee=false;
+function verifierMaRedaction(){
+  const an=analyseRedaction();
+  const rem=verifierOrthographe(an.propre);
+  const z=document.getElementById('red-ortho');
+  redVerifiee=true;
+  if(!rem.length){
+    z.innerHTML='<b style="color:#3E8E3E;">🔎 Relecture assistée : je n\u2019ai rien repéré, beau travail !</b><br><small>Vérifie quand même toi-même : je ne vois pas toutes les fautes.</small>';
+  } else {
+    z.innerHTML='<b style="color:#6C519E;">🔎 Points à vérifier ('+rem.length+') :</b>'+
+      rem.map(r=>`<div class="auto non">✏️ ${r.extrait} — ${r.conseil}</div>`).join('')+
+      '<small style="color:#8A7A50;">Je peux me tromper (par exemple si c\u2019est un nom et pas un verbe) : c\u2019est toi qui décides en te relisant !</small>';
+  }
+  z.style.display='';
+}
+
+/* ═══════ ATELIER RÉDACTION ═══════ */
+function analyseRedaction(){
+  const a=ACTIVITES[actCourante];
+  const txt=(document.getElementById('red-texte')||{value:''}).value;
+  const propre=txt.trim();
+  const mots=propre?propre.split(/\s+/).filter(Boolean).length:0;
+  const phrases=propre.split(/[.!?…]+/).filter(x=>x.trim().length>2).length;
+  return {txt,propre,mots,checks:[
+    {ok:mots>=a.min, txt:`Au moins ${a.min} mots — tu en as ${mots}`},
+    {ok:/^[A-ZÀÂÄÉÈÊËÎÏÔÖÙÛÜÇŒ«"']/.test(propre), txt:'Mon texte commence par une majuscule'},
+    {ok:/[.!?…»"]\s*$/.test(propre), txt:'Mon texte se termine par un point'},
+    {ok:phrases>=3, txt:`Au moins 3 phrases — j’en compte ${phrases}`}
+  ]};
+}
+function majRedaction(){
+  const an=analyseRedaction();
+  const zm=document.getElementById('red-mots');
+  if(zm){ zm.textContent=an.mots+' mot'+(an.mots>1?'s':''); zm.className=an.mots>=ACTIVITES[actCourante].min?'assez':''; }
+  const za=document.getElementById('red-auto');
+  if(za) za.innerHTML='<b style="color:#6C519E;">Vérifications automatiques :</b>'+an.checks.map(c=>`<div class="auto ${c.ok?'ok':'non'}">${c.ok?'✅':'◻️'} ${c.txt}</div>`).join('');
+}
+function validerRedaction(){
+  const a=ACTIVITES[actCourante];
+  const an=analyseRedaction();
+  const autoOk=an.checks.every(c=>c.ok);
+  const crits=[...document.querySelectorAll('.red-crit')];
+  const critsOk=crits.every(c=>c.checked);
+  const fb=document.getElementById('red-fb');
+  if(!autoOk || !critsOk){
+    fb.innerHTML='📝 Presque ! '+(!autoOk?'Regarde les vérifications automatiques encore en ◻️ ci-dessus. ':'')+(!critsOk?'Et coche la liste de relecture une fois que tu as vérifié chaque point !':'');
+    fb.classList.add('visible');
+    return;
+  }
+  if(!redVerifiee){
+    verifierMaRedaction();
+    fb.innerHTML='🔎 J\u2019ai relu ton texte : regarde la relecture assistée ci-dessus, corrige si besoin… puis clique à nouveau sur « Je rends ma copie ! »';
+    fb.classList.add('visible');
+    return;
+  }
+  const premiere=!etat.redactions[actCourante];
+  const gainXP = premiere ? 50 : 8;
+  etat.redactions[actCourante]={texte:an.txt, mots:an.mots, date:aujourdHui()};
+  etat.xp += gainXP;
+  sauver();
+  const nouveauxBadges = BADGES.filter(b=>!etat.badges.includes(b.id) && b.test(etat));
+  nouveauxBadges.forEach(b=>etat.badges.push(b.id));
+  sauver();
+  const m=document.getElementById('modale');
+  let html=`<div class="emoji">🖋️</div><h2>${premiere?'Copie rendue !':'Copie améliorée !'}</h2>
+    <p>« <b>${a.titre}</b> » — <b>${an.mots} mots</b>. ${premiere?'Bravo, écrire est le meilleur moyen de progresser !':'C’est en retravaillant ses textes qu’on devient écrivain·e !'}</p>
+    <p style="font-size:.85rem;color:#8A7A50;">💡 Fais-la lire à un adulte : un regard extérieur, c’est le secret des bons textes.</p>
+    <p class="gain">+ ${gainXP} XP ☀️</p>`;
+  nouveauxBadges.forEach(b=>{ html += `<p>🏆 Nouveau badge : <b>${b.ico} ${b.nom}</b> !</p>`; });
+  html += `<button class="btn-principal" onclick="fermerModale()">Continuer</button>`;
+  m.innerHTML=html;
+  document.getElementById('voile').classList.add('visible');
 }
 
 /* ═══════ MEMORY ═══════ */
@@ -1530,7 +2085,8 @@ function terminerActivite(score, total, estJeu=false, jeuValide=null){
   const dejafait = !!etat.done[actCourante];
   let gainXP = 0;
   const etoiles = pct>=90?'⭐⭐⭐':pct>=75?'⭐⭐':valide?'⭐':'✩';
-  const jourAvant = jourComplet(etat, jourCourant);
+  const enJour = provenance==='jour';
+  const jourAvant = enJour && jourComplet(etat, jourCourant);
 
   if(valide){
     gainXP = (estJeu? 40 : score*8) + 30;
@@ -1540,7 +2096,7 @@ function terminerActivite(score, total, estJeu=false, jeuValide=null){
     if(!ancien || pct>ancien.pct) etat.done[actCourante]={pct};
   }
   sauver();
-  const jourApres = jourComplet(etat, jourCourant);
+  const jourApres = enJour && jourComplet(etat, jourCourant);
   const nouveauxBadges = BADGES.filter(b=>!etat.badges.includes(b.id) && b.test(etat));
   nouveauxBadges.forEach(b=>etat.badges.push(b.id));
   sauver();
@@ -1571,7 +2127,8 @@ function terminerActivite(score, total, estJeu=false, jeuValide=null){
 function fermerModale(retenter=false){
   document.getElementById('voile').classList.remove('visible');
   renduGlobal();
-  if(retenter){ ouvrirActivite(actCourante); }
+  if(retenter){ ouvrirActivite(actCourante, provenance); }
+  else if(provenance==='hub'){ ouvrirLecture(); }
   else { ouvrirJour(jourCourant); }
 }
 
@@ -1584,23 +2141,81 @@ let reco = null, tCourante = 0, tIdx = 0, tScore = 0, tEssais = 0, tOrdre = [], 
 function tableMaitrisee(t){ const d = etat.tables[t]; return d && d.test>=80 && d.voix>=80; }
 
 function ouvrirTables(){
+  stopCompteQ();
+  const q = etat.quotidien, fait = defiFaitAujourdhui();
+  const zone = document.getElementById('defi-quotidien');
+  if(zone) zone.innerHTML = `
+    <div class="defi-carte${fait?' fait':''}" onclick="lancerDefiQuotidien()">
+      <span class="defi-ico">${fait?'✅':'🔥'}</span>
+      <div class="defi-txt">
+        <h3>La récitation du jour</h3>
+        <p>${fait?'Faite pour aujourd\u2019hui — reviens demain pour continuer la série !':'10 multiplications mélangées, à réciter à voix haute.'}</p>
+      </div>
+      <div class="defi-stats">
+        <span>🔥 <b>${q.serie}</b> jour${q.serie>1?'s':''}</span>
+        <span>📈 palier <b>${q.palier}</b></span>
+        <span>⏱ <b>${tempsDuPalier(q.palier)}</b> s/ligne</span>
+      </div>
+    </div>`;
   const grid = document.getElementById('tables-grid'); grid.innerHTML='';
   for(let t=2;t<=9;t++){
     const d = etat.tables[t]||{};
     const card = document.createElement('div');
     card.className = 'table-card'+(tableMaitrisee(t)?' maitrisee':'');
+    const infoTest = d.test!=null ? 'Record : '+d.test+' %' : 'Pas encore fait';
+    const infoVoix = d.voix!=null ? 'Record : '+d.voix+' %' : 'Pas encore fait';
     card.innerHTML = `<h3>Table de ${t} ${tableMaitrisee(t)?'<span class="coupe">🏆</span>':''}</h3>
       <div class="table-modes">
-        <button class="${d.test>=80?'reussi':''}" onclick="lancerTestTable(${t})">✏️ Test écrit<span class="score-mode">${d.test!=null?'Record : '+d.test+' %':'Pas encore fait'}</span></button>
-        <button class="${d.voix>=80?'reussi':''}" onclick="lancerVoixTable(${t})">🎤 Réciter<span class="score-mode">${d.voix!=null?'Record : '+d.voix+' %':'Pas encore fait'}</span></button>
+        <button class="${d.test>=80?'reussi':''}" onclick="lancerTestTable(${t})">✏️ Test écrit<span class="score-mode">${infoTest}</span></button>
+        <button class="${d.voix>=80?'reussi':''}" onclick="lancerVoixTable(${t})">🎤 Réciter<span class="score-mode">${infoVoix}</span></button>
       </div>`;
     grid.appendChild(card);
   }
   document.getElementById('micro-note').innerHTML = SRClass
-    ? '🎤 La récitation utilise le micro et Internet : autorise le micro quand le navigateur te le demande.<br>💡 Si le micro est signalé comme bloqué, ouvre ce fichier <b>directement dans Chrome ou Edge</b> (les aperçus intégrés bloquent le micro).'
+    ? 'v9 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
     : '⚠️ La récitation vocale a besoin de <b>Chrome</b>, <b>Edge</b> ou <b>Safari</b> — sur ce navigateur, seul le test écrit est disponible.';
+  if(SRClass) verifierRecoLocale().then(st=>{
+    const z=document.getElementById('zone-reco-locale');
+    if(!z) return;
+    if(st==='available') z.innerHTML='<br>⚡ <b>Reconnaissance locale active</b> : rapide et sans Internet !';
+    else if(st==='downloadable') z.innerHTML='<br>⚡ Ton Chrome peut reconnaître la voix <b>sans passer par Internet</b> (beaucoup plus rapide) : <button class="btn-secondaire" style="padding:6px 14px;font-size:.8rem;" onclick="installerRecoLocale(this)">Installer le français local</button>';
+  });
   montrerVue('vue-tables');
 }
+
+/* ── Compte à rebours par question ── */
+const TEMPS_QUESTION = {test:10, voix:15}; // secondes pour répondre (voix ajusté par palier)
+const PALIER_TEMPS_DEBUT=15, PALIER_TEMPS_MIN=6;
+function tempsDuPalier(pal){ return Math.max(PALIER_TEMPS_DEBUT-(pal-1), PALIER_TEMPS_MIN); }
+function dateISO(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function aujourdHui(){ return dateISO(new Date()); }
+function hier(){ const d=new Date(); d.setDate(d.getDate()-1); return dateISO(d); }
+function defiFaitAujourdhui(){ return etat.quotidien.dernier===aujourdHui(); }
+let qTimer=null, qRestant=0, qTotal=100;
+function chronoQHTML(mode){ return `<div class="chrono-q"><div class="cq-track"><i id="cq-fill" style="width:100%"></i></div><b id="cq-num">${TEMPS_QUESTION[mode]}</b></div>`; }
+function lancerCompteQ(mode, onTimeout){
+  clearInterval(qTimer);
+  qTotal = TEMPS_QUESTION[mode]*10; qRestant = qTotal;
+  majCompteQ();
+  qTimer = setInterval(()=>{
+    // En récitation, le chrono se FIGE pendant que l'élève parle
+    // (et 1,2 s après) : la latence de la reconnaissance ne lui coûte rien.
+    const enParole = mode==='voix' && (Date.now()-dernierSonTs < 1200);
+    const num=document.getElementById('cq-num');
+    if(num) num.classList.toggle('fige-actif', enParole);
+    if(!enParole){ qRestant--; majCompteQ(); }
+    if(qRestant<=0){ clearInterval(qTimer); onTimeout(); }
+  },100);
+}
+function majCompteQ(){
+  const f=document.getElementById('cq-fill'), n=document.getElementById('cq-num');
+  if(!f||!n) return;
+  f.style.width=(qRestant/qTotal*100)+'%';
+  n.textContent=Math.ceil(qRestant/10);
+  const urgent = qRestant<=30;
+  f.classList.toggle('urgent',urgent); n.classList.toggle('urgent',urgent);
+}
+function stopCompteQ(){ clearInterval(qTimer); }
 
 /* ── TEST ÉCRIT ── */
 function lancerTestTable(t){
@@ -1615,6 +2230,7 @@ function questionTestTable(){
   document.getElementById('tj-contenu').innerHTML = `
     <div class="quiz-barre"><div class="quiz-prog"><i style="width:${tIdx*10}%"></i></div>
     <span class="quiz-compteur">${tIdx+1} / 10</span></div>
+    ${chronoQHTML('test')}
     <div class="grande-question">${tCourante} × ${n} = ?</div>
     <div class="reponse-input">
       <input type="number" id="tt-rep" inputmode="numeric" autocomplete="off">
@@ -1624,12 +2240,25 @@ function questionTestTable(){
   const inp = document.getElementById('tt-rep');
   inp.focus();
   inp.addEventListener('keydown', e=>{ if(e.key==='Enter') validerTestTable(); });
+  lancerCompteQ('test', tempsEcouleTest);
+}
+function tempsEcouleTest(){
+  const inp = document.getElementById('tt-rep');
+  if(!inp || inp.disabled) return;
+  inp.disabled = true;
+  const n = tOrdre[tIdx], bon = tCourante*n;
+  tDetails.push({n, bon, ok:false});
+  const fb = document.getElementById('tt-fb');
+  fb.innerHTML = '⏱ <b>Temps écoulé !</b> '+tCourante+' × '+n+' = <b>'+bon+'</b>';
+  fb.classList.add('visible');
+  setTimeout(()=>{ tIdx++; tIdx<10 ? questionTestTable() : finTable('test'); }, 1900);
 }
 function validerTestTable(){
   const inp = document.getElementById('tt-rep');
   if(inp.disabled) return;
   const val = parseInt(inp.value,10);
   if(isNaN(val)){ inp.focus(); return; }
+  stopCompteQ();
   const n = tOrdre[tIdx], bon = tCourante*n, ok = val===bon;
   if(ok) tScore++;
   tDetails.push({n, bon, ok});
@@ -1647,139 +2276,319 @@ const MOTS_NOMBRES = (()=>{
   const d={'vingt':20,'trente':30,'quarante':40,'cinquante':50,'soixante':60};
   return {u,d};
 })();
-function motsVersNombre(txt){
-  // 1) chiffres directs
-  const m = txt.match(/\d+/); if(m) return parseInt(m[0],10);
-  // 2) mots français (0 à 100)
-  let t = txt.toLowerCase().replace(/[-']/g,' ').replace(/\s+/g,' ').trim();
-  if(/\bcent\b/.test(t)) return 100;
-  t = t.replace(/\bet\b/g,' ');
-  const mots = t.split(' ').filter(Boolean);
+function extraireNombres(txt){
+  // Renvoie TOUS les nombres entendus, dans l'ordre (« 4 fois 8 32 » → [4, 8, 32])
+  const nums=[]; let cur=null;
   const {u,d} = MOTS_NOMBRES;
-  let total=null;
+  const flush=()=>{ if(cur!==null){ nums.push(cur); cur=null; } };
+  const mots = txt.toLowerCase().replace(/[-',.!?]/g,' ').split(/\s+/).filter(Boolean);
   for(let i=0;i<mots.length;i++){
     const w=mots[i];
-    if(w==='quatre' && (mots[i+1]==='vingt'||mots[i+1]==='vingts')){ total=(total||0)+80; i++; continue; }
-    if(w==='soixante' && mots[i+1]==='dix'){ total=(total||0)+70; i++; continue; }
-    if(w in d){ total=(total||0)+d[w]; continue; }
-    if(w in u){ total=(total||0)+u[w]; continue; }
-    if(w==='dix' && total!==null){ total+=10; continue; }
+    if(/^\d+$/.test(w)){ flush(); nums.push(parseInt(w,10)); continue; }
+    if(w==='cent'||w==='cents'){ flush(); nums.push(100); continue; }
+    if(w==='quatre' && (mots[i+1]==='vingt'||mots[i+1]==='vingts')){ flush(); cur=80; i++; continue; }
+    if(w==='soixante' && mots[i+1]==='dix'){ flush(); cur=70; i++; continue; }
+    if(w in d){ flush(); cur=d[w]; continue; }
+    if(w==='et') continue;
+    if(w in u){
+      if(cur!==null && (cur===80||cur===70||cur%10===0) && u[w]<20 && cur+u[w]<=100){ cur+=u[w]; }
+      else { flush(); cur=u[w]; }
+      continue;
+    }
+    flush(); // tout autre mot sépare les nombres
   }
-  return total;
+  flush();
+  return nums;
+}
+function motsVersNombre(txt){ const n=extraireNombres(txt); return n.length?n[0]:null; }
+function reponseEntendue(txt, bon){
+  // La bonne réponse quelque part → validé ; sinon on prend le DERNIER nombre (on récite « 4 fois 8, 32 »)
+  const n = extraireNombres(txt);
+  if(!n.length) return null;
+  return n.includes(bon) ? bon : n[n.length-1];
+}
+let fluxMicro=null, enPause=false, audioCtx=null, vuAnim=null, dernierSonTs=0, modeLocal=false;
+const SUR_ANDROID_FILE = /Android/i.test(navigator.userAgent) && location.protocol==='file:';
+let avertiAndroid=false;
+function avertirAndroidFile(retryJS){
+  // Sur Android, la reconnaissance vocale de Chrome refuse souvent les pages en file://.
+  // On prévient clairement AVANT, au lieu de laisser l'élève devant un micro muet.
+  if(!SUR_ANDROID_FILE || avertiAndroid) return false;
+  const m=document.getElementById('modale');
+  m.innerHTML=`<div class="emoji">📱</div><h2>Tablette détectée</h2>
+    <p style="text-align:left;">Sur tablette Android, Chrome <b>bloque souvent le micro</b> pour les fichiers ouverts directement (adresse commençant par <i>file://</i>).</p>
+    <p style="text-align:left;">✅ <b>La solution fiable :</b> ouvrir le cahier depuis une <b>adresse en ligne (https)</b> — par exemple hébergé gratuitement sur GitHub Pages. Là, le micro fonctionne parfaitement et l\u2019autorisation est mémorisée.</p>
+    <p style="text-align:left;">Tu peux quand même essayer ici : ça fonctionne sur certaines tablettes.</p>
+    <button class="btn-principal" onclick="avertiAndroid=true;document.getElementById('voile').classList.remove('visible');${retryJS}">Essayer quand même 🎤</button>
+    <button class="btn-secondaire" onclick="document.getElementById('voile').classList.remove('visible')" style="margin-top:10px;">Plus tard</button>`;
+  document.getElementById('voile').classList.add('visible');
+  return true;
+}
+let tPaires=[], modeVoix='table'; // 'table' = une table entière, 'defi' = récitation du jour (mixte)
+function demarrerVumetre(){
+  if(!fluxMicro) return; // pas de flux direct (Android file://) : pas de vumètre, tout le reste fonctionne
+  // Retour visuel INSTANTANÉ : la bulle micro réagit au volume de la voix,
+  // indépendamment de la reconnaissance (qui, elle, a de la latence réseau).
+  try{
+    audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    const src = audioCtx.createMediaStreamSource(fluxMicro);
+    const ana = audioCtx.createAnalyser();
+    ana.fftSize = 512;
+    src.connect(ana);
+    const buf = new Uint8Array(ana.frequencyBinCount);
+    const boucle = ()=>{
+      if(!audioCtx) return;
+      ana.getByteTimeDomainData(buf);
+      let somme=0;
+      for(let i=0;i<buf.length;i++){ const v=(buf[i]-128)/128; somme+=v*v; }
+      const rms = Math.sqrt(somme/buf.length);
+      const bulle = document.getElementById('micro-bulle');
+      if(bulle){
+        const amp = Math.min(rms*4, 1);
+        bulle.style.transform = 'scale('+(1+amp*0.35)+')';
+        bulle.style.boxShadow = '0 0 0 '+(amp*26)+'px rgba(92,184,92,'+(amp*0.28)+')';
+        bulle.classList.toggle('parle', rms>0.045);
+      }
+      if(rms>0.045){
+        if(Date.now()-dernierSonTs>600) onsetTs=Date.now(); // début d'une prise de parole
+        dernierSonTs = Date.now();
+      }
+      vuAnim = requestAnimationFrame(boucle);
+    };
+    boucle();
+  }catch(e){}
+}
+function arreterVumetre(){
+  cancelAnimationFrame(vuAnim); vuAnim=null;
+  if(audioCtx){ try{ audioCtx.close(); }catch(e){} audioCtx=null; }
+}
+async function verifierRecoLocale(){
+  // Chrome récent : reconnaissance SUR L'APPAREIL (sans serveur → quasi aucune latence)
+  try{
+    if(typeof SRClass.available !== 'function') return 'indisponible';
+    const st = await SRClass.available({langs:['fr-FR'], processLocally:true});
+    return st; // 'available' | 'downloadable' | 'downloading' | 'unavailable'
+  }catch(e){ return 'indisponible'; }
+}
+async function installerRecoLocale(btn){
+  btn.disabled=true; btn.textContent='Téléchargement…';
+  try{
+    const ok = await SRClass.install({langs:['fr-FR'], processLocally:true});
+    if(ok){ modeLocal=true; btn.textContent='⚡ Reconnaissance locale installée !'; }
+    else btn.textContent='Installation impossible';
+  }catch(e){ btn.textContent='Installation impossible'; }
 }
 function lancerVoixTable(t){
   if(!SRClass){ alert('La reconnaissance vocale n\u2019est pas disponible sur ce navigateur. Essaie avec Chrome, Edge ou Safari !'); return; }
-  tCourante=t; tScore=0; tIdx=0; tEssais=0; tDetails=[]; voixActive=true;
-  tOrdre=[1,2,3,4,5,6,7,8,9,10]; // récitation dans l'ordre, comme la vraie table
+  if(avertirAndroidFile('lancerVoixTable('+t+')')) return;
+  tCourante=t; tScore=0; tIdx=0; tDetails=[]; voixActive=true; modeVoix='table';
+  TEMPS_QUESTION.voix = 15;
+  tPaires=[1,2,3,4,5,6,7,8,9,10].map(n=>[t,n]); // récitation dans l'ordre, comme la vraie table
   document.getElementById('tj-titre').textContent = 'Je récite la table de '+t+' 🎤';
   montrerVue('vue-table-jeu');
   document.getElementById('tj-contenu').innerHTML = `
     <div class="micro-zone">
       <div class="micro-bulle">🎤</div>
-      <div class="micro-statut">Vérification du micro…</div>
+      <div class="micro-statut">Préparation du micro… (autorise-le si on te le demande)</div>
     </div>`;
-  verifierMicro().then(ok=>{ if(ok && voixActive) questionVoix(); });
+  verifierMicro().then(async ok=>{
+    if(!voixActive) return;
+    const dispo = await verifierRecoLocale();
+    modeLocal = (dispo==='available');
+    demarrerVumetre();
+    questionVoix();
+    demarrerReconnaissance();
+  });
 }
-async function verifierMicro(){
-  const statut = ()=>document.querySelector('.micro-statut');
-  // Dans une iframe (aperçu intégré), le micro est bloqué par la page hôte
-  const enIframe = (()=>{ try{ return window.self!==window.top; }catch(e){ return true; } })();
+async function verifierMicro(retryJS){
+  // getUserMedia est un BONUS (permission gardée ouverte sur PC + vumètre).
+  // Sur Android en file:// ou dans certaines visionneuses, il est indisponible :
+  // on continue sans lui — la reconnaissance vocale gère le micro elle-même.
+  fluxMicro = null;
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return true;
   try{
-    const flux = await navigator.mediaDevices.getUserMedia({audio:true});
-    flux.getTracks().forEach(tr=>tr.stop()); // on voulait juste la permission
-    return true;
-  }catch(err){
-    voixActive=false;
-    let msg;
-    if(enIframe){
-      msg = '⚠️ <b>L\u2019aperçu intégré bloque le micro.</b><br>Télécharge le fichier et ouvre-le directement dans Chrome ou Edge : là, le micro fonctionnera. 👍';
-    } else if(err.name==='NotAllowedError' || err.name==='SecurityError'){
-      msg = '⚠️ <b>Le micro a été refusé.</b><br>Clique sur l\u2019icône 🔒 (ou 🎤) à gauche de la barre d\u2019adresse → Autorisations → <b>Micro : Autoriser</b>, puis recharge la page.';
-    } else if(err.name==='NotFoundError'){
-      msg = '⚠️ <b>Aucun micro détecté.</b><br>Branche un micro ou un casque, puis réessaie.';
-    } else {
-      msg = '⚠️ Impossible d\u2019accéder au micro ('+err.name+').<br>Essaie dans Chrome ou Edge, en dehors de tout aperçu intégré.';
-    }
-    if(statut()) statut().innerHTML = msg+'<br><button class="btn-secondaire" style="margin-top:10px;padding:8px 16px;" onclick="lancerVoixTable('+tCourante+')">Réessayer 🎤</button>';
-    return false;
-  }
+    fluxMicro = await Promise.race([
+      navigator.mediaDevices.getUserMedia({audio:true}),
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')), 4000))
+    ]);
+  }catch(err){ fluxMicro = null; }
+  return true;
 }
 function questionVoix(){
-  const n = tOrdre[tIdx];
+  // Récitation LIBRE : toutes les lignes s'affichent, l'élève récite à son rythme,
+  // l'app coche les lignes au fil de ce qu'elle entend — aucune attente.
+  ligneIdx=0; tScore=0; tDetails=[];
+  const lignes = tPaires.map(([t,n],i)=>`<div class="ligne-recit${i===0?' active':''}" id="lr-${i}">
+    <span class="lr-op">${t} × ${n} =</span> <span class="lr-rep" id="lr-rep-${i}">…</span></div>`).join('');
   document.getElementById('tj-contenu').innerHTML = `
-    <div class="quiz-barre"><div class="quiz-prog"><i style="width:${tIdx*10}%"></i></div>
-    <span class="quiz-compteur">${tIdx+1} / 10</span></div>
-    <div class="grande-question">${tCourante} × ${n} = ?</div>
+    <div class="quiz-barre"><div class="quiz-prog"><i id="recit-prog" style="width:0%"></i></div>
+    <span class="quiz-compteur" id="recit-compte">0 / 10</span></div>
+    ${chronoQHTML('voix')}
+    <div class="recit-grid">${lignes}</div>
     <div class="micro-zone">
-      <div class="micro-bulle" id="micro-bulle">🎤</div>
-      <div class="micro-statut" id="micro-statut">Prépare-toi…</div>
+      <div class="micro-bulle ecoute" id="micro-bulle">🎤</div>
+      <div class="micro-statut" id="micro-statut">${modeVoix==='defi'?'Récite chaque ligne dans l\u2019ordre — '+TEMPS_QUESTION.voix+' s par ligne au palier '+etat.quotidien.palier+' !':'Récite ta table à ton rythme (« '+tCourante+' fois 1, '+tCourante+'… ») — je coche au fur et à mesure !'}</div>
+      <div class="mode-reco${modeLocal?' locale':''}">${modeLocal?'⚡ reconnaissance locale (rapide)':'☁️ reconnaissance en ligne'} <span id="latence-tag"></span></div>
       <div class="entendu" id="micro-entendu"></div>
-    </div>
-    <div class="explication" id="tv-fb" style="max-width:420px;margin:0 auto;"></div>`;
-  setTimeout(ecouter, 400);
+    </div>`;
+  lancerCompteQ('voix', tempsEcouleVoix);
 }
-function ecouter(){
+function produitAttendu(){ const p=tPaires[ligneIdx]; return p[0]*p[1]; }
+function consommerNombres(nums){
+  // Coche autant de lignes que possible dans l'ordre de la table
+  let coche=false;
+  while(voixActive && ligneIdx<10 && nums.includes(produitAttendu())){
+    validerLigne(true); coche=true;
+  }
+  return coche;
+}
+function validerLigne(ok){
+  const [t,n]=tPaires[ligneIdx], bon=t*n;
+  tDetails.push({t,n,bon,ok});
+  if(ok) tScore++;
+  const el=document.getElementById('lr-'+ligneIdx), rep=document.getElementById('lr-rep-'+ligneIdx);
+  if(el){ el.classList.remove('active'); el.classList.add(ok?'ok':'rate'); }
+  if(rep) rep.textContent=bon;
+  ligneIdx++;
+  const c=document.getElementById('recit-compte'), pr=document.getElementById('recit-prog');
+  if(c) c.textContent=ligneIdx+' / 10';
+  if(pr) pr.style.width=(ligneIdx*10)+'%';
+  if(ligneIdx>=10){ stopCompteQ(); setTimeout(()=>{ if(voixActive){ modeVoix==='defi' ? finDefiQuotidien() : finTable('voix'); } }, 700); return; }
+  const suiv=document.getElementById('lr-'+ligneIdx);
+  if(suiv) suiv.classList.add('active');
+  lancerCompteQ('voix', tempsEcouleVoix); // nouveau temps pour la ligne suivante
+}
+function tempsEcouleVoix(){
+  if(!voixActive || ligneIdx>=10) return;
+  validerLigne(false); // ligne non récitée dans les temps → la réponse s'affiche en rouge
+}
+function demarrerReconnaissance(){
+  // UNE SEULE session continue pour toute la table : aucune redemande de micro.
   if(!voixActive) return;
-  stopVoix(false);
   reco = new SRClass();
-  reco.lang='fr-FR'; reco.interimResults=false; reco.maxAlternatives=4; reco.continuous=false;
-  const bulle=document.getElementById('micro-bulle'), statut=document.getElementById('micro-statut');
-  bulle.classList.add('ecoute');
-  statut.textContent='Je t\u2019écoute… dis la réponse à voix haute !';
+  reco.lang='fr-FR'; reco.interimResults=true; reco.maxAlternatives=4; reco.continuous=true;
+  if(modeLocal){ try{ reco.processLocally=true; }catch(e){ modeLocal=false; } }
   reco.onresult = e=>{
-    const alts=[...e.results[0]].map(r=>r.transcript);
-    document.getElementById('micro-entendu').textContent='« '+alts[0]+' »';
-    let val=null;
-    for(const a of alts){ val=motsVersNombre(a); if(val!==null) break; }
-    traiterVoix(val);
+    if(!voixActive || ligneIdx>=10) return;
+    // Mesure de latence : parole détectée (vumètre) → premier résultat reçu
+    if(onsetTs){
+      const l=Date.now()-onsetTs; onsetTs=0;
+      const tag=document.getElementById('latence-tag');
+      if(tag) tag.textContent='· latence ~'+(l/1000).toFixed(1).replace('.',',')+' s';
+    }
+    let final='', interim='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const r=e.results[i];
+      if(r.isFinal) final+=r[0].transcript+' '; else interim+=r[0].transcript+' ';
+    }
+    const affiche=(interim||final).trim();
+    const ent=document.getElementById('micro-entendu');
+    if(affiche && ent) ent.textContent='« '+(affiche.length>48?'…'+affiche.slice(-48):affiche)+' »';
+    // On coche depuis l'interim (le plus frais) ET depuis le final (le plus fiable)
+    if(interim) consommerNombres(extraireNombres(interim));
+    if(final) consommerNombres(extraireNombres(final));
   };
   reco.onerror = e=>{
-    bulle.classList.remove('ecoute');
+    const statut=document.getElementById('micro-statut');
     if(e.error==='not-allowed' || e.error==='service-not-allowed'){
-      statut.innerHTML='⚠️ La reconnaissance vocale est bloquée ici.<br>Ouvre le fichier <b>directement dans Chrome ou Edge</b> (pas dans un aperçu intégré) et vérifie que tu es connectée à Internet.';
-      voixActive=false; return;
-    }
-    if(e.error==='network'){
-      statut.innerHTML='⚠️ La reconnaissance vocale a besoin d\u2019Internet.<br>Vérifie ta connexion puis <button class="btn-secondaire" style="padding:6px 14px;font-size:.85rem;" onclick="ecouter()">réessaie 🎤</button>';
+      voixActive=false; stopCompteQ();
+      if(statut) statut.innerHTML='⚠️ La reconnaissance vocale est bloquée ici.<br><b>Sur PC :</b> ouvre le fichier directement dans Chrome ou Edge (pas dans un aperçu intégré).<br><b>Sur tablette/téléphone :</b> Chrome → ⋮ → Paramètres → Paramètres des sites → <b>Micro : autorisé</b>, et vérifie que l\u2019application <b>Google</b> a la permission Micro dans les réglages Android. La solution la plus fiable : mettre le fichier en ligne (https) et l\u2019ouvrir depuis son adresse.';
       return;
     }
-    statut.innerHTML='Je n\u2019ai rien entendu… <button class="btn-secondaire" style="padding:6px 14px;font-size:.85rem;" onclick="ecouter()">Réessayer 🎤</button>';
+    if(e.error==='network'){
+      stopCompteQ();
+      if(statut) statut.innerHTML='⚠️ La reconnaissance vocale a besoin d\u2019Internet.<br>Vérifie ta connexion puis <button class="btn-secondaire" style="padding:6px 14px;font-size:.85rem;" onclick="questionVoix();demarrerReconnaissance()">réessaie 🎤</button>';
+      return;
+    }
   };
-  reco.onend = ()=>bulle.classList.remove('ecoute');
+  reco.onend = ()=>{
+    if(voixActive){ setTimeout(()=>{ if(voixActive && reco){ try{ reco.start(); }catch(err){} } }, 10); }
+  };
   try{ reco.start(); }catch(err){}
 }
-function traiterVoix(val){
-  const n=tOrdre[tIdx], bon=tCourante*n;
-  const fb=document.getElementById('tv-fb'), statut=document.getElementById('micro-statut');
-  if(val===null){
-    statut.innerHTML='Hmm, je n\u2019ai pas compris de nombre… <button class="btn-secondaire" style="padding:6px 14px;font-size:.85rem;" onclick="ecouter()">Réessayer 🎤</button>';
-    return;
-  }
-  if(val===bon){
-    tScore++; tDetails.push({n,bon,ok:true}); tEssais=0;
-    fb.innerHTML='✅ <b>Bravo !</b> '+tCourante+' × '+n+' = '+bon;
-    fb.classList.add('visible');
-    setTimeout(suivantVoix, 900);
-  } else {
-    tEssais++;
-    if(tEssais<2){
-      statut.innerHTML='❌ Pas ça… encore un essai ! <button class="btn-secondaire" style="padding:6px 14px;font-size:.85rem;" onclick="ecouter()">Je retente 🎤</button>';
-    } else {
-      tDetails.push({n,bon,ok:false}); tEssais=0;
-      fb.innerHTML='❌ La bonne réponse était : '+tCourante+' × '+n+' = <b>'+bon+'</b>. Répète-la dans ta tête !';
-      fb.classList.add('visible');
-      setTimeout(suivantVoix, 2200);
-    }
-  }
-}
-function suivantVoix(){
-  tIdx++;
-  if(tIdx<10) questionVoix();
-  else { voixActive=false; finTable('voix'); }
-}
 function stopVoix(desactiver=true){
+  stopCompteQ();
+  arreterVumetre();
   if(reco){ try{ reco.onresult=null; reco.onend=null; reco.onerror=null; reco.abort(); }catch(e){} reco=null; }
+  if(fluxMicro){ try{ fluxMicro.getTracks().forEach(tr=>tr.stop()); }catch(e){} fluxMicro=null; }
   if(desactiver) voixActive=false;
+}
+
+/* ── LA RÉCITATION DU JOUR 🔥 ── */
+function lancerDefiQuotidien(){
+  if(!SRClass){ alert('La reconnaissance vocale n\u2019est pas disponible sur ce navigateur. Essaie avec Chrome, Edge ou Safari !'); return; }
+  if(avertirAndroidFile('lancerDefiQuotidien()')) return;
+  // 10 multiplications mélangées de toutes les tables, produits tous différents
+  const cands=[];
+  for(let t=2;t<=9;t++) for(let n=1;n<=10;n++) cands.push([t,n]);
+  cands.sort(()=>Math.random()-0.5);
+  const produits=new Set(); tPaires=[];
+  for(const [t,n] of cands){
+    if(tPaires.length>=10) break;
+    if(!produits.has(t*n)){ produits.add(t*n); tPaires.push([t,n]); }
+  }
+  tScore=0; tDetails=[]; voixActive=true; modeVoix='defi';
+  TEMPS_QUESTION.voix = tempsDuPalier(etat.quotidien.palier);
+  document.getElementById('tj-titre').textContent = '🔥 Récitation du jour — palier '+etat.quotidien.palier;
+  montrerVue('vue-table-jeu');
+  document.getElementById('tj-contenu').innerHTML = `
+    <div class="micro-zone">
+      <div class="micro-bulle">🎤</div>
+      <div class="micro-statut">Préparation du micro… (autorise-le si on te le demande)</div>
+    </div>`;
+  verifierMicro().then(async ok=>{
+    if(!voixActive) return;
+    const dispo = await verifierRecoLocale();
+    modeLocal = (dispo==='available');
+    demarrerVumetre();
+    questionVoix();
+    demarrerReconnaissance();
+  });
+}
+function finDefiQuotidien(){
+  stopVoix();
+  const pct = tScore*10, valide = pct>=80;
+  const dejaFait = defiFaitAujourdhui();
+  const q = etat.quotidien;
+  let gainXP=0, palierMonte=false, ancienTemps=TEMPS_QUESTION.voix;
+  if(valide){
+    if(!dejaFait){
+      q.serie = (q.dernier===hier()) ? q.serie+1 : 1;
+      q.dernier = aujourdHui();
+      if(tempsDuPalier(q.palier)>PALIER_TEMPS_MIN){ q.palier++; palierMonte=true; }
+      gainXP = 30 + Math.min(q.serie,10)*2;
+    } else {
+      gainXP = 10; // entraînement bonus le même jour
+    }
+    etat.xp += gainXP;
+  }
+  sauver();
+  const nouveauxBadges = BADGES.filter(b=>!etat.badges.includes(b.id) && b.test(etat));
+  nouveauxBadges.forEach(b=>etat.badges.push(b.id));
+  sauver();
+  const recap = tDetails.map(x=>`<span class="${x.ok?'ok':'raté'}">${x.t} × ${x.n} = ${x.bon}</span>`).join('');
+  const m = document.getElementById('modale');
+  let html = valide
+    ? `<div class="emoji">🔥</div><h2>Récitation du jour réussie !</h2>`
+    : `<div class="emoji">💪</div><h2>Presque !</h2>`;
+  html += `<div class="etoiles">${pct===100?'⭐⭐⭐':pct>=90?'⭐⭐':valide?'⭐':'✩'}</div>
+    <p><b>${tScore}/10</b> récitées (${ancienTemps} s par ligne)</p>
+    <div class="recap-table">${recap}</div>`;
+  if(valide && !dejaFait){
+    html += `<p>🔥 Série : <b>${q.serie} jour${q.serie>1?'s':''} d\u2019affilée !</b></p>`;
+    if(palierMonte) html += `<p>📈 <b>Palier ${q.palier} débloqué</b> : demain, ${tempsDuPalier(q.palier)} s par ligne. Ça se corse !</p>`;
+    else html += `<p>🏔️ Tu es au palier maximum : ${PALIER_TEMPS_MIN} s par ligne. Championne !</p>`;
+  }
+  if(valide && dejaFait) html += `<p>Défi du jour déjà validé — bel entraînement en plus ! 💪</p>`;
+  if(gainXP) html += `<p class="gain">+ ${gainXP} XP ☀️</p>`;
+  nouveauxBadges.forEach(b=>{ html += `<p>🏆 Nouveau badge : <b>${b.ico} ${b.nom}</b> !</p>`; });
+  html += valide
+    ? `<button class="btn-principal" onclick="fermerModaleTable()">Continuer</button>`
+    : `<p>Il faut 8/10 pour valider la récitation du jour. Retente, la série t\u2019attend ! 🔥</p>
+       <button class="btn-principal" onclick="document.getElementById('voile').classList.remove('visible');lancerDefiQuotidien()">Réessayer 🔄</button>
+       <button class="btn-secondaire" onclick="fermerModaleTable()" style="margin-top:10px;">Plus tard</button>`;
+  m.innerHTML = html;
+  document.getElementById('voile').classList.add('visible');
 }
 
 /* ── Fin d'une table ── */
@@ -1789,9 +2598,11 @@ function finTable(mode){
   const d = etat.tables[tCourante] || (etat.tables[tCourante]={});
   const maitriseeAvant = tableMaitrisee(tCourante);
   const record = d[mode]==null || pct>d[mode];
+  const sansTimeout = tDetails.every(x=>x.ok) && tScore===10;
+  const bonusEclair = valide && sansTimeout ? 10 : 0; // 10/10 dans les temps
   let gainXP = 0;
   if(valide){
-    gainXP = (d[mode]>=80 ? 15 : 45); // moins d'XP si déjà validée
+    gainXP = (d[mode]>=80 ? 15 : 45) + bonusEclair; // moins d'XP si déjà validée
     etat.xp += gainXP;
   }
   if(record) d[mode]=pct;
@@ -1807,7 +2618,7 @@ function finTable(mode){
   html += `<div class="etoiles">${pct===100?'⭐⭐⭐':pct>=90?'⭐⭐':valide?'⭐':'✩'}</div>
     <p><b>${tScore}/10</b> ${mode==='voix'?'récitées':'bonnes réponses'} pour la table de ${tCourante}${record&&d[mode]!=null?' — nouveau record !':''}</p>
     <div class="recap-table">${recap}</div>`;
-  if(gainXP) html += `<p class="gain">+ ${gainXP} XP ☀️</p>`;
+  if(gainXP) html += `<p class="gain">+ ${gainXP} XP ☀️${bonusEclair?' <small>(dont +'+bonusEclair+' bonus éclair ⚡ : tout bon dans les temps !)</small>':''}</p>`;
   if(!maitriseeAvant && tableMaitrisee(tCourante))
     html += `<div class="tampon-anim"><span>🏆</span>Table de ${tCourante}<br>maîtrisée !</div>
       <p><b>Test écrit ✏️ et récitation 🎤 réussis !</b></p>`;
