@@ -475,7 +475,7 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
     <div id="semaines"></div>
     <h3 class="badges-titre">🏆 Mes badges</h3>
     <div class="badges" id="badges"></div>
-    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v20 ·</b><br>
+    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v21 ·</b><br>
     <button onclick="toutEffacer()">Recommencer le cahier à zéro</button></p>
   </section>
 
@@ -2336,7 +2336,7 @@ function ouvrirTables(){
     grid.appendChild(card);
   }
   document.getElementById('micro-note').innerHTML = SRClass
-    ? 'v20 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
+    ? 'v21 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
     : '⚠️ La récitation vocale a besoin de <b>Chrome</b>, <b>Edge</b> ou <b>Safari</b> — sur ce navigateur, seul le test écrit est disponible.';
   if(SRClass) verifierRecoLocale().then(st=>{
     const z=document.getElementById('zone-reco-locale');
@@ -2501,21 +2501,27 @@ function chargerScript(url){
 }
 async function chargerMoteurVosk(statutCb){
   if(!window.Vosk){
-    statutCb('Chargement du moteur vocal…');
-    await chargerScript('https://cdn.jsdelivr.net/npm/vosk-browser@0.0.5/dist/vosk.js');
+    statutCb('Étape 1/3 — chargement du moteur vocal…');
+    try{ await chargerScript('https://cdn.jsdelivr.net/npm/vosk-browser@0.0.5/dist/vosk.js'); }
+    catch(e){ throw new Error('la bibliothèque du moteur n\u2019a pas pu être chargée (réseau ?)'); }
   }
   if(!voskEtat.model){
-    statutCb('Téléchargement du modèle de français (~40 Mo, une seule fois — il sera gardé en mémoire)…');
     const urls=['modele-fr.tar.gz',
       'https://ccoreilly.github.io/vosk-browser/models/vosk-model-small-fr-pguyot-0.3.tar.gz',
       'https://ccoreilly.github.io/vosk-browser/models/vosk-model-small-fr-0.22.tar.gz'];
     let derniereErreur=null;
-    for(const u of urls){
-      try{ voskEtat.model = await Vosk.createModel(u); derniereErreur=null; break; }
-      catch(e){ derniereErreur=e; }
+    for(let i=0;i<urls.length && !voskEtat.model;i++){
+      const depart=Date.now();
+      const batt=setInterval(()=>{
+        statutCb('Étape 2/3 — téléchargement et préparation du modèle de français ('+(i+1)+'/'+urls.length+')… '+Math.round((Date.now()-depart)/1000)+' s (jusqu\u2019à 2-3 min la première fois, ~40 Mo)');
+      },1000);
+      try{ voskEtat.model = await Vosk.createModel(urls[i]); derniereErreur=null; }
+      catch(e){ derniereErreur=e; console.error('Vosk modèle',urls[i],e); }
+      clearInterval(batt);
     }
-    if(!voskEtat.model) throw derniereErreur || new Error('modèle introuvable');
+    if(!voskEtat.model) throw new Error('le modèle n\u2019a pas pu être chargé — '+(derniereErreur&&(derniereErreur.message||derniereErreur)||'raison inconnue')+'. Mémoire de la tablette insuffisante ou réseau coupé ?');
   }
+  statutCb('Étape 3/3 — démarrage du micro…');
 }
 async function demarrerVosk(onTexte, avecGrammaire){
   arreterVosk();
@@ -2571,7 +2577,8 @@ async function activerVoskRecitation(){
     majSt('🚀 Micro nouvelle génération actif — récite, tout se passe dans la page !');
     if(btn) btn.style.display='none';
   }catch(e){
-    majSt('⚠️ Impossible de démarrer le moteur ('+(e&&e.message||e)+'). Vérifie ta connexion et réessaie.');
+    console.error('Vosk récitation', e);
+    majSt('⚠️ Le moteur n\u2019a pas démarré : '+(e&&e.message||e)+' — Réessaie, ou utilise le champ 🎤 du clavier ci-dessous en attendant.');
     if(btn) btn.disabled=false;
   }
 }
