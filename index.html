@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏖️ Cap sur la 5ème ! — Cahier de vacances interactif</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --papier:#FDF6E3;
+  --papier-fonce:#F3E8CC;
+  --encre:#2B3A55;
+  --ligne:#DCCFAC;
+  --corail:#FF6B6B;
+  --corail-fonce:#E14F4F;
+  --soleil:#FFC145;
+  --ocean:#2AA5D6;
+  --ocean-fonce:#1789BE;
+  --menthe:#3EC98B;
+  --lavande:#8B6FC7;
+  --lavande-fonce:#7358AB;
+  --blanc:#FFFFFF;
+  --ombre:rgba(43,58,85,.16);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{
+  font-family:'Nunito',sans-serif;
+  color:var(--encre);
+  background:linear-gradient(180deg,#8FD3EA 0%,#BEE7F2 32%,#FCE9C0 70%,#F9DCA0 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+  padding:26px 12px 60px;
+  line-height:1.55;
+}
+/* soleil décoratif */
+body::before{
+  content:'';position:fixed;top:-70px;right:-70px;width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle,#FFE9A8 0%,#FFD25E 55%,rgba(255,210,94,0) 72%);
+  filter:blur(2px);z-index:0;pointer-events:none;
+}
+.cahier{
+  position:relative;z-index:1;
+  max-width:860px;margin:0 auto;
+  background:var(--papier);
+  border-radius:18px;
+  box-shadow:0 24px 60px var(--ombre), 0 3px 0 #E8DCBB inset;
+  padding:54px 22px 34px;
+}
+/* ── Spirale Wire-O ── */
+.spirale{
+  position:absolute;top:-15px;left:0;right:0;
+  display:flex;justify-content:center;gap:14px;
+  pointer-events:none;
+}
+.spirale span{
+  width:13px;height:32px;border-radius:8px;
+  background:linear-gradient(180deg,#EFE6D2 0%,#B9A97F 30%,#8C7B52 55%,#CBBD97 100%);
+  box-shadow:0 2px 4px rgba(0,0,0,.28), inset 0 1px 1px rgba(255,255,255,.6);
+  position:relative;
+}
+.spirale span::after{
+  content:'';position:absolute;left:2px;right:2px;top:20px;height:9px;border-radius:5px;
+  background:var(--papier);box-shadow:inset 0 2px 3px rgba(0,0,0,.3);
+}
+/* ── En-tête ── */
+.entete{text-align:center;margin-bottom:22px;}
+.eyebrow{
+  display:inline-block;font-weight:800;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ocean-fonce);background:#E2F3FB;border:1.5px solid #BCE2F3;border-radius:99px;padding:4px 14px;
+}
+h1{
+  font-family:'Fredoka',sans-serif;font-weight:700;
+  font-size:clamp(2rem,6vw,3rem);letter-spacing:.5px;margin-top:8px;
+  color:var(--encre);
+}
+h1 .cinq{color:var(--corail);}
+.tagline{font-family:'Caveat',cursive;font-size:1.35rem;color:#7A6A45;transform:rotate(-1.2deg);}
+/* ── Stats ── */
+.stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:18px 0 8px;}
+.stat{
+  background:var(--blanc);border:2px solid var(--ligne);border-radius:14px;
+  padding:8px 16px;text-align:center;min-width:96px;
+  box-shadow:0 3px 0 var(--ligne);
+}
+.stat b{font-family:'Fredoka',sans-serif;font-size:1.3rem;display:block;line-height:1.1;}
+.stat small{font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#9A8B63;}
+.stat.xp b{color:var(--soleil);text-shadow:0 1px 0 #C79318;}
+.stat.niveau b{color:var(--ocean);}
+.stat.tampons b{color:var(--corail);}
+.xp-track{
+  max-width:420px;margin:10px auto 0;height:16px;background:#EFE4C4;border-radius:99px;
+  border:2px solid var(--ligne);overflow:hidden;position:relative;
+}
+.xp-fill{
+  height:100%;width:0%;border-radius:99px;
+  background:linear-gradient(90deg,var(--soleil),#FF9F45);
+  transition:width .6s cubic-bezier(.22,1,.36,1);
+}
+.xp-note{text-align:center;font-size:.75rem;font-weight:700;color:#9A8B63;margin-top:4px;}
+/* ── Progression matières ── */
+.matieres-prog{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0 26px;}
+.mat-card{background:var(--blanc);border-radius:14px;padding:12px 14px;border:2px solid var(--ligne);box-shadow:0 3px 0 var(--ligne);}
+.mat-card h3{font-family:'Fredoka',sans-serif;font-size:.95rem;display:flex;align-items:center;gap:6px;}
+.mat-track{height:10px;background:#F0E8CF;border-radius:99px;margin-top:8px;overflow:hidden;}
+.mat-fill{height:100%;border-radius:99px;transition:width .5s ease;}
+.mat-card small{font-size:.72rem;font-weight:700;color:#9A8B63;}
+.mat-maths .mat-fill{background:var(--ocean);}
+.mat-anglais .mat-fill{background:var(--corail);}
+.mat-francais .mat-fill{background:var(--lavande);}
+/* ── Semaines / jours ── */
+.semaine-label{
+  font-family:'Caveat',cursive;font-size:1.5rem;color:var(--encre);
+  margin:22px 4px 10px;display:flex;align-items:center;gap:10px;
+}
+.semaine-label::after{content:'';flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--ligne) 0 8px,transparent 8px 16px);}
+.jours-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;}
+.jour-card{
+  background:var(--blanc);border:2px solid var(--ligne);border-radius:16px;
+  padding:14px 12px 12px;cursor:pointer;position:relative;text-align:center;
+  box-shadow:0 4px 0 var(--ligne);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.jour-card:hover{transform:translateY(-3px);box-shadow:0 7px 0 var(--ligne);}
+.jour-card h4{font-family:'Fredoka',sans-serif;font-size:1.05rem;}
+.jour-card .theme{font-size:.7rem;font-weight:700;color:#9A8B63;min-height:2em;line-height:1.3;}
+.pastilles{display:flex;justify-content:center;gap:6px;margin-top:8px;}
+.pastille{width:12px;height:12px;border-radius:50%;border:2px solid;}
+.pastille.maths{border-color:var(--ocean);}   .pastille.maths.ok{background:var(--ocean);}
+.pastille.anglais{border-color:var(--corail);} .pastille.anglais.ok{background:var(--corail);}
+.pastille.francais{border-color:var(--lavande);} .pastille.francais.ok{background:var(--lavande);}
+.tampon{
+  position:absolute;top:-10px;right:-8px;width:52px;height:52px;border-radius:50%;
+  background:var(--corail);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:'Caveat',cursive;font-weight:700;font-size:.8rem;line-height:1;
+  border:2px dashed #fff;outline:3px solid var(--corail);
+  transform:rotate(12deg);box-shadow:0 4px 10px rgba(225,79,79,.4);
+}
+.tampon span{font-size:1.15rem;}
+/* ── Badges ── */
+.badges-titre{font-family:'Fredoka',sans-serif;font-size:1.1rem;margin:28px 4px 10px;}
+.badges{display:flex;flex-wrap:wrap;gap:10px;}
+.badge{
+  background:var(--blanc);border:2px solid var(--ligne);border-radius:14px;padding:8px 12px;
+  display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:800;
+  opacity:.38;filter:grayscale(1);
+}
+.badge.ok{opacity:1;filter:none;border-color:var(--soleil);box-shadow:0 3px 0 var(--soleil);}
+.badge .ico{font-size:1.3rem;}
+/* ── Vues ── */
+.vue{display:none;animation:pop .25s ease;}
+.vue.active{display:block;}
+@keyframes pop{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.btn-retour{
+  background:var(--blanc);border:2px solid var(--ligne);border-radius:99px;
+  font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;color:var(--encre);
+  padding:7px 16px;cursor:pointer;box-shadow:0 3px 0 var(--ligne);margin-bottom:16px;
+}
+.btn-retour:hover{transform:translateY(-1px);}
+/* ── Vue jour ── */
+.jour-entete{text-align:center;margin-bottom:18px;}
+.jour-entete h2{font-family:'Fredoka',sans-serif;font-size:1.7rem;}
+.jour-entete p{font-family:'Caveat',cursive;font-size:1.3rem;color:#7A6A45;}
+.missions{display:grid;gap:12px;max-width:560px;margin:0 auto;}
+.mission{
+  background:var(--blanc);border-radius:16px;padding:16px 18px;cursor:pointer;
+  display:flex;align-items:center;gap:14px;border:2px solid var(--ligne);
+  border-left-width:8px;box-shadow:0 4px 0 var(--ligne);
+  transition:transform .15s ease;
+}
+.mission:hover{transform:translateY(-2px);}
+.mission.maths{border-left-color:var(--ocean);}
+.mission.anglais{border-left-color:var(--corail);}
+.mission.francais{border-left-color:var(--lavande);}
+.mission .ico{font-size:1.9rem;}
+.mission h3{font-family:'Fredoka',sans-serif;font-size:1.02rem;}
+.mission small{font-size:.74rem;font-weight:700;color:#9A8B63;display:block;}
+.mission .etat{margin-left:auto;font-size:1.4rem;}
+/* ── Vue activité ── */
+.act-entete{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.chip{
+  font-size:.7rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;
+  border-radius:99px;padding:4px 12px;
+}
+.chip.maths{background:var(--ocean);} .chip.anglais{background:var(--corail);} .chip.francais{background:var(--lavande);}
+.act-entete h2{font-family:'Fredoka',sans-serif;font-size:1.35rem;flex:1 1 100%;}
+/* Leçon */
+.lecon{
+  background:var(--blanc);border:2px solid var(--ligne);border-radius:16px;
+  padding:18px 20px;margin-bottom:16px;
+  background-image:repeating-linear-gradient(180deg,transparent 0 27px,#F1E9D2 27px 28px);
+}
+.lecon h3{font-family:'Fredoka',sans-serif;font-size:1.02rem;margin:10px 0 4px;color:var(--ocean-fonce);}
+.lecon p{margin:4px 0;font-size:.92rem;}
+.lecon ul{margin:4px 0 4px 20px;font-size:.92rem;}
+.lecon li{margin:2px 0;}
+.lecon table{border-collapse:collapse;margin:8px 0;font-size:.85rem;background:#FFFDF6;}
+.lecon th,.lecon td{border:1.5px solid var(--ligne);padding:4px 10px;text-align:center;}
+.lecon th{background:var(--papier-fonce);font-weight:800;}
+.astuce{
+  background:#FFF6DC;border:2px dashed var(--soleil);border-radius:12px;
+  padding:10px 14px;margin:10px 0;font-size:.88rem;
+}
+.astuce b{color:#B07C0A;}
+mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
+.ex-ok{color:#1F9E63;font-weight:800;} .ex-non{color:var(--corail-fonce);font-weight:800;}
+.btn-principal{
+  display:block;margin:16px auto 4px;
+  background:linear-gradient(180deg,var(--corail),var(--corail-fonce));color:#fff;
+  font-family:'Fredoka',sans-serif;font-size:1.05rem;font-weight:600;letter-spacing:.4px;
+  border:none;border-radius:99px;padding:12px 34px;cursor:pointer;
+  box-shadow:0 5px 0 #B23A3A;transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn-principal:hover{transform:translateY(-2px);box-shadow:0 7px 0 #B23A3A;}
+.btn-principal:active{transform:translateY(2px);box-shadow:0 2px 0 #B23A3A;}
+.btn-secondaire{
+  display:inline-block;background:var(--blanc);border:2px solid var(--ligne);border-radius:99px;
+  font-weight:800;font-size:.85rem;padding:8px 18px;cursor:pointer;box-shadow:0 3px 0 var(--ligne);
+  font-family:'Nunito',sans-serif;color:var(--encre);
+}
+/* Quiz */
+.quiz-barre{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.quiz-prog{flex:1;height:10px;background:#EFE4C4;border-radius:99px;overflow:hidden;border:1.5px solid var(--ligne);}
+.quiz-prog i{display:block;height:100%;background:var(--menthe);width:0;transition:width .3s ease;}
+.quiz-compteur{font-weight:900;font-size:.8rem;color:#9A8B63;white-space:nowrap;}
+.question-carte{
+  background:var(--blanc);border:2px solid var(--ligne);border-radius:16px;padding:20px;
+  box-shadow:0 4px 0 var(--ligne);
+}
+.question-carte .qtxt{font-size:1.08rem;font-weight:800;margin-bottom:14px;}
+.btn-audio{
+  background:#FFE9EC;border:2px solid var(--corail);color:var(--corail-fonce);
+  border-radius:99px;font-size:1rem;padding:4px 12px;cursor:pointer;margin-left:8px;vertical-align:middle;
+}
+.choix{display:grid;gap:10px;}
+@media(min-width:560px){.choix.deux-col{grid-template-columns:1fr 1fr;}}
+.choix button{
+  background:var(--papier);border:2px solid var(--ligne);border-radius:12px;
+  font-family:'Nunito',sans-serif;font-weight:800;font-size:.98rem;color:var(--encre);
+  padding:12px 14px;cursor:pointer;text-align:left;transition:transform .1s ease;
+}
+.choix button:hover:not(:disabled){transform:translateY(-1px);border-color:var(--ocean);}
+.choix button.bon{background:#E4F8EE;border-color:var(--menthe);color:#157A4C;}
+.choix button.faux{background:#FDE6E6;border-color:var(--corail);color:var(--corail-fonce);}
+.choix button:disabled{cursor:default;}
+.explication{
+  margin-top:12px;background:#EEF7FD;border:2px solid #BCE2F3;border-radius:12px;
+  padding:10px 14px;font-size:.88rem;display:none;
+}
+.explication.visible{display:block;animation:pop .25s ease;}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px;font-weight:900;line-height:1.05;}
+.frac i{font-style:normal;border-bottom:2px solid currentColor;padding:0 4px;}
+.frac u{text-decoration:none;padding:0 4px;}
+/* Jeux */
+.jeu-hud{display:flex;justify-content:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
+.hud-item{background:var(--blanc);border:2px solid var(--ligne);border-radius:12px;padding:6px 16px;font-weight:900;box-shadow:0 3px 0 var(--ligne);}
+.hud-item b{font-family:'Fredoka',sans-serif;font-size:1.15rem;}
+.hud-item.temps b{color:var(--corail);}
+.hud-item.score b{color:var(--menthe);}
+.memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:520px;margin:0 auto;}
+.memo-carte{
+  aspect-ratio:3/2.4;border-radius:12px;cursor:pointer;perspective:600px;position:relative;
+}
+.memo-face{
+  position:absolute;inset:0;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.9rem;text-align:center;padding:6px;
+  backface-visibility:hidden;transition:transform .4s ease;border:2px solid var(--ligne);
+}
+.memo-dos{background:linear-gradient(135deg,var(--ocean),#5CC3E8);color:#fff;font-family:'Fredoka',sans-serif;font-size:1.4rem;}
+.memo-avant{background:var(--blanc);transform:rotateY(180deg);}
+.memo-carte.retournee .memo-dos{transform:rotateY(180deg);}
+.memo-carte.retournee .memo-avant{transform:rotateY(0);}
+.memo-carte.trouvee .memo-avant{background:#E4F8EE;border-color:var(--menthe);color:#157A4C;}
+.memo-carte .drapeau{font-size:.7rem;position:absolute;top:4px;left:6px;opacity:.7;}
+.grande-question{
+  text-align:center;font-family:'Fredoka',sans-serif;font-size:2rem;margin:10px 0 16px;
+  background:var(--blanc);border:2px solid var(--ligne);border-radius:16px;padding:22px;box-shadow:0 4px 0 var(--ligne);
+}
+.grande-question .phrase{font-family:'Nunito',sans-serif;font-size:1.15rem;font-weight:800;}
+.grande-question .trou{display:inline-block;min-width:64px;border-bottom:3px dashed var(--corail);color:var(--corail);}
+/* ── Modale résultat ── */
+.voile{
+  position:fixed;inset:0;background:rgba(43,58,85,.45);display:none;
+  align-items:center;justify-content:center;z-index:50;padding:16px;
+}
+.voile.visible{display:flex;}
+.modale{
+  background:var(--papier);border-radius:20px;padding:28px 26px;max-width:400px;width:100%;
+  text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.35);position:relative;animation:pop .3s ease;
+}
+.modale h2{font-family:'Fredoka',sans-serif;font-size:1.5rem;margin:6px 0;}
+.modale .emoji{font-size:3rem;}
+.modale p{font-size:.95rem;margin:6px 0;}
+.modale .gain{font-family:'Caveat',cursive;font-size:1.5rem;color:#B07C0A;}
+.etoiles{font-size:1.8rem;letter-spacing:4px;margin:4px 0;}
+.tampon-anim{
+  margin:10px auto;width:110px;height:110px;border-radius:50%;
+  border:3px dashed var(--corail);outline:5px solid var(--corail);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:var(--corail);font-family:'Caveat',cursive;font-weight:700;font-size:1.1rem;line-height:1.1;
+  transform:rotate(-10deg);animation:stamp .45s cubic-bezier(.2,1.6,.4,1);
+}
+.tampon-anim span{font-size:2rem;}
+@keyframes stamp{0%{transform:scale(2.4) rotate(-10deg);opacity:0;}100%{transform:scale(1) rotate(-10deg);opacity:1;}}
+.pied{
+  text-align:center;margin-top:34px;font-size:.75rem;color:#9A8B63;font-weight:700;
+}
+.pied button{background:none;border:none;color:#B99;text-decoration:underline;cursor:pointer;font-size:.72rem;font-family:'Nunito',sans-serif;}
+@media(max-width:520px){
+  .memory-grid{grid-template-columns:repeat(4,1fr);gap:7px;}
+  .memo-face{font-size:.72rem;}
+  .matieres-prog{grid-template-columns:1fr;}
+  .spirale{gap:9px;}
+  .spirale span:nth-child(n+17){display:none;}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;}
+}
+/* ── Coin des tables ── */
+.tables-banniere{display:flex;align-items:center;gap:14px;background:linear-gradient(120deg,#2AA5D6,#1B7FA8);color:#fff;border-radius:18px;padding:16px 18px;margin:18px 0 6px;cursor:pointer;box-shadow:0 6px 16px rgba(42,165,214,.35);transition:transform .15s;}
+.tables-banniere:hover{transform:translateY(-2px);}
+.tb-ico{font-size:2rem;background:rgba(255,255,255,.2);border-radius:12px;padding:8px 12px;}
+.tb-txt{flex:1;}
+.tb-txt h3{font-family:'Fredoka';font-size:1.15rem;margin:0;}
+.tb-txt p{margin:2px 0 0;font-size:.8rem;opacity:.9;}
+.tb-prog{text-align:center;background:rgba(255,255,255,.18);border-radius:12px;padding:6px 12px;line-height:1.1;}
+.tb-prog b{font-family:'Fredoka';font-size:1.2rem;display:block;}
+.tb-prog small{font-size:.6rem;opacity:.85;}
+.tb-fleche{font-size:1.4rem;font-weight:900;}
+.tables-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:16px;}
+.table-card{background:#fff;border:2px solid #E8DDBF;border-radius:16px;padding:16px;box-shadow:0 3px 10px rgba(90,74,32,.08);}
+.table-card.maitrisee{border-color:#5CB85C;background:linear-gradient(180deg,#F4FBF2,#fff);}
+.table-card h3{font-family:'Fredoka';font-size:1.3rem;margin:0 0 8px;color:#1B7FA8;display:flex;align-items:center;justify-content:space-between;}
+.table-card h3 .coupe{font-size:1.2rem;}
+.table-modes{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.table-modes button{border:2px solid #D8ECF5;background:#F3FAFD;border-radius:12px;padding:10px 6px;font-family:'Nunito';font-weight:800;font-size:.8rem;cursor:pointer;color:#1B7FA8;transition:all .15s;line-height:1.3;}
+.table-modes button:hover{background:#2AA5D6;color:#fff;border-color:#2AA5D6;}
+.table-modes button .score-mode{display:block;font-size:.68rem;font-weight:700;opacity:.75;}
+.table-modes button.reussi{border-color:#5CB85C;background:#EAF7EA;color:#3E8E3E;}
+.table-modes button.reussi:hover{background:#5CB85C;color:#fff;}
+.micro-zone{text-align:center;margin:16px 0;}
+.micro-bulle{width:110px;height:110px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:3rem;background:#F3FAFD;border:3px solid #D8ECF5;transition:all .2s;}
+.micro-bulle.ecoute{background:#FFE9E9;border-color:#FF6B6B;animation:pulseMicro 1.1s infinite;}
+@keyframes pulseMicro{0%{box-shadow:0 0 0 0 rgba(255,107,107,.45);}70%{box-shadow:0 0 0 22px rgba(255,107,107,0);}100%{box-shadow:0 0 0 0 rgba(255,107,107,0);}}
+.micro-statut{font-weight:800;color:#8A7A50;min-height:1.4em;font-size:.95rem;}
+.entendu{font-family:'Caveat',cursive;font-size:1.5rem;color:#1B7FA8;min-height:1.2em;}
+.reponse-input{display:flex;gap:10px;justify-content:center;margin-top:14px;}
+.reponse-input input{width:130px;font-family:'Fredoka';font-size:1.8rem;text-align:center;border:3px solid #D8ECF5;border-radius:14px;padding:8px;background:#fff;color:#2A2416;}
+.reponse-input input:focus{outline:none;border-color:#2AA5D6;}
+.recap-table{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;max-width:420px;margin:14px auto;font-weight:800;}
+.recap-table span{background:#F7F2E2;border-radius:10px;padding:6px 10px;text-align:center;}
+.recap-table span.ok{background:#EAF7EA;color:#3E8E3E;}
+.recap-table span.raté{background:#FBE9E9;color:#C0392B;}
+</style>
+</head>
+<body>
+<div class="cahier">
+  <div class="spirale" id="spirale"></div>
+
+  <header class="entete">
+    <span class="eyebrow">Cahier de vacances · de la 6ème à la 5ème</span>
+    <h1>Cap sur la <span class="cinq">5ᵉ</span> !</h1>
+    <p class="tagline">15 jours pour tout réviser en s'amusant ☀️</p>
+    <div class="stats">
+      <div class="stat xp"><b id="stat-xp">0</b><small>points XP</small></div>
+      <div class="stat niveau"><b id="stat-niveau">1</b><small>niveau</small></div>
+      <div class="stat tampons"><b id="stat-tampons">0/15</b><small>tampons</small></div>
+    </div>
+    <div class="xp-track"><div class="xp-fill" id="xp-fill"></div></div>
+    <p class="xp-note" id="xp-note"></p>
+  </header>
+
+  <!-- ═══════ VUE ACCUEIL ═══════ -->
+  <section class="vue active" id="vue-home">
+    <div class="matieres-prog">
+      <div class="mat-card mat-maths"><h3>📐 Maths</h3><div class="mat-track"><div class="mat-fill" id="prog-maths"></div></div><small id="prog-maths-txt">0/15</small></div>
+      <div class="mat-card mat-anglais"><h3>🇬🇧 Anglais</h3><div class="mat-track"><div class="mat-fill" id="prog-anglais"></div></div><small id="prog-anglais-txt">0/15</small></div>
+      <div class="mat-card mat-francais"><h3>📖 Français</h3><div class="mat-track"><div class="mat-fill" id="prog-francais"></div></div><small id="prog-francais-txt">0/15</small></div>
+    </div>
+    <div class="tables-banniere" onclick="ouvrirTables()">
+      <span class="tb-ico">✖️</span>
+      <div class="tb-txt"><h3>Le coin des tables</h3><p>Teste-toi par écrit ✏️ ou récite tes tables à voix haute 🎤</p></div>
+      <div class="tb-prog"><b id="tables-compteur">0/8</b><small>tables<br>maîtrisées</small></div>
+      <span class="tb-fleche">→</span>
+    </div>
+    <div id="semaines"></div>
+    <h3 class="badges-titre">🏆 Mes badges</h3>
+    <div class="badges" id="badges"></div>
+    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil.<br>
+    <button onclick="toutEffacer()">Recommencer le cahier à zéro</button></p>
+  </section>
+
+  <!-- ═══════ VUE JOUR ═══════ -->
+  <section class="vue" id="vue-jour">
+    <button class="btn-retour" onclick="montrerVue('vue-home')">← Retour au cahier</button>
+    <div class="jour-entete"><h2 id="jour-titre"></h2><p id="jour-theme"></p></div>
+    <div class="missions" id="missions"></div>
+  </section>
+
+  <!-- ═══════ VUE COIN DES TABLES ═══════ -->
+  <section class="vue" id="vue-tables">
+    <button class="btn-retour" onclick="montrerVue('vue-home');renduGlobal()">← Retour au cahier</button>
+    <div class="jour-entete"><h2>✖️ Le coin des tables</h2>
+      <p>Pour maîtriser une table : réussis le <b>test écrit</b> ✏️ <u>et</u> la <b>récitation à voix haute</b> 🎤 (8/10 minimum).</p></div>
+    <div class="tables-grid" id="tables-grid"></div>
+    <p class="pied" id="micro-note"></p>
+  </section>
+
+  <!-- ═══════ VUE ENTRAÎNEMENT TABLE ═══════ -->
+  <section class="vue" id="vue-table-jeu">
+    <button class="btn-retour" onclick="stopVoix();ouvrirTables()">← Retour aux tables</button>
+    <div class="act-entete">
+      <span class="chip maths" id="tj-chip">📐 Tables</span>
+      <h2 id="tj-titre"></h2>
+    </div>
+    <div id="tj-contenu"></div>
+  </section>
+
+  <!-- ═══════ VUE ACTIVITÉ ═══════ -->
+  <section class="vue" id="vue-act">
+    <button class="btn-retour" onclick="retourJour()">← Retour aux missions</button>
+    <div class="act-entete">
+      <span class="chip" id="act-chip"></span>
+      <span id="act-duree" style="font-size:.75rem;font-weight:800;color:#9A8B63;"></span>
+      <h2 id="act-titre"></h2>
+    </div>
+    <div id="act-contenu"></div>
+  </section>
+</div>
+
+<!-- Modale résultat -->
+<div class="voile" id="voile">
+  <div class="modale" id="modale"></div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   DONNÉES — helpers
+════════════════════════════════════════════════ */
+const F = (n,d) => `<span class="frac"><i>${n}</i><u>${d}</u></span>`;
+
+/* Chaque activité : {id, mat, titre, duree, type, lecon?, questions?|jeu}
+   type : 'quiz' (leçon + QCM), 'memory', 'chrono-tables', 'chrono-homophones' */
+const ACTIVITES = {
+
+/* ══════════════ MATHS ══════════════ */
+M1:{mat:'maths',titre:'Les fractions : lire et comprendre',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Qu'est-ce qu'une fraction ?</h3>
+<p>Une fraction représente un <mark>partage</mark>. Dans ${F(3,4)} : le <b>4</b> (dénominateur) dit en combien de parts égales on coupe, le <b>3</b> (numérateur) dit combien de parts on prend.</p>
+<h3>Lire une fraction</h3>
+<ul><li>${F(1,2)} = un demi &nbsp;·&nbsp; ${F(1,3)} = un tiers &nbsp;·&nbsp; ${F(1,4)} = un quart</li>
+<li>${F(2,5)} = deux cinquièmes &nbsp;·&nbsp; ${F(7,10)} = sept dixièmes</li></ul>
+<h3>Le sens quotient</h3>
+<p>${F(3,4)} veut aussi dire <b>3 ÷ 4 = 0,75</b>. Une fraction, c'est une division !</p>
+<div class="astuce">💡 <b>Astuce :</b> si le numérateur = le dénominateur, la fraction vaut <b>1</b> (le gâteau entier !). ${F(5,5)} = 1.</div>`,
+questions:[
+{q:`Dans la fraction ${F(5,8)}, que représente le 8 ?`,c:['Le nombre de parts prises','Le nombre de parts égales du partage','Le résultat de la division'],a:1,e:'Le dénominateur (en bas) indique en combien de parts égales on coupe.'},
+{q:`Comment lit-on ${F(3,10)} ?`,c:['Trois dixièmes','Trois dizaines','Dix tiers'],a:0,e:'Numérateur d\'abord, puis le dénominateur en « -ièmes » : trois dixièmes.'},
+{q:`${F(1,4)} d'une pizza coupée en 4 parts égales, c'est…`,c:['1 part','4 parts','La moitié'],a:0,e:'Un quart = une part sur les quatre.'},
+{q:`${F(3,4)} est égal à…`,c:['3 × 4 = 12','4 ÷ 3','3 ÷ 4 = 0,75'],a:2,e:'Une fraction est une division : numérateur ÷ dénominateur.'},
+{q:`Quelle fraction vaut exactement 1 ?`,c:[F(6,6),F(1,6),F(6,1)+' non simplifiée'],a:0,e:'Quand numérateur = dénominateur, on a pris toutes les parts : ça vaut 1.'},
+{q:`${F(1,2)} = … ?`,c:['0,2','0,5','2'],a:1,e:'1 ÷ 2 = 0,5. Un demi = la moitié.'},
+{q:`Dans un paquet de 10 bonbons, tu en manges ${F(7,10)}. Combien en as-tu mangé ?`,c:['7 bonbons','10 bonbons','3 bonbons'],a:0,e:'7 dixièmes de 10 = 7 bonbons. Il en reste 3 !'},
+{q:`Quelle fraction est plus grande que 1 ?`,c:[F(4,5),F(5,4),F(5,5)],a:1,e:'5 quarts, c\'est plus qu\'un entier (4 quarts = 1).'}]},
+
+M2:{mat:'maths',titre:'Comparer les fractions',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Même dénominateur</h3>
+<p>C'est le plus facile : on compare les <mark>numérateurs</mark>. ${F(5,7)} > ${F(3,7)} car 5 > 3.</p>
+<h3>Même numérateur</h3>
+<p>Attention, c'est l'inverse ! Le <mark>plus petit dénominateur</mark> gagne : ${F(2,3)} > ${F(2,9)}. <i>Plus on partage, plus les parts sont petites.</i></p>
+<h3>Les produits en croix ✖️</h3>
+<p>Pour comparer ${F('a','b')} et ${F('c','d')} : calcule <b>a × d</b> et <b>c × b</b>, puis compare !</p>
+<p>Exemple : ${F(2,3)} et ${F(3,5)} → 2 × 5 = <b>10</b> et 3 × 3 = <b>9</b>. Comme 10 > 9, alors ${F(2,3)} > ${F(3,5)}. <span class="ex-ok">✓</span></p>
+<div class="astuce">💡 <b>Astuce :</b> compare aussi à ${F(1,2)} ou à 1 : ${F(4,9)} < ${F(1,2)} < ${F(5,8)}, donc pas besoin de calculer !</div>`,
+questions:[
+{q:`${F(4,9)} ou ${F(7,9)} : laquelle est la plus grande ?`,c:[F(4,9),F(7,9),'Elles sont égales'],a:1,e:'Même dénominateur → on compare les numérateurs : 7 > 4.'},
+{q:`${F(3,5)} ou ${F(3,8)} : laquelle est la plus grande ?`,c:[F(3,5),F(3,8),'Elles sont égales'],a:0,e:'Même numérateur → le plus petit dénominateur gagne : des cinquièmes sont plus gros que des huitièmes.'},
+{q:`Produits en croix pour ${F(2,3)} et ${F(4,7)} : que calcule-t-on ?`,c:['2×3 et 4×7','2×7 et 4×3','2×4 et 3×7'],a:1,e:'On croise : numérateur de gauche × dénominateur de droite, et inversement.'},
+{q:`${F(2,3)} ? ${F(4,7)} → 2×7=14 et 4×3=12. Donc…`,c:[F(2,3)+' > '+F(4,7),F(2,3)+' < '+F(4,7),'Égales'],a:0,e:'14 > 12, donc la fraction de gauche est la plus grande.'},
+{q:`Laquelle est plus petite que ${F(1,2)} ?`,c:[F(5,8),F(3,7),F(6,10)],a:1,e:'3 est plus petit que la moitié de 7 (3,5), donc 3/7 < 1/2.'},
+{q:`Range dans l'ordre croissant : ${F(1,4)}, ${F(1,2)}, ${F(1,8)}`,c:[F(1,8)+' < '+F(1,4)+' < '+F(1,2),F(1,2)+' < '+F(1,4)+' < '+F(1,8),F(1,4)+' < '+F(1,8)+' < '+F(1,2)],a:0,e:'Même numérateur : plus le dénominateur est grand, plus la fraction est petite.'},
+{q:`Vrai ou faux : ${F(5,6)} > ${F(7,9)}`,c:['Vrai','Faux'],a:0,e:'5×9=45 et 7×6=42. 45 > 42 donc c\'est vrai !'},
+{q:`${F(3,4)} et ${F(6,8)} sont…`,c:['Différentes','Égales','Impossible à comparer'],a:1,e:'3×8=24 et 6×4=24 : produits égaux → fractions égales ! (6/8 = 3/4 simplifiée)'}]},
+
+M3:{mat:'maths',titre:'Jeu : Tables en folie ⏱️',duree:'60 secondes',type:'chrono-tables',niveau:1,
+consigne:`Réponds à un maximum de multiplications en <b>60 secondes</b> ! Il te faut au moins <b>12 bonnes réponses</b> pour valider la mission.`},
+
+M4:{mat:'maths',titre:'La division posée',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Le vocabulaire</h3>
+<p><b>dividende ÷ diviseur = quotient</b>, et parfois il y a un <b>reste</b>.</p>
+<p>Exemple : 17 ÷ 5 → quotient <b>3</b>, reste <b>2</b>, car 5 × 3 = 15 et 15 + 2 = 17.</p>
+<h3>La méthode</h3>
+<ul><li>1️⃣ « Dans 1 (dizaines), combien de fois 5 ? » — trop petit, on prend 17.</li>
+<li>2️⃣ « Dans 17, combien de fois 5 ? » → 3 fois (5×3=15).</li>
+<li>3️⃣ 17 − 15 = 2. Le reste (2) doit toujours être <mark>plus petit que le diviseur</mark>.</li></ul>
+<div class="astuce">💡 <b>Vérification magique :</b> quotient × diviseur + reste = dividende. 3 × 5 + 2 = 17 ✓</div>`,
+questions:[
+{q:`Dans 23 ÷ 4, le nombre 23 s'appelle…`,c:['Le diviseur','Le dividende','Le quotient'],a:1,e:'Le dividende est le nombre qu\'on partage.'},
+{q:`23 ÷ 4 = ? (quotient et reste)`,c:['q = 5, r = 3','q = 6, r = 1','q = 4, r = 7'],a:0,e:'4 × 5 = 20, et 23 − 20 = 3. Le reste 3 < 4 ✓'},
+{q:`Le reste d'une division doit toujours être…`,c:['Plus grand que le diviseur','Égal au quotient','Plus petit que le diviseur'],a:2,e:'Sinon, on peut encore partager une fois de plus !'},
+{q:`56 ÷ 8 = ?`,c:['6','7','8'],a:1,e:'8 × 7 = 56, division exacte : reste 0.'},
+{q:`Dans une division, on vérifie avec…`,c:['quotient × diviseur + reste = dividende','quotient + diviseur = dividende','dividende × reste = quotient'],a:0,e:'C\'est la vérification magique !'},
+{q:`65 ÷ 5 = ?`,c:['12','13','15'],a:1,e:'5 × 13 = 65. Astuce : 65 = 50 + 15 = 5×10 + 5×3.'},
+{q:`On partage 50 billes entre 6 enfants. Chacun reçoit…`,c:['8 billes, il en reste 2','7 billes, il en reste 8','9 billes, il en reste 0'],a:0,e:'6 × 8 = 48, reste 2 (et 8 < … non, 2 < 6 ✓).'},
+{q:`Quelle division est FAUSSE ?`,c:['34 ÷ 5 : q=6, r=4','41 ÷ 7 : q=5, r=6','29 ÷ 3 : q=8, r=5'],a:2,e:'Le reste 5 est plus grand que le diviseur 3 ! En vrai : q=9, r=2.'}]},
+
+M5:{mat:'maths',titre:'Les nombres décimaux',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 La virgule sépare deux mondes</h3>
+<p>Dans <b>34,56</b> : la partie entière est <b>34</b>, la partie décimale est <b>56 centièmes</b>.</p>
+<table><tr><th>dizaines</th><th>unités</th><th>,</th><th>dixièmes</th><th>centièmes</th></tr>
+<tr><td>3</td><td>4</td><td>,</td><td>5</td><td>6</td></tr></table>
+<h3>Comparer des décimaux</h3>
+<p>On compare d'abord les parties entières, puis chiffre par chiffre après la virgule.</p>
+<p>⚠️ <b>Piège classique :</b> 3,8 > 3,25 (car 8 dixièmes > 2 dixièmes), même si « 25 » semble plus grand que « 8 » !</p>
+<div class="astuce">💡 <b>Astuce :</b> ajoute des zéros pour comparer : 3,8 = 3,80 et 3,80 > 3,25.</div>`,
+questions:[
+{q:`Dans 47,29 — quel est le chiffre des dixièmes ?`,c:['4','2','9'],a:1,e:'Juste après la virgule : 2 dixièmes.'},
+{q:`Quel nombre est le plus grand ?`,c:['5,7','5,68','5,09'],a:0,e:'5,70 > 5,68 > 5,09. Compare dixième par dixième !'},
+{q:`12,50 et 12,5 sont…`,c:['Différents','Égaux','Impossible à comparer'],a:1,e:'Le zéro final après la virgule ne change rien : 50 centièmes = 5 dixièmes.'},
+{q:`Comment écrit-on « six unités et trois centièmes » ?`,c:['6,3','6,03','63'],a:1,e:'3 centièmes = 0,03. Le zéro des dixièmes est obligatoire !'},
+{q:`${F(7,10)} en écriture décimale = ?`,c:['0,7','7,10','0,07'],a:0,e:'7 dixièmes = 0,7.'},
+{q:`Range dans l'ordre croissant : 2,4 · 2,35 · 2,405`,c:['2,35 < 2,4 < 2,405','2,4 < 2,35 < 2,405','2,405 < 2,4 < 2,35'],a:0,e:'2,350 < 2,400 < 2,405 en ajoutant des zéros.'},
+{q:`9,99 + 0,01 = ?`,c:['9,100','10','9,991'],a:1,e:'99 centièmes + 1 centième = 100 centièmes = 1 unité de plus !'},
+{q:`Quel nombre est entre 6,2 et 6,3 ?`,c:['6,25','6,32','6,19'],a:0,e:'6,20 < 6,25 < 6,30. Il y a une infinité de nombres entre deux décimaux !'}]},
+
+M6:{mat:'maths',titre:'Convertir les longueurs',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Le tableau des longueurs</h3>
+<table><tr><th>km</th><th>hm</th><th>dam</th><th>m</th><th>dm</th><th>cm</th><th>mm</th></tr>
+<tr><td colspan="7">chaque colonne = ×10 vers la droite, ÷10 vers la gauche</td></tr></table>
+<p>Pour convertir : place le nombre dans le tableau (le chiffre des unités dans la colonne de l'unité donnée), puis complète avec des zéros.</p>
+<ul><li>3 km = 3 000 m (on descend de 3 colonnes → ×1000)</li>
+<li>45 mm = 4,5 cm (on remonte d'une colonne → ÷10)</li></ul>
+<div class="astuce">💡 <b>Repères de la vraie vie :</b> une fourmi ≈ 5 mm · une règle = 30 cm · un terrain de foot ≈ 100 m · Paris-Marseille ≈ 780 km.</div>`,
+questions:[
+{q:`5 km = … m`,c:['50 m','500 m','5 000 m'],a:2,e:'km → m : 3 colonnes, donc × 1000.'},
+{q:`230 cm = … m`,c:['2,3 m','23 m','0,23 m'],a:0,e:'cm → m : ÷ 100. 230 ÷ 100 = 2,3.'},
+{q:`7,5 m = … cm`,c:['75 cm','750 cm','7 500 cm'],a:1,e:'m → cm : × 100.'},
+{q:`Quelle unité pour mesurer la longueur d'une gomme ?`,c:['Le mètre','Le centimètre','Le kilomètre'],a:1,e:'Une gomme mesure quelques centimètres.'},
+{q:`4 200 m = … km`,c:['42 km','4,2 km','0,42 km'],a:1,e:'m → km : ÷ 1000.'},
+{q:`60 mm = … cm`,c:['6 cm','600 cm','0,6 cm'],a:0,e:'mm → cm : ÷ 10.'},
+{q:`1 m + 25 cm = … cm`,c:['26 cm','125 cm','1 025 cm'],a:1,e:'1 m = 100 cm, donc 100 + 25 = 125 cm. On convertit avant d\'additionner !'},
+{q:`Qui est le plus long : 0,8 km ou 750 m ?`,c:['0,8 km','750 m','C\'est pareil'],a:0,e:'0,8 km = 800 m > 750 m.'}]},
+
+M7:{mat:'maths',titre:'Convertir les masses',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Le tableau des masses</h3>
+<table><tr><th>kg</th><th>hg</th><th>dag</th><th>g</th><th>dg</th><th>cg</th><th>mg</th></tr>
+<tr><td>×1000</td><td>×100</td><td>×10</td><td><b>1</b></td><td>÷10</td><td>÷100</td><td>÷1000</td></tr></table>
+<p><b>Règle d'or :</b> vers une unité plus petite → on <mark>multiplie</mark>. Vers une unité plus grande → on <mark>divise</mark>.</p>
+<ul><li>2 kg = 2 000 g</li><li>350 g = 0,35 kg</li><li>5 g = 5 000 mg</li></ul>
+<div class="astuce">💡 <b>Repères :</b> un trombone ≈ 1 g · une pomme ≈ 150 g · un pack d'eau = 9 kg · toi ≈ 40 kg !</div>`,
+questions:[
+{q:`3 kg = … g`,c:['30 g','300 g','3 000 g'],a:2,e:'kg → g : × 1000.'},
+{q:`1 500 g = … kg`,c:['1,5 kg','15 kg','150 kg'],a:0,e:'g → kg : ÷ 1000.'},
+{q:`2,5 g = … mg`,c:['25 mg','250 mg','2 500 mg'],a:2,e:'g → mg : × 1000.'},
+{q:`Quelle unité pour peser une lettre ?`,c:['Le kilogramme','Le gramme','Le milligramme'],a:1,e:'Une lettre pèse environ 20 g.'},
+{q:`0,75 kg = … g`,c:['75 g','750 g','7 500 g'],a:1,e:'0,75 × 1000 = 750.'},
+{q:`Sur une balance : 500 g + 200 g + 50 g = ?`,c:['750 g','705 g','7,5 kg'],a:0,e:'500 + 200 + 50 = 750 g (= 0,75 kg).'},
+{q:`4 hg = … g`,c:['40 g','400 g','4 000 g'],a:1,e:'hg → g : × 100 (h comme hecto = cent).'},
+{q:`Qui est le plus lourd : 0,9 kg ou 950 g ?`,c:['0,9 kg','950 g','C\'est pareil'],a:1,e:'0,9 kg = 900 g < 950 g.'}]},
+
+M8:{mat:'maths',titre:'La symétrie axiale',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 C'est quoi la symétrie axiale ?</h3>
+<p>Deux figures sont symétriques par rapport à une droite (l'<mark>axe</mark>) si, en <b>pliant</b> le long de cette droite, elles se superposent parfaitement. C'est l'effet miroir ! 🪞</p>
+<h3>Les propriétés magiques</h3>
+<ul><li>Le symétrique d'un point A est à la <b>même distance</b> de l'axe, de l'autre côté.</li>
+<li>Le segment [AA'] est <b>perpendiculaire</b> à l'axe.</li>
+<li>La symétrie conserve les <b>longueurs</b>, les <b>angles</b> et les <b>aires</b>.</li>
+<li>Un point <b>sur l'axe</b> est son propre symétrique !</li></ul>
+<div class="astuce">💡 <b>Dans la vraie vie :</b> un papillon 🦋, la lettre A, un cœur ❤️… ont un axe de symétrie. La lettre F n'en a aucun !</div>`,
+questions:[
+{q:`Si on plie le long de l'axe de symétrie, les deux figures…`,c:['Se superposent exactement','S\'agrandissent','Disparaissent'],a:0,e:'C\'est la définition du pliage / effet miroir.'},
+{q:`Le symétrique d'un point A se trouve…`,c:['N\'importe où','À la même distance de l\'axe, de l\'autre côté','Sur l\'axe'],a:1,e:'Même distance, côté opposé, et [AA\'] ⟂ axe.'},
+{q:`La symétrie axiale conserve…`,c:['Seulement les couleurs','Les longueurs et les angles','Rien du tout'],a:1,e:'Le symétrique d\'un segment de 5 cm mesure… 5 cm !'},
+{q:`Un point situé SUR l'axe de symétrie…`,c:['N\'a pas de symétrique','Est son propre symétrique','A deux symétriques'],a:1,e:'Il ne bouge pas quand on plie !'},
+{q:`Combien d'axes de symétrie a un carré ?`,c:['2','4','1'],a:1,e:'2 médianes + 2 diagonales = 4 axes.'},
+{q:`Quelle lettre majuscule a un axe de symétrie vertical ?`,c:['A','F','L'],a:0,e:'Plie un A en deux verticalement : les deux moitiés se superposent.'},
+{q:`Le segment [AA'] entre un point et son symétrique est … à l'axe.`,c:['Parallèle','Perpendiculaire','Égal'],a:1,e:'Il coupe l\'axe à angle droit, et l\'axe passe par son milieu.'},
+{q:`Le symétrique d'un triangle d'aire 12 cm² a une aire de…`,c:['6 cm²','12 cm²','24 cm²'],a:1,e:'La symétrie conserve les aires : rien ne change sauf l\'orientation.'}]},
+
+M9:{mat:'maths',titre:'Les périmètres',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Le périmètre, c'est le tour !</h3>
+<p>Le périmètre d'une figure = la <mark>longueur de son contour</mark>. Imagine une fourmi qui fait le tour : la distance qu'elle parcourt, c'est le périmètre. 🐜</p>
+<h3>Les formules</h3>
+<ul><li><b>Carré</b> de côté c : P = 4 × c</li>
+<li><b>Rectangle</b> : P = 2 × (Longueur + largeur)</li>
+<li><b>Figure quelconque</b> : on additionne tous les côtés !</li></ul>
+<p>Exemple : rectangle de 7 cm sur 3 cm → P = 2 × (7 + 3) = 2 × 10 = <b>20 cm</b>.</p>
+<div class="astuce">⚠️ <b>Attention :</b> toutes les longueurs doivent être dans la <b>même unité</b> avant de calculer !</div>`,
+questions:[
+{q:`Le périmètre d'un carré de côté 6 cm = ?`,c:['12 cm','24 cm','36 cm'],a:1,e:'P = 4 × 6 = 24 cm.'},
+{q:`Le périmètre d'un rectangle de 8 cm sur 5 cm = ?`,c:['13 cm','40 cm','26 cm'],a:2,e:'P = 2 × (8 + 5) = 2 × 13 = 26 cm.'},
+{q:`Un carré a un périmètre de 20 cm. Son côté mesure…`,c:['4 cm','5 cm','10 cm'],a:1,e:'20 ÷ 4 = 5 cm.'},
+{q:`Le périmètre se mesure en…`,c:['cm','cm²','kg'],a:0,e:'C\'est une longueur ! (cm² c\'est pour les aires)'},
+{q:`Un triangle a des côtés de 3 cm, 4 cm et 5 cm. Son périmètre = ?`,c:['12 cm','60 cm','7 cm'],a:0,e:'3 + 4 + 5 = 12 cm. On additionne tous les côtés.'},
+{q:`Un rectangle de 1 m sur 40 cm. Son périmètre = ?`,c:['82 cm','280 cm','140 cm'],a:1,e:'1 m = 100 cm. P = 2 × (100 + 40) = 280 cm. Même unité d\'abord !'},
+{q:`Si on double le côté d'un carré, son périmètre…`,c:['Double aussi','Est multiplié par 4','Ne change pas'],a:0,e:'P = 4 × c : si c double, P double.'},
+{q:`Pour clôturer un jardin rectangulaire de 12 m sur 8 m, il faut…`,c:['20 m de clôture','40 m de clôture','96 m de clôture'],a:1,e:'P = 2 × (12 + 8) = 40 m. (96 serait l\'aire !)'}]},
+
+M10:{mat:'maths',titre:'Les aires',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 L'aire, c'est la surface !</h3>
+<p>L'aire mesure la <mark>place occupée à l'intérieur</mark> d'une figure. Si tu peins la figure, l'aire = la surface peinte. 🎨</p>
+<h3>Les formules</h3>
+<ul><li><b>Carré</b> : A = c × c</li>
+<li><b>Rectangle</b> : A = Longueur × largeur</li></ul>
+<p>Exemple : rectangle de 7 cm sur 3 cm → A = 7 × 3 = <b>21 cm²</b>.</p>
+<h3>Périmètre ou aire ? 🤔</h3>
+<table><tr><th></th><th>Périmètre</th><th>Aire</th></tr>
+<tr><td>C'est…</td><td>le tour</td><td>la surface</td></tr>
+<tr><td>Unité</td><td>cm, m…</td><td>cm², m²…</td></tr>
+<tr><td>Exemple</td><td>clôture, cadre</td><td>peinture, moquette</td></tr></table>`,
+questions:[
+{q:`L'aire d'un rectangle de 9 cm sur 4 cm = ?`,c:['13 cm²','36 cm²','26 cm²'],a:1,e:'A = 9 × 4 = 36 cm².'},
+{q:`L'aire d'un carré de côté 7 cm = ?`,c:['28 cm²','49 cm²','14 cm²'],a:1,e:'A = 7 × 7 = 49 cm².'},
+{q:`L'aire se mesure en…`,c:['cm','cm²','cm³'],a:1,e:'Les « centimètres carrés » : des petits carreaux de 1 cm de côté.'},
+{q:`Pour acheter de la moquette pour une chambre, je calcule…`,c:['Le périmètre','L\'aire','Le volume'],a:1,e:'La moquette couvre la surface du sol.'},
+{q:`Un rectangle a une aire de 24 cm² et une longueur de 8 cm. Sa largeur = ?`,c:['3 cm','4 cm','16 cm'],a:0,e:'24 ÷ 8 = 3 cm, car L × l = A.'},
+{q:`Deux figures peuvent avoir le même périmètre mais…`,c:['Jamais la même aire','Des aires différentes','Toujours la même aire'],a:1,e:'Un carré 4×4 et un rectangle 6×2 ont P=16, mais A=16 et A=12 !'},
+{q:`L'aire d'un carré de 10 m de côté = ?`,c:['40 m²','100 m²','1 000 m²'],a:1,e:'10 × 10 = 100 m². (40 m serait le périmètre)'},
+{q:`Un terrain de 20 m sur 15 m. Combien de m² de gazon faut-il ?`,c:['70 m²','300 m²','35 m²'],a:1,e:'A = 20 × 15 = 300 m².'}]},
+
+M11:{mat:'maths',titre:'Fractions et pourcentages',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Un pourcentage est une fraction sur 100</h3>
+<p><b>50 %</b> veut dire ${F(50,100)}, c'est-à-dire <b>la moitié</b> !</p>
+<table><tr><th>Fraction</th><th>Pourcentage</th><th>En clair</th></tr>
+<tr><td>${F(1,2)}</td><td>50 %</td><td>la moitié</td></tr>
+<tr><td>${F(1,4)}</td><td>25 %</td><td>le quart</td></tr>
+<tr><td>${F(3,4)}</td><td>75 %</td><td>les trois quarts</td></tr>
+<tr><td>${F(1,10)}</td><td>10 %</td><td>le dixième</td></tr>
+<tr><td>${F(1,1)}</td><td>100 %</td><td>la totalité</td></tr></table>
+<h3>Calculer un pourcentage</h3>
+<p>50 % de 80 = la moitié de 80 = <b>40</b>. &nbsp; 25 % de 80 = le quart = <b>20</b>. &nbsp; 10 % de 80 = <b>8</b> (÷10).</p>
+<div class="astuce">💡 <b>Astuce des soldes :</b> −30 % sur 50 € → 10 % de 50 = 5 €, donc 30 % = 15 €. Prix soldé : 35 € !</div>`,
+questions:[
+{q:`25 % correspond à la fraction…`,c:[F(1,4),F(1,2),F(2,5)],a:0,e:'25/100 = 1/4, le quart.'},
+{q:`50 % de 60 = ?`,c:['15','30','25'],a:1,e:'La moitié de 60.'},
+{q:`10 % de 250 = ?`,c:['25','2,5','10'],a:0,e:'10 % = ÷ 10.'},
+{q:`75 % d'un gâteau, c'est…`,c:['Le quart','Les trois quarts','La totalité'],a:1,e:'75/100 = 3/4.'},
+{q:`Dans une classe de 20 élèves, 25 % portent des lunettes. Combien ?`,c:['4 élèves','5 élèves','10 élèves'],a:1,e:'Le quart de 20 = 5.'},
+{q:`100 % de 37 = ?`,c:['0','37','100'],a:1,e:'100 % = tout !'},
+{q:`Un jeu à 40 € est soldé à −50 %. Nouveau prix ?`,c:['20 €','35 €','30 €'],a:0,e:'−50 % = moitié prix.'},
+{q:`${F(7,10)} en pourcentage = ?`,c:['7 %','70 %','0,7 %'],a:1,e:'7/10 = 70/100 = 70 %.'}]},
+
+M12:{mat:'maths',titre:'La proportionnalité',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 C'est quoi, être proportionnel ?</h3>
+<p>Deux grandeurs sont proportionnelles quand on passe de l'une à l'autre en <mark>multipliant toujours par le même nombre</mark> (le coefficient).</p>
+<p>Exemple : 1 croissant coûte 2 €. Alors 3 croissants coûtent 3 × 2 = 6 €. Prix et quantité sont proportionnels ! 🥐</p>
+<h3>Les techniques</h3>
+<ul><li><b>Passage à l'unité :</b> 4 stylos = 6 € → 1 stylo = 1,50 € → 7 stylos = 10,50 €</li>
+<li><b>Additionner des colonnes :</b> si 2 kg → 5 € et 4 kg → 10 €, alors 6 kg → 15 €</li>
+<li><b>Multiplier une colonne :</b> 3 places = 24 € → 6 places = 48 € (×2)</li></ul>
+<div class="astuce">⚠️ <b>Piège :</b> l'âge et la taille ne sont PAS proportionnels ! À 12 ans tu ne mesures pas 2 fois ta taille de 6 ans. 😄</div>`,
+questions:[
+{q:`3 baguettes coûtent 3,60 €. Combien coûte 1 baguette ?`,c:['1,20 €','1,80 €','1,10 €'],a:0,e:'3,60 ÷ 3 = 1,20 €.'},
+{q:`1 baguette = 1,20 €. Combien coûtent 5 baguettes ?`,c:['5,50 €','6 €','6,20 €'],a:1,e:'5 × 1,20 = 6 €.'},
+{q:`Quelle situation est proportionnelle ?`,c:['L\'âge et la pointure','Le nombre de tickets et leur prix','La taille et la note en maths'],a:1,e:'2 fois plus de tickets = 2 fois plus cher.'},
+{q:`Si 2 kg de pommes coûtent 5 €, alors 6 kg coûtent…`,c:['10 €','15 €','12 €'],a:1,e:'6 kg = 3 × 2 kg, donc 3 × 5 = 15 €.'},
+{q:`Une voiture roule à 90 km/h. En 2 heures, elle parcourt…`,c:['45 km','180 km','92 km'],a:1,e:'90 × 2 = 180 km. Distance et durée sont proportionnelles à vitesse constante.'},
+{q:`4 cahiers coûtent 10 €. Combien coûtent 2 cahiers ?`,c:['5 €','8 €','2,50 €'],a:0,e:'2 fois moins de cahiers = 2 fois moins cher : 10 ÷ 2 = 5 €.'},
+{q:`Pour 4 crêpes il faut 100 g de farine. Pour 12 crêpes ?`,c:['200 g','300 g','400 g'],a:1,e:'12 = 4 × 3, donc 100 × 3 = 300 g. 🥞'},
+{q:`5 tours de piste en 10 min. Combien de temps pour 8 tours (même vitesse) ?`,c:['13 min','16 min','18 min'],a:1,e:'1 tour = 2 min, donc 8 tours = 16 min.'}]},
+
+M13:{mat:'maths',titre:'Jeu : Calcul mental express ⏱️',duree:'60 secondes',type:'chrono-tables',niveau:2,
+consigne:`Multiplications ET divisions mélangées, 60 secondes chrono ! Il te faut au moins <b>12 bonnes réponses</b> pour valider.`},
+
+M14:{mat:'maths',titre:'Petits problèmes de l\'été',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 La méthode pour résoudre un problème</h3>
+<ul><li>1️⃣ <b>Je lis</b> l'énoncé deux fois (au moins !).</li>
+<li>2️⃣ <b>Je repère</b> ce qu'on cherche et les données utiles.</li>
+<li>3️⃣ <b>Je choisis</b> l'opération : + (ajouter), − (enlever, comparer), × (répéter), ÷ (partager).</li>
+<li>4️⃣ <b>Je calcule</b>, puis <b>je vérifie</b> que le résultat est logique.</li>
+<li>5️⃣ <b>Je réponds</b> par une phrase !</li></ul>
+<div class="astuce">💡 Un résultat de 4 500 km pour un trajet à vélo ? 🚴 C'est louche… vérifie ton calcul !</div>`,
+questions:[
+{q:`Léa achète un livre à 12 € et un magazine à 4,50 €. Elle paie avec un billet de 20 €. Combien lui rend-on ?`,c:['3,50 €','4,50 €','16,50 €'],a:0,e:'12 + 4,50 = 16,50 €. Puis 20 − 16,50 = 3,50 €.'},
+{q:`Un car transporte 55 passagers. Il fait 4 trajets pleins. Combien de passagers en tout ?`,c:['220','59','200'],a:0,e:'55 × 4 = 220 passagers.'},
+{q:`On partage équitablement 72 cartes entre 6 joueurs. Combien chacun ?`,c:['12 cartes','11 cartes','13 cartes'],a:0,e:'72 ÷ 6 = 12.'},
+{q:`Tom a 3 fois plus de billes que Zoé. Zoé en a 15. Combien Tom en a-t-il ?`,c:['5','18','45'],a:2,e:'15 × 3 = 45 billes.'},
+{q:`Un film commence à 20 h 15 et dure 1 h 50. À quelle heure finit-il ?`,c:['21 h 65','22 h 05','21 h 55'],a:1,e:'20 h 15 + 1 h 50 = 21 h 65 → attention, 65 min = 1 h 05 → 22 h 05 !'},
+{q:`Une piscine de 25 m. Nager 8 longueurs, c'est nager…`,c:['200 m','100 m','33 m'],a:0,e:'25 × 8 = 200 m.'},
+{q:`3 kg de cerises coûtent 12 €. Combien coûtent 5 kg ?`,c:['15 €','20 €','18 €'],a:1,e:'1 kg = 4 €, donc 5 × 4 = 20 €. La proportionnalité sert partout !'},
+{q:`Un rectangle de jardin fait 9 m sur 6 m. Quelle est son aire ?`,c:['30 m²','54 m²','15 m²'],a:1,e:'9 × 6 = 54 m².'}]},
+
+M15:{mat:'maths',titre:'Le grand défi maths 🏁',duree:'~20 min',type:'quiz',
+lecon:`<h3>📖 Dernier jour !</h3>
+<p>Ce grand quiz mélange <b>tout ce que tu as révisé</b> : fractions, décimaux, divisions, mesures, géométrie, pourcentages et proportionnalité. Prends ton temps, tu connais tout ! 💪</p>
+<div class="astuce">🎯 <b>Objectif :</b> montre que tu es prête pour la 5ème !</div>`,
+questions:[
+{q:`${F(3,5)} ? ${F(2,3)} — utilise les produits en croix !`,c:[F(3,5)+' > '+F(2,3),F(3,5)+' < '+F(2,3),'Égales'],a:1,e:'3×3=9 et 2×5=10. 9 < 10 donc 3/5 < 2/3.'},
+{q:`87 ÷ 9 : quotient et reste ?`,c:['q=9, r=6','q=8, r=15','q=10, r=3'],a:0,e:'9 × 9 = 81, et 87 − 81 = 6.'},
+{q:`Quel est le plus grand : 4,08 · 4,2 · 4,15 ?`,c:['4,08','4,2','4,15'],a:1,e:'4,20 > 4,15 > 4,08.'},
+{q:`3,2 km = … m`,c:['320 m','3 200 m','32 000 m'],a:1,e:'× 1000.'},
+{q:`Périmètre d'un carré de côté 9 cm ?`,c:['36 cm','81 cm','18 cm'],a:0,e:'4 × 9 = 36 cm. (81 cm² serait l\'aire !)'},
+{q:`Aire d'un rectangle de 12 m sur 5 m ?`,c:['34 m²','60 m²','17 m²'],a:1,e:'12 × 5 = 60 m².'},
+{q:`25 % de 200 = ?`,c:['25','50','75'],a:1,e:'Le quart de 200.'},
+{q:`6 œufs pour 4 crêpes… euh non : 2 œufs pour 8 crêpes. Pour 24 crêpes ?`,c:['4 œufs','6 œufs','8 œufs'],a:1,e:'24 = 8 × 3, donc 2 × 3 = 6 œufs.'},
+{q:`Combien d'axes de symétrie a un rectangle (non carré) ?`,c:['2','4','0'],a:0,e:'Les 2 médianes. Les diagonales ne sont PAS des axes de symétrie du rectangle !'},
+{q:`450 g + 0,8 kg = ?`,c:['1 250 g','850 g','450,8 g'],a:0,e:'0,8 kg = 800 g. 450 + 800 = 1 250 g = 1,25 kg.'}]},
+
+/* ══════════════ ANGLAIS ══════════════ */
+A1:{mat:'anglais',titre:'Vocabulary: Family ties 👨‍👩‍👧',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 The family / La famille</h3>
+<table><tr><th>English 🔊</th><th>Français</th></tr>
+<tr><td>mother / mum</td><td>la mère / maman</td></tr>
+<tr><td>father / dad</td><td>le père / papa</td></tr>
+<tr><td>brother · sister</td><td>le frère · la sœur</td></tr>
+<tr><td>grandmother · grandfather</td><td>la grand-mère · le grand-père</td></tr>
+<tr><td>uncle · aunt</td><td>l'oncle · la tante</td></tr>
+<tr><td>cousin</td><td>le/la cousin(e)</td></tr>
+<tr><td>parents · children</td><td>les parents · les enfants</td></tr>
+<tr><td>son · daughter</td><td>le fils · la fille</td></tr></table>
+<div class="astuce">💡 Clique sur 🔊 dans les questions pour écouter la prononciation anglaise !</div>`,
+questions:[
+{q:`« sister » veut dire…`,say:'sister',c:['La sœur','La mère','La tante'],a:0,e:'Sister = sœur. Brother = frère.'},
+{q:`Comment dit-on « le grand-père » ?`,say:'grandfather',c:['Grandmother','Grandfather','Uncle'],a:1,e:'Grand + father. Grandmother = grand-mère.'},
+{q:`« My uncle » est…`,say:'my uncle',c:['Mon oncle','Mon cousin','Mon neveu'],a:0,e:'Uncle = oncle, aunt = tante.'},
+{q:`« daughter » veut dire…`,say:'daughter',c:['La fille (de ses parents)','La sœur','La femme'],a:0,e:'Son = fils, daughter = fille. Attention à la prononciation : "dôteur" !'},
+{q:`Comment dit-on « les enfants » ?`,say:'children',c:['Childs','Children','Childrens'],a:1,e:'Child → children : un pluriel irrégulier à connaître !'},
+{q:`« aunt » veut dire…`,say:'aunt',c:['La tante','La grand-mère','La cousine'],a:0,e:'Aunt = tante.'},
+{q:`Tom is my mother's son. Tom is my…`,say:'Tom is my brother',c:['Cousin','Brother','Father'],a:1,e:'Le fils de ma mère, c\'est mon frère !'},
+{q:`« parents » en anglais désigne…`,say:'parents',c:['Toute la famille','Le père et la mère','Les grands-parents'],a:1,e:'Attention, faux-ami partiel : parents = uniquement papa et maman.'}]},
+
+A2:{mat:'anglais',titre:'Grammar: pronouns & BE',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Les pronoms sujets</h3>
+<table><tr><th>I</th><th>you</th><th>he</th><th>she</th><th>it</th><th>we</th><th>they</th></tr>
+<tr><td>je</td><td>tu/vous</td><td>il</td><td>elle</td><td>il/elle (chose)</td><td>nous</td><td>ils/elles</td></tr></table>
+<p>⚠️ <b>I</b> s'écrit TOUJOURS en majuscule. <b>It</b> sert pour les objets et les animaux.</p>
+<h3>Le verbe BE (être) au présent</h3>
+<table><tr><th>I</th><td><b>am</b></td><td>I'm</td></tr>
+<tr><th>you / we / they</th><td><b>are</b></td><td>you're, we're, they're</td></tr>
+<tr><th>he / she / it</th><td><b>is</b></td><td>he's, she's, it's</td></tr></table>
+<p>Négation : is <b>not</b> = isn't · are <b>not</b> = aren't. <i>She isn't tired.</i></p>`,
+questions:[
+{q:`« Elle est grande » → … is tall.`,say:'She is tall',c:['He','She','It'],a:1,e:'She = elle (personne féminine).'},
+{q:`I … eleven years old.`,say:'I am eleven years old',c:['is','are','am'],a:2,e:'Avec I, toujours am !'},
+{q:`They … my friends.`,say:'They are my friends',c:['is','are','am'],a:1,e:'They (ils/elles) → are.'},
+{q:`Pour parler d'un chat 🐱, on utilise…`,c:['He','It','They'],a:1,e:'It pour les animaux et les objets.'},
+{q:`« He's » est la contraction de…`,say:'he is',c:['He was','He is','He has… enfin ici : he is'],a:1,e:'He\'s happy = He is happy.'},
+{q:`My brother and I … at the beach.`,say:'We are at the beach',c:['am','is','are'],a:2,e:'My brother and I = we → are.'},
+{q:`La forme négative de « She is tired » :`,say:'She is not tired',c:['She isn\'t tired','She aren\'t tired','She not is tired'],a:0,e:'is + not = isn\'t.'},
+{q:`… am French. (n'oublie pas la règle !)`,c:['i','I','me'],a:1,e:'I prend TOUJOURS une majuscule, même au milieu d\'une phrase.'}]},
+
+A3:{mat:'anglais',titre:'Game: Animal Memory 🐾',duree:'~10 min',type:'memory',
+consigne:`Retrouve les paires <b>anglais 🇬🇧 ↔ français 🇫🇷</b> ! Les cartes anglaises se prononcent quand tu les retournes. Trouve les 8 paires pour valider.`,
+paires:[['dog','le chien'],['cat','le chat'],['horse','le cheval'],['bird','l\'oiseau'],['rabbit','le lapin'],['mouse','la souris'],['bear','l\'ours'],['fish','le poisson']]},
+
+A4:{mat:'anglais',titre:'Vocabulary: Physical appearance 👀',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Describing people / Décrire quelqu'un</h3>
+<table><tr><th>English 🔊</th><th>Français</th></tr>
+<tr><td>tall · short</td><td>grand(e) · petit(e)</td></tr>
+<tr><td>young · old</td><td>jeune · âgé(e)</td></tr>
+<tr><td>hair</td><td>les cheveux</td></tr>
+<tr><td>long / short hair</td><td>cheveux longs / courts</td></tr>
+<tr><td>blond · brown · red hair</td><td>blonds · bruns · roux</td></tr>
+<tr><td>curly · straight</td><td>bouclés · raides</td></tr>
+<tr><td>blue / green / brown eyes</td><td>yeux bleus / verts / marron</td></tr>
+<tr><td>He wears glasses</td><td>Il porte des lunettes</td></tr></table>
+<p>On décrit avec <b>be</b> (She is tall) et <b>have got</b> (She has got blue eyes).</p>`,
+questions:[
+{q:`« curly hair » veut dire…`,say:'curly hair',c:['Cheveux raides','Cheveux bouclés','Cheveux courts'],a:1,e:'Curly = bouclé. Straight = raide.'},
+{q:`« Il est petit » →`,say:'He is short',c:['He is tall','He is short','He is old'],a:1,e:'Short = petit (taille). Tall = grand.'},
+{q:`She has got … eyes. (yeux verts)`,say:'She has got green eyes',c:['green','blue','brown'],a:0,e:'Green = vert.'},
+{q:`« Elle porte des lunettes » →`,say:'She wears glasses',c:['She is glasses','She wears glasses','She glasses'],a:1,e:'To wear = porter (un vêtement, des lunettes).'},
+{q:`« red hair » veut dire…`,say:'red hair',c:['Cheveux rouges (teints)','Cheveux roux','Cheveux bruns'],a:1,e:'En anglais, les cheveux roux se disent « red » !'},
+{q:`Le contraire de « young » :`,say:'old',c:['Tall','Old','Small'],a:1,e:'Young = jeune ↔ old = âgé.'},
+{q:`My grandmother is old. She has got … hair. (cheveux gris)`,say:'grey hair',c:['grey','green','glasses'],a:0,e:'Grey = gris.'},
+{q:`« He is tall and he has got short brown hair » décrit…`,c:['Un garçon grand aux cheveux courts et bruns','Un garçon petit aux cheveux longs','Un garçon roux avec des lunettes'],a:0,e:'Tall = grand, short hair = cheveux courts, brown = bruns.'}]},
+
+A5:{mat:'anglais',titre:'Grammar: a, an, the',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Les articles</h3>
+<ul><li><b>a</b> + son de consonne : <i>a dog, a book, a university</i></li>
+<li><b>an</b> + son de voyelle (a, e, i, o, u) : <i>an apple, an elephant, an hour</i></li>
+<li><b>the</b> = le, la, les (une chose précise) : <i>the sun, the Eiffel Tower</i></li></ul>
+<p>⚠️ C'est le <mark>son</mark> qui compte, pas la lettre ! <i>an hour</i> (h muet), <i>a university</i> (son « you »).</p>
+<div class="astuce">💡 Pas d'article devant les généralités : <i>I like ~ dogs</i> (j'aime les chiens en général).</div>`,
+questions:[
+{q:`… apple a day! 🍎`,say:'an apple',c:['A','An','The'],a:1,e:'Apple commence par un son de voyelle → an.'},
+{q:`I have got … dog.`,say:'a dog',c:['a','an','the'],a:0,e:'Dog commence par un son de consonne → a.'},
+{q:`… sun is yellow. ☀️`,say:'the sun',c:['A','An','The'],a:2,e:'Le soleil est unique et précis → the.'},
+{q:`She is … English teacher.`,say:'an English teacher',c:['a','an','the'],a:1,e:'English commence par le son « i » → an.'},
+{q:`We watched … elephant at the zoo.`,say:'an elephant',c:['a','an','—'],a:1,e:'Elephant → son de voyelle → an.'},
+{q:`Wait … hour, please! (h muet)`,say:'an hour',c:['a','an','the'],a:1,e:'Hour se prononce « aouer » : le h est muet, donc an !'},
+{q:`This is … book I told you about. (le livre précis)`,c:['a','an','the'],a:2,e:'Une chose précise, déjà connue → the.'},
+{q:`I go to … university. (son « you »)`,c:['a','an','the'],a:0,e:'University commence par le son consonne « y » → a. Piège classique !'}]},
+
+A6:{mat:'anglais',titre:'Vocabulary: Jobs 💼',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Jobs / Les métiers</h3>
+<table><tr><th>English 🔊</th><th>Français</th></tr>
+<tr><td>teacher</td><td>professeur(e)</td></tr>
+<tr><td>doctor · nurse</td><td>médecin · infirmier(ère)</td></tr>
+<tr><td>firefighter</td><td>pompier</td></tr>
+<tr><td>police officer</td><td>policier(ère)</td></tr>
+<tr><td>baker · cook</td><td>boulanger(ère) · cuisinier(ère)</td></tr>
+<tr><td>farmer</td><td>agriculteur(trice)</td></tr>
+<tr><td>singer · actor</td><td>chanteur(se) · acteur(trice)</td></tr>
+<tr><td>vet</td><td>vétérinaire</td></tr></table>
+<p>On dit : <i>She is <b>a</b> doctor.</i> — en anglais, il faut l'article <b>a/an</b> devant le métier !</p>`,
+questions:[
+{q:`« firefighter » veut dire…`,say:'firefighter',c:['Policier','Pompier','Soldat'],a:1,e:'Fire (feu) + fighter (combattant) = pompier !'},
+{q:`My mum works in a hospital. She is a…`,say:'She is a nurse',c:['baker','nurse','farmer'],a:1,e:'Nurse = infirmière (ou doctor = médecin).'},
+{q:`« Il est boulanger » →`,say:'He is a baker',c:['He is baker','He is a baker','He is the baker job'],a:1,e:'En anglais on met toujours a/an devant un métier !'},
+{q:`A « vet » takes care of…`,say:'vet',c:['Cars','Animals','Books'],a:1,e:'Vet = vétérinaire, il soigne les animaux.'},
+{q:`« singer » veut dire…`,say:'singer',c:['Danseur','Chanteur','Dessinateur'],a:1,e:'To sing = chanter → singer = chanteur.'},
+{q:`Who teaches students at school?`,say:'a teacher',c:['A doctor','A teacher','A cook'],a:1,e:'To teach = enseigner.'},
+{q:`« police officer » veut dire…`,say:'police officer',c:['Policier','Officier de l\'armée','Juge'],a:0,e:'Police officer = policier / policière.'},
+{q:`A farmer works…`,say:'farmer',c:['On a farm','In a school','In a hospital'],a:0,e:'Farm = la ferme → farmer = agriculteur.'}]},
+
+A7:{mat:'anglais',titre:'Grammar: my, your, his, her…',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Les adjectifs possessifs</h3>
+<table><tr><th>my</th><th>your</th><th>his</th><th>her</th><th>its</th><th>our</th><th>their</th></tr>
+<tr><td>mon/ma/mes</td><td>ton/votre</td><td>son… (à LUI)</td><td>son… (à ELLE)</td><td>son (chose)</td><td>notre/nos</td><td>leur(s)</td></tr></table>
+<p>⚠️ <b>La grande différence avec le français :</b> on choisit selon le <mark>possesseur</mark>, pas selon l'objet !</p>
+<ul><li>Tom aime <b>sa</b> sœur → Tom loves <b>his</b> sister (c'est SA sœur à LUI).</li>
+<li>Emma aime <b>son</b> frère → Emma loves <b>her</b> brother (à ELLE).</li></ul>`,
+questions:[
+{q:`Tom and … dog. (le chien de Tom)`,say:'Tom and his dog',c:['her','his','its'],a:1,e:'Tom est un garçon → his.'},
+{q:`Emma and … cat. (le chat d'Emma)`,say:'Emma and her cat',c:['her','his','their'],a:0,e:'Emma est une fille → her, même si « cat » n\'a pas de genre.'},
+{q:`« Notre maison » →`,say:'our house',c:['your house','our house','their house'],a:1,e:'Our = notre/nos.'},
+{q:`The children love … parents. (leurs parents)`,say:'their parents',c:['his','her','their'],a:2,e:'Plusieurs possesseurs → their.'},
+{q:`I love … family. (ma famille)`,say:'my family',c:['my','me','I'],a:0,e:'My = mon/ma/mes.'},
+{q:`The dog eats … food. (un animal-chose)`,c:['his','her','its'],a:2,e:'Pour un animal (sans genre précisé) → its.'},
+{q:`« Ton vélo est rouge » →`,say:'Your bike is red',c:['Your bike is red','You bike is red','Yours bike is red'],a:0,e:'Your + nom = ton/ta/tes.'},
+{q:`My brother loves … teacher, Mrs Smith. (professeure = femme, mais frère = possesseur !)`,c:['her','his','its'],a:1,e:'On regarde le possesseur : mon frère → his teacher. Piège n°1 des 6èmes !'}]},
+
+A8:{mat:'anglais',titre:'Game: Food Memory 🍔',duree:'~10 min',type:'memory',
+consigne:`Retrouve les paires <b>anglais 🇬🇧 ↔ français 🇫🇷</b> sur le thème de la nourriture. 8 paires à trouver !`,
+paires:[['bread','le pain'],['cheese','le fromage'],['chicken','le poulet'],['egg','l\'œuf'],['milk','le lait'],['strawberry','la fraise'],['butter','le beurre'],['sweets','les bonbons']]},
+
+A9:{mat:'anglais',titre:'Vocabulary: School & colours 🎨',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 School things / Le matériel scolaire</h3>
+<table><tr><th>English 🔊</th><th>Français</th></tr>
+<tr><td>a pen · a pencil</td><td>un stylo · un crayon</td></tr>
+<tr><td>a rubber</td><td>une gomme</td></tr>
+<tr><td>a ruler</td><td>une règle</td></tr>
+<tr><td>a schoolbag</td><td>un cartable</td></tr>
+<tr><td>a copybook</td><td>un cahier</td></tr></table>
+<h3>Colours / Les couleurs</h3>
+<p>red (rouge) · blue (bleu) · green (vert) · yellow (jaune) · black (noir) · white (blanc) · orange · pink (rose) · purple (violet) · brown (marron) · grey (gris)</p>
+<p>⚠️ L'adjectif se place <mark>avant</mark> le nom : <i>a <b>blue</b> pen</i> = un stylo bleu.</p>`,
+questions:[
+{q:`« a rubber » c'est…`,say:'a rubber',c:['Une règle','Une gomme','Un cartable'],a:1,e:'Rubber = gomme. Ruler = règle. Ne les confonds pas !'},
+{q:`« Un cartable » →`,say:'a schoolbag',c:['A schoolbag','A copybook','A pencil case'],a:0,e:'School (école) + bag (sac).'},
+{q:`« purple » veut dire…`,say:'purple',c:['Rose','Violet','Marron'],a:1,e:'Purple = violet. Pink = rose.'},
+{q:`« Un stylo bleu » →`,say:'a blue pen',c:['A pen blue','A blue pen','Blue a pen'],a:1,e:'L\'adjectif se place AVANT le nom en anglais.'},
+{q:`« a ruler » sert à…`,say:'a ruler',c:['Effacer','Tracer des traits','Découper'],a:1,e:'Ruler = règle (pour tracer et mesurer).'},
+{q:`« black and white » veut dire…`,say:'black and white',c:['Bleu et blanc','Noir et blanc','Noir et vert'],a:1,e:'Black = noir, white = blanc.'},
+{q:`I write in my … (cahier)`,say:'copybook',c:['copybook','schoolbag','rubber'],a:0,e:'Copybook (ou notebook) = cahier.'},
+{q:`« a green pencil » c'est…`,say:'a green pencil',c:['Un stylo vert','Un crayon vert','Une trousse verte'],a:1,e:'Pencil = crayon (pen = stylo).'}]},
+
+A10:{mat:'anglais',titre:'Grammar: present simple',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Le présent simple</h3>
+<p>Il sert pour les <b>habitudes</b> et les <b>vérités générales</b> : <i>I play tennis every Sunday.</i></p>
+<h3>La règle d'or : le S de la 3ᵉ personne</h3>
+<p>Avec <b>he, she, it</b> → verbe + <mark>-s</mark> : <i>She play<b>s</b> football. He like<b>s</b> pizza.</i></p>
+<ul><li>Verbes en -ch, -sh, -o, -x → <b>-es</b> : <i>she watch<b>es</b>, he go<b>es</b></i></li>
+<li>Consonne + y → <b>-ies</b> : <i>she stud<b>ies</b></i></li></ul>
+<p>Négation : <i>I <b>don't</b> like… / She <b>doesn't</b> like…</i> (et le verbe perd son -s !)</p>`,
+questions:[
+{q:`She … football every Saturday.`,say:'She plays football',c:['play','plays','playes'],a:1,e:'He/she/it → verbe + s.'},
+{q:`I … to school by bus.`,say:'I go to school by bus',c:['go','goes','going'],a:0,e:'Avec I, pas de -s : le -s c\'est SEULEMENT he/she/it.'},
+{q:`My brother … TV every evening.`,say:'He watches TV',c:['watchs','watches','watch'],a:1,e:'Watch se termine par -ch → -es.'},
+{q:`He … his homework. (négation)`,say:'He does not do his homework',c:['don\'t do','doesn\'t do','doesn\'t does'],a:1,e:'He → doesn\'t + verbe SANS -s.'},
+{q:`The sun … in the east.`,say:'The sun rises in the east',c:['rise','rises','risees'],a:1,e:'The sun = it → rises. Vérité générale = présent simple.'},
+{q:`They … English and Spanish.`,say:'They speak English and Spanish',c:['speaks','speak','speakes'],a:1,e:'They → pas de -s.'},
+{q:`Emma … maths every day. (study)`,say:'Emma studies maths',c:['studys','studies','studyes'],a:1,e:'Consonne + y → ies.'},
+{q:`… you like chocolate?`,say:'Do you like chocolate',c:['Do','Does','Are'],a:0,e:'Question avec you → Do you… ? (Does = he/she/it)'}]},
+
+A11:{mat:'anglais',titre:'Vocabulary: Body & creatures 🐉',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 The body / Le corps</h3>
+<p>head (tête) · eye (œil) · ear (oreille) · nose (nez) · mouth (bouche) · arm (bras) · hand (main) · leg (jambe) · foot → <b>feet</b> (pied/pieds) · tooth → <b>teeth</b> (dent/dents)</p>
+<h3>Legendary creatures / Créatures de légende</h3>
+<p>a dragon (un dragon) · a giant (un géant) · a monster (un monstre) · a knight (un chevalier) · a sword (une épée) · a king (un roi) · a queen (une reine) · brave (courageux)</p>
+<div class="astuce">💡 Souviens-toi de Beowulf, le héros qui combat le monstre Grendel ! Les légendes anglaises sont pleines de knights, dragons et swords. ⚔️</div>`,
+questions:[
+{q:`« mouth » veut dire…`,say:'mouth',c:['Le nez','La bouche','L\'oreille'],a:1,e:'Mouth = bouche.'},
+{q:`Le pluriel de « foot » :`,say:'feet',c:['Foots','Feet','Feets'],a:1,e:'Foot → feet, un pluriel irrégulier (comme tooth → teeth).'},
+{q:`« a knight » c'est…`,say:'a knight',c:['Un roi','Un chevalier','Une nuit'],a:1,e:'Knight = chevalier (le k ne se prononce pas !). Night = la nuit.'},
+{q:`Le dragon crache du feu avec sa…`,say:'mouth',c:['hand','mouth','leg'],a:1,e:'Mouth = bouche.'},
+{q:`« a sword » c'est…`,say:'a sword',c:['Un bouclier','Une épée','Une couronne'],a:1,e:'Sword = épée (le w ne se prononce pas : « sord »).'},
+{q:`« brave » veut dire…`,say:'brave',c:['Courageux','Fort','Effrayant'],a:0,e:'Beowulf is brave = courageux !'},
+{q:`The … and the queen live in a castle.`,say:'the king and the queen',c:['knight','king','giant'],a:1,e:'King = roi, queen = reine.'},
+{q:`I listen with my…`,say:'ears',c:['eyes','ears','teeth'],a:1,e:'Ears = oreilles. Eyes = yeux.'}]},
+
+A12:{mat:'anglais',titre:'Grammar: question words ❓',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Les mots interrogatifs</h3>
+<table><tr><th>What</th><td>Quoi / Que</td><td><i>What is your name?</i></td></tr>
+<tr><th>Where</th><td>Où</td><td><i>Where do you live?</i></td></tr>
+<tr><th>When</th><td>Quand</td><td><i>When is your birthday?</i></td></tr>
+<tr><th>Who</th><td>Qui</td><td><i>Who is this boy?</i></td></tr>
+<tr><th>Why</th><td>Pourquoi</td><td><i>Why are you late?</i></td></tr>
+<tr><th>How</th><td>Comment</td><td><i>How are you?</i></td></tr>
+<tr><th>How old</th><td>Quel âge</td><td><i>How old are you?</i></td></tr>
+<tr><th>How many</th><td>Combien</td><td><i>How many brothers have you got?</i></td></tr></table>`,
+questions:[
+{q:`… is your name? — My name is Léa.`,say:'What is your name',c:['Who','What','Where'],a:1,e:'What = quoi/que → on demande le nom.'},
+{q:`… do you live? — In Paris.`,say:'Where do you live',c:['When','Where','Why'],a:1,e:'Where = où (réponse : un lieu).'},
+{q:`… old are you? — I'm eleven.`,say:'How old are you',c:['What','How','Who'],a:1,e:'How old = quel âge.'},
+{q:`… is your birthday? — In July!`,say:'When is your birthday',c:['When','Where','What'],a:0,e:'When = quand (réponse : une date).'},
+{q:`… is this girl? — She's my cousin.`,say:'Who is this girl',c:['What','Who','How'],a:1,e:'Who = qui (réponse : une personne).'},
+{q:`… are you crying? — Because I'm sad.`,say:'Why are you crying',c:['Why','When','Who'],a:0,e:'Why (pourquoi) appelle une réponse avec because !'},
+{q:`… many pets have you got? — Two!`,say:'How many pets have you got',c:['How','What','Where'],a:0,e:'How many = combien (quantité).'},
+{q:`… are you? — I'm fine, thank you!`,say:'How are you',c:['How','What','Who'],a:0,e:'How are you? = Comment vas-tu ?'}]},
+
+A13:{mat:'anglais',titre:'Game: Jobs & School Memory 🎒',duree:'~10 min',type:'memory',
+consigne:`Dernière partie de memory : métiers et école mélangés. Trouve les 8 paires <b>anglais ↔ français</b> !`,
+paires:[['teacher','professeur'],['doctor','médecin'],['baker','boulanger'],['singer','chanteur'],['a pen','un stylo'],['a ruler','une règle'],['a rubber','une gomme'],['a schoolbag','un cartable']]},
+
+A14:{mat:'anglais',titre:'Vocabulary: Personality ✨',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Personality / Le caractère</h3>
+<table><tr><th>English 🔊</th><th>Français</th></tr>
+<tr><td>funny</td><td>drôle</td></tr>
+<tr><td>kind · nice</td><td>gentil(le) · sympa</td></tr>
+<tr><td>shy</td><td>timide</td></tr>
+<tr><td>clever / smart</td><td>intelligent(e)</td></tr>
+<tr><td>lazy</td><td>paresseux(se)</td></tr>
+<tr><td>hard-working</td><td>travailleur(se)</td></tr>
+<tr><td>friendly</td><td>amical(e)</td></tr>
+<tr><td>talkative</td><td>bavard(e)</td></tr></table>
+<p><i>My best friend is funny and kind.</i> = Mon meilleur ami est drôle et gentil.</p>`,
+questions:[
+{q:`« shy » veut dire…`,say:'shy',c:['Timide','Bavard','Drôle'],a:0,e:'Shy = timide.'},
+{q:`Le contraire de « lazy » :`,say:'hard-working',c:['Funny','Hard-working','Kind'],a:1,e:'Lazy (paresseux) ↔ hard-working (travailleur).'},
+{q:`« Elle est drôle » →`,say:'She is funny',c:['She is funny','She is angry','She is shy'],a:0,e:'Funny = drôle.'},
+{q:`« clever » veut dire…`,say:'clever',c:['Rapide','Intelligent','Fort'],a:1,e:'Clever (ou smart) = intelligent.'},
+{q:`Someone who talks a lot is…`,say:'talkative',c:['shy','talkative','lazy'],a:1,e:'To talk = parler → talkative = bavard.'},
+{q:`« kind » veut dire…`,say:'kind',c:['Méchant','Gentil','Curieux'],a:1,e:'Kind = gentil. Be kind! 💛'},
+{q:`My friend helps everyone and smiles a lot. She is…`,say:'friendly and nice',c:['lazy and shy','friendly and nice','talkative and angry'],a:1,e:'Friendly = amicale, nice = sympa.'},
+{q:`« Il est travailleur mais timide » →`,c:['He is lazy but funny','He is hard-working but shy','He is clever but talkative'],a:1,e:'Hard-working = travailleur, shy = timide.'}]},
+
+A15:{mat:'anglais',titre:'The Big English Challenge 🏁',duree:'~20 min',type:'quiz',
+lecon:`<h3>📖 Last day!</h3>
+<p>Ce grand quiz mélange <b>tout ton anglais de 6ème</b> : vocabulaire, be, articles, possessifs, présent simple et mots interrogatifs. You can do it! 💪</p>
+<div class="astuce">🎯 <b>Goal:</b> show you're ready for Year 8… euh, la 5ème !</div>`,
+questions:[
+{q:`My mother's sister is my…`,say:'my aunt',c:['cousin','aunt','grandmother'],a:1,e:'La sœur de ma mère = ma tante = aunt.'},
+{q:`They … eleven years old.`,say:'They are eleven years old',c:['is','am','are'],a:2,e:'They → are.'},
+{q:`I eat … orange every morning.`,say:'an orange',c:['a','an','the'],a:1,e:'Orange → son de voyelle → an.'},
+{q:`Emma loves … dog. (le chien d'Emma)`,say:'her dog',c:['his','her','its'],a:1,e:'Emma = fille → her.'},
+{q:`He … TV on Sundays.`,say:'He watches TV',c:['watch','watchs','watches'],a:2,e:'He + verbe en -ch → -es.'},
+{q:`… do you live? — In Cayenne!`,say:'Where do you live',c:['Where','When','Who'],a:0,e:'Where = où.'},
+{q:`She has got long … hair. (bouclés)`,say:'long curly hair',c:['curly','straight','short'],a:0,e:'Curly = bouclés.'},
+{q:`My dad works in a school. He is … teacher.`,say:'He is a teacher',c:['a','an','the'],a:0,e:'Teacher → son de consonne → a. Et l\'article est obligatoire devant un métier !'},
+{q:`Le pluriel de « child » :`,say:'children',c:['childs','children','childrens'],a:1,e:'Child → children.'},
+{q:`« The brave knight has got a sword » veut dire…`,c:['Le chevalier courageux a une épée','Le roi méchant a une couronne','Le géant fort a un bouclier'],a:0,e:'Brave = courageux, knight = chevalier, sword = épée. ⚔️'}]},
+
+/* ══════════════ FRANÇAIS ══════════════ */
+F1:{mat:'francais',titre:'Les classes de mots',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Chaque mot a sa famille</h3>
+<ul><li><b>Le nom</b> désigne une personne, un animal, une chose, une idée : <i>chat, plage, courage</i>.</li>
+<li><b>Le déterminant</b> accompagne le nom : <i>le, la, un, des, mon, cette…</i></li>
+<li><b>L'adjectif</b> décrit le nom : <i>un chat <mark>gris</mark>, une <mark>belle</mark> plage</i>.</li>
+<li><b>Le verbe</b> exprime une action ou un état : <i>nager, être, sembler</i>.</li>
+<li><b>Le pronom</b> remplace un nom : <i>il, elle, nous, celui-ci…</i></li>
+<li><b>L'adverbe</b> est invariable et précise : <i>très, vite, hier, toujours</i>.</li></ul>
+<div class="astuce">💡 <b>Test du verbe :</b> si tu peux le conjuguer (je nage, tu nages…), c'est un verbe !</div>`,
+questions:[
+{q:`Dans « La mouette survole la plage », le mot « plage » est…`,c:['Un verbe','Un nom','Un adjectif'],a:1,e:'C\'est une chose (un lieu) : c\'est un nom commun.'},
+{q:`Dans « un été magnifique », « magnifique » est…`,c:['Un nom','Un adverbe','Un adjectif'],a:2,e:'Il décrit le nom « été » : c\'est un adjectif qualificatif.'},
+{q:`Dans « Elle nage très vite », « Elle » est…`,c:['Un pronom','Un déterminant','Un nom'],a:0,e:'Il remplace un nom (Léa, ma sœur…) : c\'est un pronom personnel.'},
+{q:`« Mes » dans « mes vacances » est…`,c:['Un pronom','Un déterminant','Un adjectif'],a:1,e:'Il accompagne et précise le nom : déterminant possessif.'},
+{q:`Quel mot est un verbe ?`,c:['Voyage (dans « je voyage »)','Voyage (dans « un beau voyage »)','Vraiment'],a:0,e:'« Je voyage, tu voyages… » : on peut le conjuguer ! Le même mot peut être nom OU verbe selon la phrase.'},
+{q:`Dans « Il court rapidement », « rapidement » est…`,c:['Un adjectif','Un adverbe','Un verbe'],a:1,e:'Invariable, il précise comment il court : adverbe (souvent en -ment).'},
+{q:`Combien de noms dans « Le soleil brille sur la mer bleue » ?`,c:['1','2','3'],a:1,e:'« soleil » et « mer ». (« bleue » est un adjectif !)'},
+{q:`Un adjectif s'accorde avec…`,c:['Le verbe','Le nom qu\'il décrit','Rien, il est invariable'],a:1,e:'« Des vagues géantES » : féminin pluriel comme « vagues ».'}]},
+
+F2:{mat:'francais',titre:'Conjugaison : le présent',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Le présent de l'indicatif</h3>
+<h3>Verbes en -ER (1er groupe)</h3>
+<p>chanter → je chant<b>e</b>, tu chant<b>es</b>, il chant<b>e</b>, nous chant<b>ons</b>, vous chant<b>ez</b>, ils chant<b>ent</b></p>
+<h3>Être et avoir (à connaître par cœur !)</h3>
+<table><tr><th></th><th>ÊTRE</th><th>AVOIR</th></tr>
+<tr><td>je/j'</td><td>suis</td><td>ai</td></tr>
+<tr><td>tu</td><td>es</td><td>as</td></tr>
+<tr><td>il/elle</td><td>est</td><td>a</td></tr>
+<tr><td>nous</td><td>sommes</td><td>avons</td></tr>
+<tr><td>vous</td><td>êtes</td><td>avez</td></tr>
+<tr><td>ils/elles</td><td>sont</td><td>ont</td></tr></table>
+<div class="astuce">⚠️ Avec « tu », il y a presque toujours un <b>-s</b> : tu chantes, tu finis, tu es, tu as.</div>`,
+questions:[
+{q:`Tu (chanter) → tu…`,c:['chante','chantes','chantent'],a:1,e:'Avec tu : -es. Le -s de « tu » !'},
+{q:`Nous (jouer) → nous…`,c:['jouons','jouont','joues'],a:0,e:'Nous → -ons, toujours.'},
+{q:`Ils (être) → ils…`,c:['est','sont','êtes'],a:1,e:'Ils sont. (Vous êtes !)'},
+{q:`Elle (avoir) → elle…`,c:['as','a','à'],a:1,e:'Elle a (sans accent : c\'est le verbe avoir).'},
+{q:`Vous (regarder) → vous…`,c:['regarder','regardez','regardé'],a:1,e:'Vous → -ez.'},
+{q:`Je (être) → je…`,c:['suis','es','ai'],a:0,e:'Je suis. (J\'ai = verbe avoir)'},
+{q:`Ils (nager) → ils…`,c:['nage','nages','nagent'],a:2,e:'Ils/elles → -ent (qui ne se prononce pas !).'},
+{q:`Nous (avoir) → nous…`,c:['sommes','avons','avont'],a:1,e:'Nous avons. « Avont » n\'existe pas !'}]},
+
+F3:{mat:'francais',titre:'Jeu : La chasse aux homophones ⏱️',duree:'45 secondes',type:'chrono-homophones',niveau:1,
+consigne:`<b>a / à</b> et <b>et / est</b> : choisis le bon mot le plus vite possible ! 45 secondes, il te faut au moins <b>8 bonnes réponses</b>.<br><br>💡 Rappel : « a » = verbe avoir (il <i>avait</i>) · « à » = petit mot invariable · « et » = "et puis" · « est » = verbe être (il <i>était</i>).`},
+
+F4:{mat:'francais',titre:'Sujet, verbe, compléments',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Le squelette de la phrase</h3>
+<ul><li><b>Le verbe</b> : le cœur de la phrase. <i>Léa <mark>mange</mark> une glace.</i></li>
+<li><b>Le sujet</b> : qui fait l'action ? On le trouve avec « Qui est-ce qui… ? » → <i><mark>Léa</mark> mange.</i></li>
+<li><b>Le COD</b> : complète le verbe sans préposition. « Léa mange <b>quoi</b> ? » → <i>une glace</i>.</li>
+<li><b>Le COI</b> : avec une préposition (à, de). « Elle parle <b>à qui</b> ? » → <i>à son frère</i>.</li>
+<li><b>Les compléments circonstanciels</b> : où ? quand ? comment ? → <i>à la plage, ce matin, joyeusement</i>. On peut les déplacer ou les supprimer !</li></ul>
+<div class="astuce">💡 <b>Test :</b> un complément circonstanciel peut être enlevé, la phrase reste correcte. Pas le COD !</div>`,
+questions:[
+{q:`Dans « Le chien attrape la balle », le sujet est…`,c:['La balle','Le chien','Attrape'],a:1,e:'Qui est-ce qui attrape ? Le chien !'},
+{q:`Dans « Le chien attrape la balle », « la balle » est…`,c:['Le sujet','Le COD','Un complément circonstanciel'],a:1,e:'Il attrape QUOI ? La balle → COD.'},
+{q:`Dans « Ce matin, Zoé lit un roman », quel est le complément circonstanciel ?`,c:['Ce matin','Zoé','Un roman'],a:0,e:'Il répond à « quand ? » et peut être supprimé.'},
+{q:`Dans « Nous parlons à la directrice », « à la directrice » est…`,c:['Un COD','Un COI','Le sujet'],a:1,e:'Parlons À QUI ? → COI (avec la préposition à).'},
+{q:`Le verbe s'accorde toujours avec…`,c:['Le COD','Le sujet','Le complément circonstanciel'],a:1,e:'C\'est le sujet qui commande le verbe !'},
+{q:`Dans « Les vagues immenses recouvrent le sable », le verbe est…`,c:['Vagues','Immenses','Recouvrent'],a:2,e:'C\'est l\'action de la phrase.'},
+{q:`« À la plage, les enfants construisent un château. » Que peut-on supprimer ?`,c:['À la plage','Les enfants','Un château'],a:0,e:'Le CC de lieu est supprimable : « Les enfants construisent un château » reste correct.'},
+{q:`Dans « Papa prépare le dîner », trouve le COD :`,c:['Papa','Prépare','Le dîner'],a:2,e:'Il prépare QUOI ? Le dîner.'}]},
+
+F5:{mat:'francais',titre:'Conjugaison : l\'imparfait',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 L'imparfait : le passé qui dure</h3>
+<p>Il décrit une <b>habitude</b> ou un <b>décor</b> dans le passé : <i>Quand j'étais petite, je jouais à la poupée.</i></p>
+<h3>Les terminaisons (les mêmes pour TOUS les verbes !)</h3>
+<table><tr><th>je</th><th>tu</th><th>il/elle</th><th>nous</th><th>vous</th><th>ils/elles</th></tr>
+<tr><td>-ais</td><td>-ais</td><td>-ait</td><td>-ions</td><td>-iez</td><td>-aient</td></tr></table>
+<p>chanter → je chant<b>ais</b> · finir → nous finiss<b>ions</b> · être → j'ét<b>ais</b> · avoir → il av<b>ait</b></p>
+<div class="astuce">💡 <b>Astuce :</b> pars de « nous » au présent (nous finiss-ons) → radical « finiss » → je finissais.</div>`,
+questions:[
+{q:`Je (chanter) à l'imparfait → je…`,c:['chantais','chantait','chanté'],a:0,e:'Je → -ais.'},
+{q:`Il (avoir) à l'imparfait → il…`,c:['avais','avait','avaient'],a:1,e:'Il/elle → -ait.'},
+{q:`Nous (finir) à l'imparfait → nous…`,c:['finissions','finissons','finirions'],a:0,e:'Radical finiss- + -ions.'},
+{q:`Elles (être) à l'imparfait → elles…`,c:['était','étaient','êtres'],a:1,e:'Ils/elles → -aient (qui se prononce comme -ait !).'},
+{q:`Tu (jouer) à l'imparfait → tu…`,c:['jouait','jouais','joues'],a:1,e:'Tu → -ais.'},
+{q:`Vous (regarder) à l'imparfait → vous…`,c:['regardiez','regardez','regardaient'],a:0,e:'Vous → -iez.'},
+{q:`L'imparfait sert à exprimer…`,c:['Une action future','Une habitude ou une description dans le passé','Un ordre'],a:1,e:'« Chaque été, nous allions à la mer » : habitude passée.'},
+{q:`Quelle phrase est à l'imparfait ?`,c:['Je mangerai une glace','Je mangeais une glace','Je mange une glace'],a:1,e:'-eais = imparfait. (-erai = futur, -e = présent)'}]},
+
+F6:{mat:'francais',titre:'Homophones : son/sont, on/ont, ou/où',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Les jumeaux sonores, niveau 2 !</h3>
+<ul><li><b>son</b> = le sien (son vélo) ↔ <b>sont</b> = verbe être (ils <i>étaient</i>)</li>
+<li><b>on</b> = quelqu'un (il/elle) ↔ <b>ont</b> = verbe avoir (ils <i>avaient</i>)</li>
+<li><b>ou</b> = ou bien ↔ <b>où</b> = un lieu (l'accent montre l'endroit !)</li>
+<li><b>ce</b> = déterminant (ce chien) ↔ <b>se</b> = pronom devant un verbe (il <b>se</b> lave)</li></ul>
+<div class="astuce">💡 <b>Le test magique :</b> remplace par « étaient » ou « avaient ». Si ça marche → sont / ont. « Ils SONT partis » = « ils ÉTAIENT partis » ✓</div>`,
+questions:[
+{q:`Mes cousins … arrivés hier.`,c:['son','sont'],a:1,e:'« étaient arrivés » fonctionne → sont.'},
+{q:`Il a perdu … cartable.`,c:['son','sont'],a:0,e:'= le sien → son (déterminant possessif).'},
+{q:`Ils … faim après la piscine.`,c:['on','ont'],a:1,e:'« Ils avaient faim » ✓ → ont.'},
+{q:`… va à la plage cet après-midi ?`,c:['On','Ont'],a:0,e:'= quelqu\'un/nous → on (on peut dire « il va »).'},
+{q:`Tu préfères la mer … la montagne ?`,c:['ou','où'],a:0,e:'= ou bien → ou, sans accent.'},
+{q:`Voici la maison … je suis née.`,c:['ou','où'],a:1,e:'Un lieu → où avec accent.'},
+{q:`… chaton dort dans le panier.`,c:['Ce','Se'],a:0,e:'Devant un nom → ce (déterminant).'},
+{q:`Le soleil … couche sur la mer.`,c:['ce','se'],a:1,e:'Devant un verbe (se coucher) → se.'}]},
+
+F7:{mat:'francais',titre:'Conjugaison : le futur',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Le futur simple : demain, plus tard…</h3>
+<h3>Les terminaisons</h3>
+<table><tr><th>je</th><th>tu</th><th>il/elle</th><th>nous</th><th>vous</th><th>ils/elles</th></tr>
+<tr><td>-rai</td><td>-ras</td><td>-ra</td><td>-rons</td><td>-rez</td><td>-ront</td></tr></table>
+<p>chanter → je chante<b>rai</b> · finir → tu fini<b>ras</b> · Il y a toujours un <mark>R</mark> !</p>
+<h3>Les futurs irréguliers à connaître</h3>
+<p>être → je <b>serai</b> · avoir → j'<b>aurai</b> · aller → j'<b>irai</b> · faire → je <b>ferai</b> · venir → je <b>viendrai</b> · voir → je <b>verrai</b></p>
+<div class="astuce">💡 En 5ème, tu écriras souvent au futur : « L'année prochaine, je serai en 5ème et j'aurai de nouveaux profs ! »</div>`,
+questions:[
+{q:`Demain, je (chanter) → je…`,c:['chanterai','chanterais','chantais'],a:0,e:'Futur : -rai. (chanterais = conditionnel, avec un s !)'},
+{q:`Tu (finir) tes devoirs ce soir → tu…`,c:['finira','finiras','finissais'],a:1,e:'Tu → -ras.'},
+{q:`L'année prochaine, nous (être) en 5ème → nous…`,c:['serons','sommes','étions'],a:0,e:'Être au futur : je serai, nous serons.'},
+{q:`Ils (avoir) un nouveau professeur → ils…`,c:['auront','avaient','ont'],a:0,e:'Avoir au futur : j\'aurai, ils auront.'},
+{q:`Elle (aller) au collège en bus → elle…`,c:['allera','ira','allait'],a:1,e:'Aller est irrégulier : j\'irai, elle ira !'},
+{q:`Vous (regarder) le feu d'artifice → vous…`,c:['regarderez','regardiez','regardez'],a:0,e:'Vous → -rez.'},
+{q:`Quel est le point commun de toutes les terminaisons du futur ?`,c:['Un S','Un R','Un T'],a:1,e:'-rai, -ras, -ra, -rons, -rez, -ront : le R du futuR !'},
+{q:`Nous (faire) une grande fête → nous…`,c:['fairons','ferons','faisons'],a:1,e:'Faire au futur : je ferai, nous ferons.'}]},
+
+F8:{mat:'francais',titre:'Poésie : compter les syllabes',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 La versification</h3>
+<p>Un poème est écrit en <b>vers</b> (les lignes). On compte leurs <b>syllabes</b> :</p>
+<ul><li>6 syllabes = hexasyllabe · 8 = octosyllabe · 10 = décasyllabe · <b>12 = alexandrin</b> 👑</li></ul>
+<h3>La règle du E muet 🔇</h3>
+<ul><li>E devant une <b>consonne</b> → il <span class="ex-ok">COMPTE</span> : <i>« un<b>e</b> rose »</i> → u-ne-ro… </li>
+<li>E devant une <b>voyelle</b> → il <span class="ex-non">NE COMPTE PAS</span> : <i>« un<b>e</b> étoile »</i> → u-né-toi-le</li>
+<li>E à la <b>fin du vers</b> → il <span class="ex-non">NE COMPTE PAS</span></li></ul>
+<div class="astuce">💡 <b>Formule magique :</b> « E devant Voyelle = Éliminé ! »</div>`,
+questions:[
+{q:`Un vers de 12 syllabes s'appelle…`,c:['Un octosyllabe','Un alexandrin','Un décasyllabe'],a:1,e:'L\'alexandrin, le vers roi de la poésie française !'},
+{q:`Combien de syllabes dans « Le soleil brillait » ? (Le-so-leil-bril-lait)`,c:['4','5','6'],a:1,e:'Le/so/leil/bril/lait = 5 syllabes.'},
+{q:`Dans « une rose rouge », le e de « une » (devant la consonne r)…`,c:['Compte','Ne compte pas'],a:0,e:'E + consonne → il compte : u/ne/ro/se…'},
+{q:`Dans « une étoile », le e de « une » (devant la voyelle é)…`,c:['Compte','Ne compte pas'],a:1,e:'E devant Voyelle = Éliminé ! u/né/toi/le.'},
+{q:`Le e à la toute fin d'un vers…`,c:['Compte toujours','Ne compte jamais','Compte le lundi'],a:1,e:'Le e final du vers est toujours muet.'},
+{q:`Un vers de 8 syllabes s'appelle…`,c:['Un octosyllabe','Un alexandrin','Un hexasyllabe'],a:0,e:'Octo = 8 (comme une pieuvre a 8 bras 🐙).'},
+{q:`Une ligne de poème s'appelle…`,c:['Une phrase','Un vers','Une strophe'],a:1,e:'Un vers. Un groupe de vers = une strophe !'},
+{q:`« Les sanglots longs des violons » — combien de syllabes ? (Les-san-glots-longs-des-vi-o-lons)`,c:['7','8','9'],a:1,e:'8 syllabes : un octosyllabe de Verlaine !'}]},
+
+F9:{mat:'francais',titre:'Les accords',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Accord sujet-verbe</h3>
+<p>Le verbe s'accorde <b>toujours avec son sujet</b> : <i>Les mouettes <mark>volent</mark>.</i> (elles → -ent)</p>
+<p>⚠️ Même si le sujet est loin : <i>Les enfants de la voisine <mark>jouent</mark>.</i> Qui joue ? Les enfants !</p>
+<h3>Accords dans le groupe nominal</h3>
+<p>Le déterminant et l'adjectif s'accordent avec le nom : <i>une grand<b>e</b> vague</i> · <i>des château<b>x</b> magnifique<b>s</b></i>.</p>
+<ul><li>Féminin : souvent + <b>e</b> (grand → grande)</li>
+<li>Pluriel : souvent + <b>s</b> (mais : -eau → -eaux, -al → -aux !)</li></ul>`,
+questions:[
+{q:`Les dauphins (nager) près du bateau → les dauphins…`,c:['nage','nagent','nages'],a:1,e:'Sujet pluriel → -ent.'},
+{q:`« Une histoire (passionnant) » →`,c:['passionnant','passionnante','passionnants'],a:1,e:'Histoire = féminin singulier → passionnante.'},
+{q:`« Des animaux (sauvage) » →`,c:['sauvage','sauvages','sauvage'],a:1,e:'Animaux = pluriel → sauvages.'},
+{q:`Le pluriel de « un château » :`,c:['Des châteaus','Des châteaux','Des châteaux'],a:1,e:'Les mots en -eau prennent un X au pluriel.'},
+{q:`Le pluriel de « un cheval » :`,c:['Des chevals','Des chevaux','Des chevales'],a:1,e:'-al → -aux (un cheval, des chevaux).'},
+{q:`« Les élèves de la classe (chanter) » → qui commande le verbe ?`,c:['La classe','Les élèves','Personne'],a:1,e:'Le sujet est « les élèves » → chantent. Ne te laisse pas piéger par « la classe » !'},
+{q:`« Ma petite sœur et mon frère (partir) » →`,c:['part','partent','pars'],a:1,e:'Deux sujets réunis par « et » = pluriel → partent.'},
+{q:`Le féminin de « heureux » :`,c:['Heureuse','Heureuxe','Heureue'],a:0,e:'-eux → -euse (heureux → heureuse).'}]},
+
+F10:{mat:'francais',titre:'Conjugaison : le passé composé',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Le passé composé = 2 mots !</h3>
+<p><b>AVOIR ou ÊTRE au présent</b> + <b>participe passé</b> : <i>j'<mark>ai mangé</mark>, elle <mark>est partie</mark></i>.</p>
+<h3>Avec AVOIR (la plupart des verbes)</h3>
+<p><i>J'ai chanté · tu as fini · nous avons vu</i> — le participe ne s'accorde pas avec le sujet.</p>
+<h3>Avec ÊTRE (aller, venir, partir, arriver, rester, tomber…)</h3>
+<p>Le participe <mark>s'accorde avec le sujet</mark> : <i>Elle est parti<b>e</b> · Ils sont arrivé<b>s</b> · Elles sont tombé<b>es</b>.</i></p>
+<div class="astuce">💡 Participes passés : -er → é (mangé) · -ir → i (fini) · être → été · avoir → eu · faire → fait · voir → vu · prendre → pris.</div>`,
+questions:[
+{q:`Hier, j'(manger) une glace → j'…`,c:['ai mangé','ai manger','suis mangé'],a:0,e:'Avoir + participe en -é. Pas l\'infinitif !'},
+{q:`Elle (partir) à la plage → elle…`,c:['a parti','est partie','est parti'],a:1,e:'Partir se conjugue avec ÊTRE, et le participe s\'accorde : partiE.'},
+{q:`Nous (finir) nos devoirs → nous…`,c:['avons fini','avons finit','sommes finis'],a:0,e:'Finir → fini (sans t à la fin ici !).'},
+{q:`Ils (arriver) en retard → ils…`,c:['ont arrivé','sont arrivés','sont arrivé'],a:1,e:'Arriver + être, accord au pluriel : arrivéS.'},
+{q:`Tu (voir) ce film ? → tu…`,c:['as vu','as voir','es vu'],a:0,e:'Voir → vu.'},
+{q:`Le participe passé de « faire » :`,c:['Fait','Faisé','Fu'],a:0,e:'J\'ai fait.'},
+{q:`Elles (tomber) dans la piscine ! → elles…`,c:['ont tombé','sont tombées','sont tombés'],a:1,e:'Être + accord féminin pluriel : tombéES. 💦'},
+{q:`Le passé composé est formé de…`,c:['Un seul mot','Un auxiliaire + un participe passé','Trois verbes'],a:1,e:'Avoir/être (auxiliaire) + participe passé.'}]},
+
+F11:{mat:'francais',titre:'Poésie : vers et rimes',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Les rimes</h3>
+<p>Deux vers riment quand ils se terminent par le <b>même son</b> : <i>chat / lilas · rivière / lumière</i>.</p>
+<h3>La disposition des rimes</h3>
+<ul><li><b>Suivies (plates)</b> : AABB — <i>chat/lilas puis mer/hiver</i></li>
+<li><b>Croisées</b> : ABAB — elles s'alternent</li>
+<li><b>Embrassées</b> : ABBA — comme un câlin 🤗</li></ul>
+<h3>Diérèse et synérèse</h3>
+<p>« li-on » en 2 syllabes = <b>diérèse</b> · « lion » en 1 syllabe = <b>synérèse</b>. Le poète choisit selon le nombre de syllabes dont il a besoin !</p>`,
+questions:[
+{q:`Quels mots riment ?`,c:['Bateau / château','Bateau / navire','Mer / plage'],a:0,e:'Même son final « -eau » !'},
+{q:`Des rimes en AABB s'appellent…`,c:['Croisées','Suivies','Embrassées'],a:1,e:'AABB : les rimes se suivent deux par deux.'},
+{q:`Des rimes en ABAB s'appellent…`,c:['Croisées','Suivies','Embrassées'],a:0,e:'ABAB : elles se croisent en alternance.'},
+{q:`Des rimes en ABBA s'appellent…`,c:['Croisées','Suivies','Embrassées'],a:2,e:'Le A « embrasse » les deux B, comme un câlin.'},
+{q:`Prononcer « li-on » en deux syllabes, c'est…`,c:['Une synérèse','Une diérèse','Une erreur'],a:1,e:'Diérèse = on sépare (di = deux).'},
+{q:`Un groupe de vers dans un poème s'appelle…`,c:['Un paragraphe','Une strophe','Un chapitre'],a:1,e:'Une strophe de 4 vers = un quatrain !'},
+{q:`« La cigale ayant chanté / Tout l'été » — ces deux vers…`,c:['Riment (é/é)','Ne riment pas','Sont des alexandrins'],a:0,e:'chanTÉ / éTÉ : même son final. C\'est La Fontaine !'},
+{q:`Une strophe de 4 vers s'appelle…`,c:['Un quatrain','Un tercet','Un carré'],a:0,e:'Quatrain = 4 vers, tercet = 3 vers.'}]},
+
+F12:{mat:'francais',titre:'Vocabulaire : synonymes & familles',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Enrichir son vocabulaire</h3>
+<ul><li><b>Synonymes</b> = sens proche : <i>content ≈ joyeux ≈ heureux</i></li>
+<li><b>Antonymes</b> = sens contraire : <i>grand ≠ petit</i>. Souvent avec des préfixes : <i>possible → <mark>im</mark>possible, faire → <mark>dé</mark>faire</i></li>
+<li><b>Famille de mots</b> = même radical : <i>terre, terrain, terrasse, enterrer, atterrir</i></li>
+<li><b>Préfixe</b> (avant) + RADICAL + <b>suffixe</b> (après) : <i>re-commence-ment</i></li></ul>
+<div class="astuce">💡 Connaître les familles aide en orthographe : « terrain » prend 2 R… comme « terre » !</div>`,
+questions:[
+{q:`Un synonyme de « content » :`,c:['Triste','Joyeux','Fatigué'],a:1,e:'Content ≈ joyeux ≈ heureux ≈ ravi.'},
+{q:`L'antonyme de « monter » :`,c:['Grimper','Descendre','Escalader'],a:1,e:'Antonyme = contraire.'},
+{q:`Quel mot est de la famille de « mer » ?`,c:['Marin','Mère','Merci'],a:0,e:'Marin, maritime, amerrir… Attention aux pièges sonores !'},
+{q:`Dans « impossible », « im- » est…`,c:['Un suffixe','Un préfixe','Un radical'],a:1,e:'Il est placé AVANT le radical et signifie « le contraire ».'},
+{q:`L'antonyme de « faire » avec un préfixe :`,c:['Refaire','Défaire','Parfaire'],a:1,e:'dé- = contraire. (re- = à nouveau !)'},
+{q:`Un synonyme de « peur » :`,c:['Crainte','Courage','Colère'],a:0,e:'Peur ≈ crainte ≈ frayeur ≈ terreur (de plus en plus fort !).'},
+{q:`Quel mot n'est PAS de la famille de « dent » ?`,c:['Dentiste','Dentifrice','Dedans'],a:2,e:'Dedans vient de « dans », pas de « dent » !'},
+{q:`Dans « chanteur », « -eur » est…`,c:['Un préfixe','Un suffixe','Un radical'],a:1,e:'Placé APRÈS le radical « chant », il indique « celui qui fait ».'}]},
+
+F13:{mat:'francais',titre:'Jeu : Homophones express ⏱️',duree:'45 secondes',type:'chrono-homophones',niveau:2,
+consigne:`Niveau 2 : <b>son/sont · on/ont · ou/où · ce/se</b>, tous mélangés ! 45 secondes, au moins <b>8 bonnes réponses</b>.<br><br>💡 Rappel : sont = « étaient » · ont = « avaient » · où = lieu · se = devant un verbe.`},
+
+F14:{mat:'francais',titre:'Les fables de La Fontaine 🦊',duree:'~15 min',type:'quiz',
+lecon:`<h3>📖 Jean de La Fontaine (1621-1695)</h3>
+<p>Le plus célèbre <b>fabuliste</b> français, au temps du roi Louis XIV. Une <b>fable</b> est un court récit, souvent en vers, avec des <mark>animaux qui parlent</mark> et une <mark>morale</mark> (la leçon de l'histoire).</p>
+<h3>Les fables stars ⭐</h3>
+<ul><li><b>Le Corbeau et le Renard</b> : le renard flatte le corbeau pour lui voler son fromage. Morale : <i>« Tout flatteur vit aux dépens de celui qui l'écoute. »</i></li>
+<li><b>La Cigale et la Fourmi</b> : la cigale a chanté tout l'été, la fourmi a travaillé… et l'hiver arrive !</li>
+<li><b>Le Lièvre et la Tortue</b> : <i>« Rien ne sert de courir ; il faut partir à point. »</i></li>
+<li><b>Le Loup et l'Agneau</b> : <i>« La raison du plus fort est toujours la meilleure. »</i> (dénonce l'injustice)</li></ul>`,
+questions:[
+{q:`Une fable se termine généralement par…`,c:['Une chanson','Une morale','Une question'],a:1,e:'La morale = la leçon que la fable veut nous apprendre.'},
+{q:`Dans « Le Corbeau et le Renard », le renard obtient le fromage grâce à…`,c:['La force','La flatterie','Un échange'],a:1,e:'Il complimente le corbeau, qui ouvre le bec pour chanter… et lâche le fromage !'},
+{q:`Qui a « chanté tout l'été » ?`,c:['La fourmi','La cigale','Le corbeau'],a:1,e:'« La Cigale, ayant chanté tout l\'été, se trouva fort dépourvue quand la bise fut venue. »'},
+{q:`« Rien ne sert de courir ; il faut partir à point » est la morale de…`,c:['Le Lièvre et la Tortue','Le Loup et l\'Agneau','La Cigale et la Fourmi'],a:0,e:'La tortue, lente mais régulière, bat le lièvre trop sûr de lui !'},
+{q:`Les personnages des fables sont souvent…`,c:['Des robots','Des animaux qui parlent','Des rois uniquement'],a:1,e:'Les animaux représentent les défauts et qualités des humains.'},
+{q:`La Fontaine a vécu au temps de…`,c:['Napoléon','Louis XIV','Jules César'],a:1,e:'Au XVIIe siècle, à la cour du Roi-Soleil.'},
+{q:`« La raison du plus fort est toujours la meilleure » dénonce…`,c:['La paresse','L\'injustice des puissants','La gourmandise'],a:1,e:'Dans « Le Loup et l\'Agneau », le loup mange l\'agneau sans vraie raison : c\'est injuste.'},
+{q:`Quel défaut la fable du Corbeau critique-t-elle ?`,c:['La vanité (aimer trop les compliments)','La lenteur','Le courage'],a:0,e:'Le corbeau se laisse piéger par les compliments : « Tout flatteur vit aux dépens de celui qui l\'écoute. »'}]},
+
+F15:{mat:'francais',titre:'Le grand défi français 🏁',duree:'~20 min',type:'quiz',
+lecon:`<h3>📖 Dernier jour !</h3>
+<p>Grammaire, conjugaison, orthographe, poésie et fables : ce grand quiz mélange <b>tout ton français de 6ème</b>. Courage, tu y es presque ! 💪</p>
+<div class="astuce">🎯 <b>Objectif :</b> décrocher ton dernier tampon et montrer que la 5ème peut arriver !</div>`,
+questions:[
+{q:`Dans « Les grandes vacances commencent », le sujet est…`,c:['Les grandes vacances','Commencent','Grandes'],a:0,e:'Qui est-ce qui commence ? Les grandes vacances !'},
+{q:`Nous (être) au présent → nous…`,c:['sommes','êtes','étions'],a:0,e:'Nous sommes.'},
+{q:`Ils … partis en vacances. (son/sont)`,c:['son','sont'],a:1,e:'« Ils étaient partis » ✓ → sont.'},
+{q:`Demain, j'(aller) à la plage → j'…`,c:['irai','allerai','allais'],a:0,e:'Aller au futur : j\'irai.'},
+{q:`Elle (arriver) hier au passé composé → elle…`,c:['a arrivé','est arrivée','est arrivé'],a:1,e:'Être + accord féminin : arrivéE.'},
+{q:`Un alexandrin compte…`,c:['10 syllabes','12 syllabes','8 syllabes'],a:1,e:'12 syllabes, le vers majestueux !'},
+{q:`Dans « une jolie plage », « jolie » est…`,c:['Un nom','Un adjectif','Un verbe'],a:1,e:'Il décrit le nom « plage ».'},
+{q:`Le pluriel de « un journal » :`,c:['Des journals','Des journaux','Des journeaux'],a:1,e:'-al → -aux.'},
+{q:`« Tout flatteur vit aux dépens de celui qui l'écoute » vient de…`,c:['Le Corbeau et le Renard','Le Lièvre et la Tortue','La Cigale et la Fourmi'],a:0,e:'La morale du renard rusé !'},
+{q:`Des rimes disposées en ABBA sont…`,c:['Suivies','Croisées','Embrassées'],a:2,e:'Les rimes A « embrassent » les rimes B.'}]},
+};
+
+/* ═══════ PLAN DES 15 JOURS ═══════ */
+const JOURS = [
+{t:'On se remet en route !',acts:['M1','A1','F1']},
+{t:'Comparaisons & présent',acts:['M2','A2','F2']},
+{t:'Journée jeux 🎮',acts:['M3','A3','F3']},
+{t:'Divisions & descriptions',acts:['M4','A4','F4']},
+{t:'Décimaux & souvenirs',acts:['M5','A5','F5']},
+{t:'Longueurs & métiers',acts:['M6','A6','F6']},
+{t:'Masses & possessifs',acts:['M7','A7','F7']},
+{t:'Miroirs & poésie 🪞',acts:['M8','A8','F8']},
+{t:'Le tour des figures',acts:['M9','A9','F9']},
+{t:'Surfaces & passé composé',acts:['M10','A10','F10']},
+{t:'Pourcentages & créatures 🐉',acts:['M11','A11','F11']},
+{t:'Proportions & questions',acts:['M12','A12','F12']},
+{t:'Journée jeux, le retour 🎮',acts:['M13','A13','F13']},
+{t:'Problèmes & fables 🦊',acts:['M14','A14','F14']},
+{t:'Les grands défis finaux 🏁',acts:['M15','A15','F15']}];
+
+const MATIERES = {maths:{nom:'Maths',ico:'📐'},anglais:{nom:'Anglais',ico:'🇬🇧'},francais:{nom:'Français',ico:'📖'}};
+
+const BADGES = [
+{id:'premier',ico:'🌅',nom:'Premier pas',desc:'1 mission validée',test:s=>Object.keys(s.done).length>=1},
+{id:'jour1',ico:'📮',nom:'Premier tampon',desc:'1 journée complète',test:s=>nbTampons(s)>=1},
+{id:'semaine1',ico:'🏖️',nom:'Semaine 1 bouclée',desc:'Jours 1 à 5 complets',test:s=>[0,1,2,3,4].every(j=>jourComplet(s,j))},
+{id:'matheuse',ico:'🧮',nom:'As des maths',desc:'Toutes les missions maths',test:s=>Object.keys(ACTIVITES).filter(k=>k[0]==='M').every(k=>s.done[k])},
+{id:'english',ico:'🎡',nom:'English star',desc:'Toutes les missions d\'anglais',test:s=>Object.keys(ACTIVITES).filter(k=>k[0]==='A').every(k=>s.done[k])},
+{id:'plume',ico:'🖋️',nom:'Belle plume',desc:'Toutes les missions de français',test:s=>Object.keys(ACTIVITES).filter(k=>k[0]==='F').every(k=>s.done[k])},
+{id:'xp500',ico:'⚡',nom:'Pleine d\'énergie',desc:'500 XP gagnés',test:s=>s.xp>=500},
+{id:'parfait',ico:'💯',nom:'Sans faute',desc:'Un quiz réussi à 100 %',test:s=>Object.values(s.done).some(d=>d.pct===100)},
+{id:'tables-test',ico:'✖️',nom:'Reine des tables',desc:'Les 8 tables validées au test',test:s=>[2,3,4,5,6,7,8,9].every(t=>s.tables&&s.tables[t]&&s.tables[t].test>=80)},
+{id:'tables-voix',ico:'🎤',nom:'Voix d\'or',desc:'Les 8 tables récitées à voix haute',test:s=>[2,3,4,5,6,7,8,9].every(t=>s.tables&&s.tables[t]&&s.tables[t].voix>=80)},
+{id:'cap',ico:'🎓',nom:'Cap sur la 5ème !',desc:'Les 15 tampons du cahier',test:s=>nbTampons(s)>=15}];
+
+/* ═══════════════════════════════════════════════
+   MOTEUR
+════════════════════════════════════════════════ */
+const CLE='cap5e_v1';
+let etat = charger();
+let jourCourant = 0, actCourante = null, timerJeu = null;
+
+function charger(){
+  try{ const s = JSON.parse(localStorage.getItem(CLE)); if(s && s.done){ if(!s.tables) s.tables={}; return s; } }catch(e){}
+  return {xp:0, done:{}, badges:[], tables:{}};
+}
+function sauver(){ localStorage.setItem(CLE, JSON.stringify(etat)); }
+function toutEffacer(){
+  if(confirm('Tout effacer et recommencer le cahier à zéro ?')){ localStorage.removeItem(CLE); etat={xp:0,done:{},badges:[],tables:{}}; renduGlobal(); montrerVue('vue-home'); }
+}
+function jourComplet(s,j){ return JOURS[j].acts.every(a=>s.done[a]); }
+function nbTampons(s){ return JOURS.reduce((n,_,j)=>n+(jourComplet(s,j)?1:0),0); }
+function niveau(xp){ return Math.floor(xp/200)+1; }
+
+/* ── Audio anglais ── */
+function parler(txt){
+  if(!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(txt);
+  u.lang='en-GB'; u.rate=0.85;
+  const v = speechSynthesis.getVoices().find(v=>v.lang.startsWith('en'));
+  if(v) u.voice=v;
+  speechSynthesis.speak(u);
+}
+if('speechSynthesis' in window) speechSynthesis.getVoices();
+
+/* ── Navigation ── */
+function montrerVue(id){
+  clearInterval(timerJeu);
+  document.querySelectorAll('.vue').forEach(v=>v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function retourJour(){ ouvrirJour(jourCourant); }
+
+/* ── Rendu global ── */
+function renduGlobal(){
+  document.getElementById('stat-xp').textContent = etat.xp;
+  document.getElementById('stat-niveau').textContent = niveau(etat.xp);
+  document.getElementById('stat-tampons').textContent = nbTampons(etat)+'/15';
+  const dansNiveau = etat.xp % 200;
+  document.getElementById('xp-fill').style.width = (dansNiveau/200*100)+'%';
+  document.getElementById('xp-note').textContent = `Encore ${200-dansNiveau} XP pour le niveau ${niveau(etat.xp)+1}`;
+  document.getElementById('tables-compteur').textContent = [2,3,4,5,6,7,8,9].filter(t=>tableMaitrisee(t)).length+'/8';
+  ['maths','anglais','francais'].forEach(m=>{
+    const tous = Object.keys(ACTIVITES).filter(k=>ACTIVITES[k].mat===m);
+    const faits = tous.filter(k=>etat.done[k]).length;
+    document.getElementById('prog-'+m).style.width = (faits/tous.length*100)+'%';
+    document.getElementById('prog-'+m+'-txt').textContent = faits+'/'+tous.length+' missions';
+  });
+  // Semaines
+  const cont = document.getElementById('semaines'); cont.innerHTML='';
+  for(let sem=0; sem<3; sem++){
+    const lab = document.createElement('div'); lab.className='semaine-label'; lab.textContent='Semaine '+(sem+1);
+    cont.appendChild(lab);
+    const grid = document.createElement('div'); grid.className='jours-grid';
+    for(let j=sem*5; j<sem*5+5; j++){
+      const d = JOURS[j];
+      const card = document.createElement('div'); card.className='jour-card';
+      card.onclick=()=>ouvrirJour(j);
+      let past = d.acts.map(a=>`<span class="pastille ${ACTIVITES[a].mat}${etat.done[a]?' ok':''}"></span>`).join('');
+      card.innerHTML = `<h4>Jour ${j+1}</h4><div class="theme">${d.t}</div><div class="pastilles">${past}</div>`;
+      if(jourComplet(etat,j)) card.innerHTML += `<div class="tampon"><span>☀️</span>Validé !</div>`;
+      grid.appendChild(card);
+    }
+    cont.appendChild(grid);
+  }
+  // Badges
+  const bz = document.getElementById('badges'); bz.innerHTML='';
+  BADGES.forEach(b=>{
+    const ok = etat.badges.includes(b.id);
+    bz.innerHTML += `<div class="badge${ok?' ok':''}" title="${b.desc}"><span class="ico">${b.ico}</span><span>${b.nom}<br><small style="font-weight:600;color:#9A8B63;">${b.desc}</small></span></div>`;
+  });
+}
+
+/* ── Vue jour ── */
+function ouvrirJour(j){
+  jourCourant = j;
+  document.getElementById('jour-titre').textContent = 'Jour '+(j+1);
+  document.getElementById('jour-theme').textContent = JOURS[j].t;
+  const cont = document.getElementById('missions'); cont.innerHTML='';
+  JOURS[j].acts.forEach(id=>{
+    const a = ACTIVITES[id], fait = etat.done[id];
+    const div = document.createElement('div');
+    div.className = 'mission '+a.mat;
+    div.onclick = ()=>ouvrirActivite(id);
+    div.innerHTML = `<span class="ico">${MATIERES[a.mat].ico}</span>
+      <div><h3>${a.titre}</h3><small>${MATIERES[a.mat].nom} · ${a.duree}${fait?` · réussi à ${fait.pct} %`:''}</small></div>
+      <span class="etat">${fait?'✅':'▶️'}</span>`;
+    cont.appendChild(div);
+  });
+  montrerVue('vue-jour');
+}
+
+/* ── Vue activité ── */
+function ouvrirActivite(id){
+  actCourante = id;
+  const a = ACTIVITES[id];
+  document.getElementById('act-chip').className = 'chip '+a.mat;
+  document.getElementById('act-chip').textContent = MATIERES[a.mat].ico+' '+MATIERES[a.mat].nom;
+  document.getElementById('act-duree').textContent = a.duree;
+  document.getElementById('act-titre').textContent = a.titre;
+  const cont = document.getElementById('act-contenu');
+  if(a.type==='quiz'){
+    cont.innerHTML = `<div class="lecon">${a.lecon}</div>
+      <button class="btn-principal" onclick="lancerQuiz()">C'est parti pour les exercices ! ✏️</button>`;
+  } else if(a.type==='memory'){
+    cont.innerHTML = `<div class="lecon"><p>${a.consigne}</p></div>
+      <button class="btn-principal" onclick="lancerMemory()">Jouer ! 🎴</button>`;
+  } else {
+    cont.innerHTML = `<div class="lecon"><p>${a.consigne}</p></div>
+      <button class="btn-principal" onclick="${a.type==='chrono-tables'?'lancerTables()':'lancerHomophones()'}">Lancer le chrono ! ⏱️</button>`;
+  }
+  montrerVue('vue-act');
+}
+
+/* ═══════ QUIZ ═══════ */
+let qIdx=0, qScore=0;
+function lancerQuiz(){
+  qIdx=0; qScore=0; afficherQuestion();
+}
+function afficherQuestion(){
+  const a = ACTIVITES[actCourante], q = a.questions[qIdx];
+  const cont = document.getElementById('act-contenu');
+  cont.innerHTML = `
+    <div class="quiz-barre"><div class="quiz-prog"><i style="width:${qIdx/a.questions.length*100}%"></i></div>
+    <span class="quiz-compteur">${qIdx+1} / ${a.questions.length}</span></div>
+    <div class="question-carte">
+      <div class="qtxt">${q.q}</div>
+      <div class="choix${q.c.length>2?'':' deux-col'}" id="choix">
+        ${q.c.map((c,i)=>`<button onclick="repondre(${i})">${c}</button>`).join('')}
+      </div>
+      <div class="explication" id="explication"></div>
+      <button class="btn-principal" id="btn-suivant" style="display:none" onclick="questionSuivante()">Question suivante →</button>
+    </div>`;
+}
+function repondre(i){
+  const a = ACTIVITES[actCourante], q = a.questions[qIdx];
+  const btns = document.querySelectorAll('#choix button');
+  btns.forEach(b=>b.disabled=true);
+  btns[q.a].classList.add('bon');
+  if(i===q.a){ qScore++; }
+  else { btns[i].classList.add('faux'); }
+  const ex = document.getElementById('explication');
+  const audio = q.say?` <button class="btn-audio" onclick="parler('${q.say.replace(/'/g,"\\'")}')" title="Écouter la prononciation">🔊 Écouter</button>`:'';
+  ex.innerHTML = (i===q.a?'✅ <b>Bravo !</b> ':'❌ <b>Pas tout à fait…</b> ')+q.e+audio;
+  ex.classList.add('visible');
+  if(i===q.a && q.say) parler(q.say);
+  const btn = document.getElementById('btn-suivant');
+  btn.style.display='block';
+  if(qIdx===a.questions.length-1) btn.textContent='Voir mon résultat 🎉';
+}
+function questionSuivante(){
+  const a = ACTIVITES[actCourante];
+  qIdx++;
+  if(qIdx<a.questions.length) afficherQuestion();
+  else terminerActivite(qScore, a.questions.length);
+}
+
+/* ═══════ MEMORY ═══════ */
+let memoOuvertes=[], memoTrouvees=0, memoCoups=0, memoLock=false;
+function lancerMemory(){
+  const a = ACTIVITES[actCourante];
+  const cartes=[];
+  a.paires.forEach((p,i)=>{ cartes.push({t:p[0],p:i,en:true}); cartes.push({t:p[1],p:i,en:false}); });
+  cartes.sort(()=>Math.random()-0.5);
+  memoOuvertes=[]; memoTrouvees=0; memoCoups=0; memoLock=false;
+  const cont = document.getElementById('act-contenu');
+  cont.innerHTML = `
+    <div class="jeu-hud">
+      <div class="hud-item score">Paires : <b id="memo-paires">0</b>/8</div>
+      <div class="hud-item">Coups : <b id="memo-coups">0</b></div>
+    </div>
+    <div class="memory-grid" id="memo-grid"></div>`;
+  const grid = document.getElementById('memo-grid');
+  cartes.forEach((c,idx)=>{
+    const d = document.createElement('div');
+    d.className='memo-carte'; d.dataset.p=c.p; d.dataset.en=c.en?'1':'0';
+    d.innerHTML = `<div class="memo-face memo-dos">?</div>
+      <div class="memo-face memo-avant"><span class="drapeau">${c.en?'🇬🇧':'🇫🇷'}</span>${c.t}</div>`;
+    d.onclick=()=>retournerCarte(d,c);
+    grid.appendChild(d);
+  });
+}
+function retournerCarte(el,c){
+  if(memoLock || el.classList.contains('retournee') || el.classList.contains('trouvee')) return;
+  el.classList.add('retournee');
+  if(c.en) parler(c.t);
+  memoOuvertes.push(el);
+  if(memoOuvertes.length===2){
+    memoLock=true; memoCoups++;
+    document.getElementById('memo-coups').textContent=memoCoups;
+    const [a,b]=memoOuvertes;
+    if(a.dataset.p===b.dataset.p && a.dataset.en!==b.dataset.en){
+      setTimeout(()=>{
+        a.classList.add('trouvee'); b.classList.add('trouvee');
+        memoTrouvees++; document.getElementById('memo-paires').textContent=memoTrouvees;
+        memoOuvertes=[]; memoLock=false;
+        if(memoTrouvees===8){
+          const pct = memoCoups<=12?100:memoCoups<=16?85:70;
+          setTimeout(()=>terminerActivite(pct,100,true),500);
+        }
+      },450);
+    } else {
+      setTimeout(()=>{ a.classList.remove('retournee'); b.classList.remove('retournee'); memoOuvertes=[]; memoLock=false; },900);
+    }
+  }
+}
+
+/* ═══════ CHRONO TABLES ═══════ */
+let chScore=0, chTotal=0, chTemps=0;
+function lancerTables(){
+  const a = ACTIVITES[actCourante];
+  chScore=0; chTotal=0; chTemps=60;
+  document.getElementById('act-contenu').innerHTML = `
+    <div class="jeu-hud">
+      <div class="hud-item temps">⏱ <b id="ch-temps">60</b> s</div>
+      <div class="hud-item score">✔ <b id="ch-score">0</b> bonnes</div>
+    </div>
+    <div class="grande-question" id="ch-question"></div>
+    <div class="choix deux-col" id="ch-choix" style="max-width:420px;margin:0 auto;"></div>`;
+  prochaineTable(a.niveau);
+  timerJeu = setInterval(()=>{
+    chTemps--;
+    document.getElementById('ch-temps').textContent=chTemps;
+    if(chTemps<=0){ clearInterval(timerJeu); terminerActivite(chScore, Math.max(chTotal,1), true, chScore>=12); }
+  },1000);
+}
+function prochaineTable(niv){
+  let txt, bon;
+  const x=2+Math.floor(Math.random()*8), y=2+Math.floor(Math.random()*8);
+  if(niv===2 && Math.random()<0.5){ txt=`${x*y} ÷ ${x} = ?`; bon=y; }
+  else { txt=`${x} × ${y} = ?`; bon=x*y; }
+  const opts=new Set([bon]);
+  while(opts.size<4){ const d=bon+[-10,-2,-1,1,2,10,x,-y][Math.floor(Math.random()*8)]; if(d>0) opts.add(d); }
+  const arr=[...opts].sort(()=>Math.random()-0.5);
+  document.getElementById('ch-question').textContent=txt;
+  document.getElementById('ch-choix').innerHTML=arr.map(v=>`<button onclick="repTable(${v},${bon},${niv})" style="text-align:center;font-size:1.2rem;">${v}</button>`).join('');
+}
+function repTable(v,bon,niv){
+  chTotal++;
+  if(v===bon){ chScore++; document.getElementById('ch-score').textContent=chScore; }
+  prochaineTable(niv);
+}
+
+/* ═══════ CHRONO HOMOPHONES ═══════ */
+const HOMO1=[
+['Léa … une nouvelle trousse.',['a','à'],0],['Nous allons … la plage.',['a','à'],1],
+['Il … perdu son ballon.',['a','à'],0],['Le train part … midi.',['a','à'],1],
+['Mon frère … faim.',['a','à'],0],['Elle habite … Cayenne.',['a','à'],1],
+['Papa … acheté des mangues.',['a','à'],0],['On joue … cache-cache.',['a','à'],1],
+['Le film … drôle.',['et','est'],1],['Un stylo … une gomme.',['et','est'],0],
+['Ma sœur … gentille.',['et','est'],1],['Du pain … du fromage.',['et','est'],0],
+['Le chat … sur le mur.',['et','est'],1],['Lundi … mardi.',['et','est'],0],
+['La mer … calme aujourd\u2019hui.',['et','est'],1],['Tom … Léa arrivent.',['et','est'],0]];
+const HOMO2=[
+['Mes amis … en vacances.',['son','sont'],1],['Il range … cartable.',['son','sont'],0],
+['Les oiseaux … partis.',['son','sont'],1],['Elle adore … chien.',['son','sont'],0],
+['Ils … gagné le match.',['on','ont'],1],['… frappe à la porte.',['On','Ont'],0],
+['Elles … soif.',['on','ont'],1],['… mange à quelle heure ?',['On','Ont'],0],
+['Tu veux du jus … de l\u2019eau ?',['ou','où'],0],['Dis-moi … tu vas.',['ou','où'],1],
+['Fromage … dessert ?',['ou','où'],0],['La ville … je suis née.',['ou','où'],1],
+['… matin, il pleut.',['Ce','Se'],0],['Le chat … cache sous le lit.',['ce','se'],1],
+['J\u2019aime … livre.',['ce','se'],0],['Ils … retrouvent au parc.',['ce','se'],1]];
+let hoPool=[], hoIdx=0;
+function lancerHomophones(){
+  const a = ACTIVITES[actCourante];
+  hoPool = (a.niveau===1?HOMO1:HOMO2).slice().sort(()=>Math.random()-0.5);
+  hoIdx=0; chScore=0; chTotal=0; chTemps=45;
+  document.getElementById('act-contenu').innerHTML = `
+    <div class="jeu-hud">
+      <div class="hud-item temps">⏱ <b id="ch-temps">45</b> s</div>
+      <div class="hud-item score">✔ <b id="ch-score">0</b> bonnes</div>
+    </div>
+    <div class="grande-question"><div class="phrase" id="ho-phrase"></div></div>
+    <div class="choix deux-col" id="ho-choix" style="max-width:420px;margin:0 auto;"></div>`;
+  prochaineHomophone();
+  timerJeu = setInterval(()=>{
+    chTemps--;
+    document.getElementById('ch-temps').textContent=chTemps;
+    if(chTemps<=0){ clearInterval(timerJeu); terminerActivite(chScore, Math.max(chTotal,1), true, chScore>=8); }
+  },1000);
+}
+function prochaineHomophone(){
+  if(hoIdx>=hoPool.length){ hoPool.sort(()=>Math.random()-0.5); hoIdx=0; }
+  const [ph,ch,bon] = hoPool[hoIdx];
+  document.getElementById('ho-phrase').innerHTML = ph.replace('…','<span class="trou">…</span>');
+  document.getElementById('ho-choix').innerHTML = ch.map((c,i)=>`<button onclick="repHomophone(${i},${bon})" style="text-align:center;font-size:1.2rem;">${c}</button>`).join('');
+}
+function repHomophone(i,bon){
+  chTotal++;
+  if(i===bon){ chScore++; document.getElementById('ch-score').textContent=chScore; }
+  hoIdx++; prochaineHomophone();
+}
+
+/* ═══════ FIN D'ACTIVITÉ ═══════ */
+function terminerActivite(score, total, estJeu=false, jeuValide=null){
+  clearInterval(timerJeu);
+  const pct = estJeu && jeuValide!==null ? (jeuValide?Math.max(60,Math.round(score/Math.max(total,score,1)*100)):Math.round(score/Math.max(total,1)*100))
+            : Math.round(score/total*100);
+  const valide = jeuValide!==null ? jeuValide : pct>=60;
+  const dejafait = !!etat.done[actCourante];
+  let gainXP = 0;
+  const etoiles = pct>=90?'⭐⭐⭐':pct>=75?'⭐⭐':valide?'⭐':'✩';
+  const jourAvant = jourComplet(etat, jourCourant);
+
+  if(valide){
+    gainXP = (estJeu? 40 : score*8) + 30;
+    if(dejafait) gainXP = Math.round(gainXP/3); // refaire rapporte moins
+    etat.xp += gainXP;
+    const ancien = etat.done[actCourante];
+    if(!ancien || pct>ancien.pct) etat.done[actCourante]={pct};
+  }
+  sauver();
+  const jourApres = jourComplet(etat, jourCourant);
+  const nouveauxBadges = BADGES.filter(b=>!etat.badges.includes(b.id) && b.test(etat));
+  nouveauxBadges.forEach(b=>etat.badges.push(b.id));
+  sauver();
+
+  const m = document.getElementById('modale');
+  let html = '';
+  if(valide){
+    html += `<div class="emoji">${pct>=90?'🤩':'🎉'}</div><h2>Mission réussie !</h2>
+      <div class="etoiles">${etoiles}</div>
+      <p>${estJeu?`<b>${score}</b> bonnes réponses !`:`<b>${score}/${total}</b> bonnes réponses (${pct} %)`}</p>
+      <p class="gain">+ ${gainXP} XP ☀️</p>`;
+    if(!jourAvant && jourApres){
+      html += `<div class="tampon-anim"><span>☀️</span>Jour ${jourCourant+1}<br>validé !</div>
+        <p><b>Tampon du jour décroché !</b> Les 3 missions du jour ${jourCourant+1} sont faites. 🎊</p>`;
+    }
+    nouveauxBadges.forEach(b=>{ html += `<p>🏆 Nouveau badge : <b>${b.ico} ${b.nom}</b> !</p>`; });
+    html += `<button class="btn-principal" onclick="fermerModale()">Continuer</button>`;
+  } else {
+    html += `<div class="emoji">💪</div><h2>Presque !</h2>
+      <p>${estJeu?`<b>${score}</b> bonnes réponses — il en fallait un peu plus.`:`<b>${score}/${total}</b> bonnes réponses (${pct} %). Il faut 60 % pour valider.`}</p>
+      <p>Relis la leçon et retente ta chance, tu vas y arriver !</p>
+      <button class="btn-principal" onclick="fermerModale(true)">Réessayer 🔄</button>
+      <button class="btn-secondaire" onclick="fermerModale()" style="margin-top:10px;">Plus tard</button>`;
+  }
+  m.innerHTML = html;
+  document.getElementById('voile').classList.add('visible');
+}
+function fermerModale(retenter=false){
+  document.getElementById('voile').classList.remove('visible');
+  renduGlobal();
+  if(retenter){ ouvrirActivite(actCourante); }
+  else { ouvrirJour(jourCourant); }
+}
+
+/* ═══════════════════════════════════════════════
+   LE COIN DES TABLES ✖️
+════════════════════════════════════════════════ */
+const SRClass = window.SpeechRecognition || window.webkitSpeechRecognition;
+let reco = null, tCourante = 0, tIdx = 0, tScore = 0, tEssais = 0, tOrdre = [], tDetails = [], voixActive = false;
+
+function tableMaitrisee(t){ const d = etat.tables[t]; return d && d.test>=80 && d.voix>=80; }
+
+function ouvrirTables(){
+  const grid = document.getElementById('tables-grid'); grid.innerHTML='';
+  for(let t=2;t<=9;t++){
+    const d = etat.tables[t]||{};
+    const card = document.createElement('div');
+    card.className = 'table-card'+(tableMaitrisee(t)?' maitrisee':'');
+    card.innerHTML = `<h3>Table de ${t} ${tableMaitrisee(t)?'<span class="coupe">🏆</span>':''}</h3>
+      <div class="table-modes">
+        <button class="${d.test>=80?'reussi':''}" onclick="lancerTestTable(${t})">✏️ Test écrit<span class="score-mode">${d.test!=null?'Record : '+d.test+' %':'Pas encore fait'}</span></button>
+        <button class="${d.voix>=80?'reussi':''}" onclick="lancerVoixTable(${t})">🎤 Réciter<span class="score-mode">${d.voix!=null?'Record : '+d.voix+' %':'Pas encore fait'}</span></button>
+      </div>`;
+    grid.appendChild(card);
+  }
+  document.getElementById('micro-note').innerHTML = SRClass
+    ? '🎤 La récitation utilise le micro et Internet : autorise le micro quand le navigateur te le demande.<br>💡 Si le micro est signalé comme bloqué, ouvre ce fichier <b>directement dans Chrome ou Edge</b> (les aperçus intégrés bloquent le micro).'
+    : '⚠️ La récitation vocale a besoin de <b>Chrome</b>, <b>Edge</b> ou <b>Safari</b> — sur ce navigateur, seul le test écrit est disponible.';
+  montrerVue('vue-tables');
+}
+
+/* ── TEST ÉCRIT ── */
+function lancerTestTable(t){
+  tCourante=t; tScore=0; tIdx=0; tDetails=[];
+  tOrdre=[1,2,3,4,5,6,7,8,9,10].sort(()=>Math.random()-0.5);
+  document.getElementById('tj-titre').textContent = 'Test écrit — table de '+t;
+  montrerVue('vue-table-jeu');
+  questionTestTable();
+}
+function questionTestTable(){
+  const n = tOrdre[tIdx];
+  document.getElementById('tj-contenu').innerHTML = `
+    <div class="quiz-barre"><div class="quiz-prog"><i style="width:${tIdx*10}%"></i></div>
+    <span class="quiz-compteur">${tIdx+1} / 10</span></div>
+    <div class="grande-question">${tCourante} × ${n} = ?</div>
+    <div class="reponse-input">
+      <input type="number" id="tt-rep" inputmode="numeric" autocomplete="off">
+      <button class="btn-principal" style="margin:0;width:auto;" onclick="validerTestTable()">OK ✔</button>
+    </div>
+    <div class="explication" id="tt-fb" style="max-width:420px;margin:14px auto 0;"></div>`;
+  const inp = document.getElementById('tt-rep');
+  inp.focus();
+  inp.addEventListener('keydown', e=>{ if(e.key==='Enter') validerTestTable(); });
+}
+function validerTestTable(){
+  const inp = document.getElementById('tt-rep');
+  if(inp.disabled) return;
+  const val = parseInt(inp.value,10);
+  if(isNaN(val)){ inp.focus(); return; }
+  const n = tOrdre[tIdx], bon = tCourante*n, ok = val===bon;
+  if(ok) tScore++;
+  tDetails.push({n, bon, ok});
+  inp.disabled = true;
+  const fb = document.getElementById('tt-fb');
+  fb.innerHTML = ok ? '✅ <b>Oui !</b> '+tCourante+' × '+n+' = '+bon
+                    : '❌ Non : '+tCourante+' × '+n+' = <b>'+bon+'</b> (tu as écrit '+val+')';
+  fb.classList.add('visible');
+  setTimeout(()=>{ tIdx++; tIdx<10 ? questionTestTable() : finTable('test'); }, ok?700:1900);
+}
+
+/* ── RÉCITATION VOCALE ── */
+const MOTS_NOMBRES = (()=>{
+  const u={'zéro':0,'zero':0,'un':1,'une':1,'deux':2,'trois':3,'quatre':4,'cinq':5,'six':6,'sept':7,'huit':8,'neuf':9,'dix':10,'onze':11,'douze':12,'treize':13,'quatorze':14,'quinze':15,'seize':16};
+  const d={'vingt':20,'trente':30,'quarante':40,'cinquante':50,'soixante':60};
+  return {u,d};
+})();
+function motsVersNombre(txt){
+  // 1) chiffres directs
+  const m = txt.match(/\d+/); if(m) return parseInt(m[0],10);
+  // 2) mots français (0 à 100)
+  let t = txt.toLowerCase().replace(/[-']/g,' ').replace(/\s+/g,' ').trim();
+  if(/\bcent\b/.test(t)) return 100;
+  t = t.replace(/\bet\b/g,' ');
+  const mots = t.split(' ').filter(Boolean);
+  const {u,d} = MOTS_NOMBRES;
+  let total=null;
+  for(let i=0;i<mots.length;i++){
+    const w=mots[i];
+    if(w==='quatre' && (mots[i+1]==='vingt'||mots[i+1]==='vingts')){ total=(total||0)+80; i++; continue; }
+    if(w==='soixante' && mots[i+1]==='dix'){ total=(total||0)+70; i++; continue; }
+    if(w in d){ total=(total||0)+d[w]; continue; }
+    if(w in u){ total=(total||0)+u[w]; continue; }
+    if(w==='dix' && total!==null){ total+=10; continue; }
+  }
+  return total;
+}
+function lancerVoixTable(t){
+  if(!SRClass){ alert('La reconnaissance vocale n\u2019est pas disponible sur ce navigateur. Essaie avec Chrome, Edge ou Safari !'); return; }
+  tCourante=t; tScore=0; tIdx=0; tEssais=0; tDetails=[]; voixActive=true;
+  tOrdre=[1,2,3,4,5,6,7,8,9,10]; // récitation dans l'ordre, comme la vraie table
+  document.getElementById('tj-titre').textContent = 'Je récite la table de '+t+' 🎤';
+  montrerVue('vue-table-jeu');
+  document.getElementById('tj-contenu').innerHTML = `
+    <div class="micro-zone">
+      <div class="micro-bulle">🎤</div>
+      <div class="micro-statut">Vérification du micro…</div>
+    </div>`;
+  verifierMicro().then(ok=>{ if(ok && voixActive) questionVoix(); });
+}
+async function verifierMicro(){
+  const statut = ()=>document.querySelector('.micro-statut');
+  // Dans une iframe (aperçu intégré), le micro est bloqué par la page hôte
+  const enIframe = (()=>{ try{ return window.self!==window.top; }catch(e){ return true; } })();
+  try{
+    const flux = await navigator.mediaDevices.getUserMedia({audio:true});
+    flux.getTracks().forEach(tr=>tr.stop()); // on voulait juste la permission
+    return true;
+  }catch(err){
+    voixActive=false;
+    let msg;
+    if(enIframe){
+      msg = '⚠️ <b>L\u2019aperçu intégré bloque le micro.</b><br>Télécharge le fichier et ouvre-le directement dans Chrome ou Edge : là, le micro fonctionnera. 👍';
+    } else if(err.name==='NotAllowedError' || err.name==='SecurityError'){
+      msg = '⚠️ <b>Le micro a été refusé.</b><br>Clique sur l\u2019icône 🔒 (ou 🎤) à gauche de la barre d\u2019adresse → Autorisations → <b>Micro : Autoriser</b>, puis recharge la page.';
+    } else if(err.name==='NotFoundError'){
+      msg = '⚠️ <b>Aucun micro détecté.</b><br>Branche un micro ou un casque, puis réessaie.';
+    } else {
+      msg = '⚠️ Impossible d\u2019accéder au micro ('+err.name+').<br>Essaie dans Chrome ou Edge, en dehors de tout aperçu intégré.';
+    }
+    if(statut()) statut().innerHTML = msg+'<br><button class="btn-secondaire" style="margin-top:10px;padding:8px 16px;" onclick="lancerVoixTable('+tCourante+')">Réessayer 🎤</button>';
+    return false;
+  }
+}
+function questionVoix(){
+  const n = tOrdre[tIdx];
+  document.getElementById('tj-contenu').innerHTML = `
+    <div class="quiz-barre"><div class="quiz-prog"><i style="width:${tIdx*10}%"></i></div>
+    <span class="quiz-compteur">${tIdx+1} / 10</span></div>
+    <div class="grande-question">${tCourante} × ${n} = ?</div>
+    <div class="micro-zone">
+      <div class="micro-bulle" id="micro-bulle">🎤</div>
+      <div class="micro-statut" id="micro-statut">Prépare-toi…</div>
+      <div class="entendu" id="micro-entendu"></div>
+    </div>
+    <div class="explication" id="tv-fb" style="max-width:420px;margin:0 auto;"></div>`;
+  setTimeout(ecouter, 400);
+}
+function ecouter(){
+  if(!voixActive) return;
+  stopVoix(false);
+  reco = new SRClass();
+  reco.lang='fr-FR'; reco.interimResults=false; reco.maxAlternatives=4; reco.continuous=false;
+  const bulle=document.getElementById('micro-bulle'), statut=document.getElementById('micro-statut');
+  bulle.classList.add('ecoute');
+  statut.textContent='Je t\u2019écoute… dis la réponse à voix haute !';
+  reco.onresult = e=>{
+    const alts=[...e.results[0]].map(r=>r.transcript);
+    document.getElementById('micro-entendu').textContent='« '+alts[0]+' »';
+    let val=null;
+    for(const a of alts){ val=motsVersNombre(a); if(val!==null) break; }
+    traiterVoix(val);
+  };
+  reco.onerror = e=>{
+    bulle.classList.remove('ecoute');
+    if(e.error==='not-allowed' || e.error==='service-not-allowed'){
+      statut.innerHTML='⚠️ La reconnaissance vocale est bloquée ici.<br>Ouvre le fichier <b>directement dans Chrome ou Edge</b> (pas dans un aperçu intégré) et vérifie que tu es connectée à Internet.';
+      voixActive=false; return;
+    }
+    if(e.error==='network'){
+      statut.innerHTML='⚠️ La reconnaissance vocale a besoin d\u2019Internet.<br>Vérifie ta connexion puis <button class="btn-secondaire" style="padding:6px 14px;font-size:.85rem;" onclick="ecouter()">réessaie 🎤</button>';
+      return;
+    }
+    statut.innerHTML='Je n\u2019ai rien entendu… <button class="btn-secondaire" style="padding:6px 14px;font-size:.85rem;" onclick="ecouter()">Réessayer 🎤</button>';
+  };
+  reco.onend = ()=>bulle.classList.remove('ecoute');
+  try{ reco.start(); }catch(err){}
+}
+function traiterVoix(val){
+  const n=tOrdre[tIdx], bon=tCourante*n;
+  const fb=document.getElementById('tv-fb'), statut=document.getElementById('micro-statut');
+  if(val===null){
+    statut.innerHTML='Hmm, je n\u2019ai pas compris de nombre… <button class="btn-secondaire" style="padding:6px 14px;font-size:.85rem;" onclick="ecouter()">Réessayer 🎤</button>';
+    return;
+  }
+  if(val===bon){
+    tScore++; tDetails.push({n,bon,ok:true}); tEssais=0;
+    fb.innerHTML='✅ <b>Bravo !</b> '+tCourante+' × '+n+' = '+bon;
+    fb.classList.add('visible');
+    setTimeout(suivantVoix, 900);
+  } else {
+    tEssais++;
+    if(tEssais<2){
+      statut.innerHTML='❌ Pas ça… encore un essai ! <button class="btn-secondaire" style="padding:6px 14px;font-size:.85rem;" onclick="ecouter()">Je retente 🎤</button>';
+    } else {
+      tDetails.push({n,bon,ok:false}); tEssais=0;
+      fb.innerHTML='❌ La bonne réponse était : '+tCourante+' × '+n+' = <b>'+bon+'</b>. Répète-la dans ta tête !';
+      fb.classList.add('visible');
+      setTimeout(suivantVoix, 2200);
+    }
+  }
+}
+function suivantVoix(){
+  tIdx++;
+  if(tIdx<10) questionVoix();
+  else { voixActive=false; finTable('voix'); }
+}
+function stopVoix(desactiver=true){
+  if(reco){ try{ reco.onresult=null; reco.onend=null; reco.onerror=null; reco.abort(); }catch(e){} reco=null; }
+  if(desactiver) voixActive=false;
+}
+
+/* ── Fin d'une table ── */
+function finTable(mode){
+  stopVoix();
+  const pct = tScore*10, valide = pct>=80;
+  const d = etat.tables[tCourante] || (etat.tables[tCourante]={});
+  const maitriseeAvant = tableMaitrisee(tCourante);
+  const record = d[mode]==null || pct>d[mode];
+  let gainXP = 0;
+  if(valide){
+    gainXP = (d[mode]>=80 ? 15 : 45); // moins d'XP si déjà validée
+    etat.xp += gainXP;
+  }
+  if(record) d[mode]=pct;
+  sauver();
+  const nouveauxBadges = BADGES.filter(b=>!etat.badges.includes(b.id) && b.test(etat));
+  nouveauxBadges.forEach(b=>etat.badges.push(b.id));
+  sauver();
+  const recap = tDetails.sort((a,b)=>a.n-b.n).map(x=>`<span class="${x.ok?'ok':'raté'}">${tCourante} × ${x.n} = ${x.bon}</span>`).join('');
+  const m = document.getElementById('modale');
+  let html = valide
+    ? `<div class="emoji">${pct===100?'🤩':'🎉'}</div><h2>${pct===100?'Table parfaite !':'Table réussie !'}</h2>`
+    : `<div class="emoji">💪</div><h2>Presque !</h2>`;
+  html += `<div class="etoiles">${pct===100?'⭐⭐⭐':pct>=90?'⭐⭐':valide?'⭐':'✩'}</div>
+    <p><b>${tScore}/10</b> ${mode==='voix'?'récitées':'bonnes réponses'} pour la table de ${tCourante}${record&&d[mode]!=null?' — nouveau record !':''}</p>
+    <div class="recap-table">${recap}</div>`;
+  if(gainXP) html += `<p class="gain">+ ${gainXP} XP ☀️</p>`;
+  if(!maitriseeAvant && tableMaitrisee(tCourante))
+    html += `<div class="tampon-anim"><span>🏆</span>Table de ${tCourante}<br>maîtrisée !</div>
+      <p><b>Test écrit ✏️ et récitation 🎤 réussis !</b></p>`;
+  nouveauxBadges.forEach(b=>{ html += `<p>🏆 Nouveau badge : <b>${b.ico} ${b.nom}</b> !</p>`; });
+  html += valide
+    ? `<button class="btn-principal" onclick="fermerModaleTable()">Continuer</button>`
+    : `<p>Il faut 8/10 pour valider. ${mode==='voix'?'Récite-la une fois en lisant le récap, puis retente !':'Revois les réponses ci-dessus et retente !'}</p>
+       <button class="btn-principal" onclick="fermerModaleTable(true,'${mode}')">Réessayer 🔄</button>
+       <button class="btn-secondaire" onclick="fermerModaleTable()" style="margin-top:10px;">Plus tard</button>`;
+  m.innerHTML = html;
+  document.getElementById('voile').classList.add('visible');
+}
+function fermerModaleTable(retenter=false, mode){
+  document.getElementById('voile').classList.remove('visible');
+  renduGlobal();
+  if(retenter){ mode==='voix' ? lancerVoixTable(tCourante) : lancerTestTable(tCourante); }
+  else ouvrirTables();
+}
+
+/* ═══════ INIT ═══════ */
+(function(){
+  const sp = document.getElementById('spirale');
+  for(let i=0;i<22;i++){ sp.appendChild(document.createElement('span')); }
+  renduGlobal();
+})();
+</script>
+</body>
+</html>
