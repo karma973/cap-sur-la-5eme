@@ -404,6 +404,26 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
 .jour-card.aujourdhui{border-color:#C4A962;box-shadow:0 6px 18px rgba(196,169,98,.35);}
 .auj-chip{font-size:.6rem;background:#C4A962;color:#fff;border-radius:8px;padding:2px 8px;vertical-align:middle;font-family:'Nunito';font-weight:800;}
 .sem-verrou{font-size:.72rem;color:#A08F63;font-weight:800;margin-left:8px;}
+.journal-banniere{background:linear-gradient(120deg,#C4A962,#A8894A);box-shadow:0 6px 16px rgba(196,169,98,.35);margin-top:12px;}
+.jr-jour{background:#fff;border:2px solid #E8DDBF;border-radius:16px;padding:14px 16px;margin-bottom:12px;}
+.jr-jour h4{font-family:'Fredoka';margin:0 0 4px;color:#5A4A20;}
+.jr-jour .jr-date{font-size:.72rem;font-weight:800;color:#A08F63;}
+.jr-mission{border-top:1px dashed #E8DDBF;padding:8px 0 2px;margin-top:8px;}
+.jr-mission-tete{display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:800;color:#4A3E23;flex-wrap:wrap;}
+.jr-mission-tete .pct{margin-left:auto;font-family:'Fredoka';color:#2E7D46;}
+.jr-mission-tete .pct.rate{color:#C0392B;}
+.jr-detail{display:none;margin:8px 0 4px;padding-left:6px;}
+.jr-detail.ouvert{display:block;}
+.jr-q{background:#FBF7EC;border-radius:10px;padding:8px 12px;margin-bottom:6px;font-size:.88rem;}
+.jr-q .q{font-weight:800;color:#4A3E23;}
+.jr-q .rep{margin-top:3px;}
+.jr-q .rep.ok{color:#2E7D46;font-weight:700;}
+.jr-q .rep.non{color:#C0392B;font-weight:700;}
+.jr-q .corr{color:#2E7D46;font-weight:700;}
+.jr-vide{color:#A08F63;font-weight:700;font-size:.9rem;background:#F7F2E2;border-radius:12px;padding:12px;}
+.jr-hist{display:flex;gap:10px;align-items:center;background:#fff;border:2px solid #E8DDBF;border-radius:12px;padding:10px 14px;margin-bottom:8px;font-weight:800;color:#4A3E23;flex-wrap:wrap;cursor:pointer;}
+.jr-hist .quoi{flex:1;}
+.jr-hist small{font-weight:700;color:#A08F63;}
 </style>
 </head>
 <body>
@@ -443,10 +463,15 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
       <div class="tb-prog"><b id="lecture-compteur">0/15</b><small>missions<br>faites</small></div>
       <span class="tb-fleche">→</span>
     </div>
+    <div class="tables-banniere journal-banniere" onclick="ouvrirJournal()">
+      <span class="tb-ico">📔</span>
+      <div class="tb-txt"><h3>Mon journal de bord</h3><p>Revois le travail des jours passés et toutes tes réponses</p></div>
+      <span class="tb-fleche">→</span>
+    </div>
     <div id="semaines"></div>
     <h3 class="badges-titre">🏆 Mes badges</h3>
     <div class="badges" id="badges"></div>
-    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v17 ·</b><br>
+    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v18 ·</b><br>
     <button onclick="toutEffacer()">Recommencer le cahier à zéro</button></p>
   </section>
 
@@ -455,6 +480,18 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
     <button class="btn-retour" onclick="montrerVue('vue-home')">← Retour au cahier</button>
     <div class="jour-entete"><h2 id="jour-titre"></h2><p id="jour-theme"></p></div>
     <div class="missions" id="missions"></div>
+  </section>
+
+  <!-- ═══════ VUE JOURNAL DE BORD ═══════ -->
+  <section class="vue" id="vue-journal">
+    <button class="btn-retour" onclick="montrerVue('vue-home');renduGlobal()">← Retour au cahier</button>
+    <div class="jour-entete"><h2>📔 Mon journal de bord</h2>
+      <p>Tout ce que tu as fait, jour par jour — avec tes réponses. Relire ses erreurs corrigées, c’est la meilleure façon de progresser !</p></div>
+    <div id="journal-jours"></div>
+    <h3 class="badges-titre" style="margin-top:24px;">✖️ Mes tables et défis récents</h3>
+    <div id="journal-tables"></div>
+    <h3 class="badges-titre" style="margin-top:24px;">✍️ Mes rédactions</h3>
+    <div class="missions" id="journal-redactions"></div>
   </section>
 
   <!-- ═══════ VUE LIRE & ÉCRIRE ═══════ -->
@@ -1408,12 +1445,12 @@ let etat = charger();
 let jourCourant = 0, actCourante = null, timerJeu = null;
 
 function charger(){
-  try{ const s = JSON.parse(localStorage.getItem(CLE)); if(s && s.done){ if(!s.tables) s.tables={}; if(!s.quotidien) s.quotidien={dernier:'',serie:0,palier:1}; if(!s.redactions) s.redactions={}; if(!s.fluence) s.fluence={}; if(!s.debut) s.debut=aujourdHui(); return s; } }catch(e){}
-  return {xp:0, done:{}, badges:[], tables:{}, quotidien:{dernier:'',serie:0,palier:1}, redactions:{}, fluence:{}, debut:aujourdHui()};
+  try{ const s = JSON.parse(localStorage.getItem(CLE)); if(s && s.done){ if(!s.tables) s.tables={}; if(!s.quotidien) s.quotidien={dernier:'',serie:0,palier:1}; if(!s.redactions) s.redactions={}; if(!s.fluence) s.fluence={}; if(!s.debut) s.debut=aujourdHui(); if(!s.reponses) s.reponses={}; if(!s.histTables) s.histTables=[]; return s; } }catch(e){}
+  return {xp:0, done:{}, badges:[], tables:{}, quotidien:{dernier:'',serie:0,palier:1}, redactions:{}, fluence:{}, debut:aujourdHui(), reponses:{}, histTables:[]};
 }
 function sauver(){ localStorage.setItem(CLE, JSON.stringify(etat)); }
 function toutEffacer(){
-  if(confirm('Tout effacer et recommencer le cahier à zéro ?')){ localStorage.removeItem(CLE); etat={xp:0,done:{},badges:[],tables:{},quotidien:{dernier:'',serie:0,palier:1},redactions:{},fluence:{},debut:aujourdHui()}; renduGlobal(); montrerVue('vue-home'); }
+  if(confirm('Tout effacer et recommencer le cahier à zéro ?')){ localStorage.removeItem(CLE); etat={xp:0,done:{},badges:[],tables:{},quotidien:{dernier:'',serie:0,palier:1},redactions:{},fluence:{},debut:aujourdHui(),reponses:{},histTables:[]}; renduGlobal(); montrerVue('vue-home'); }
 }
 function jourComplet(s,j){ return JOURS[j].acts.every(a=>s.done[a]); }
 function joursEcoules(){
@@ -1447,6 +1484,65 @@ function montrerVue(id){
   document.querySelectorAll('.vue').forEach(v=>v.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
+}
+function fmtDateFR(iso){
+  try{ return new Date(iso+'T00:00:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}); }catch(e){ return iso; }
+}
+function ouvrirJournal(){
+  const zj=document.getElementById('journal-jours'); zj.innerHTML='';
+  let rien=true;
+  JOURS.forEach((d,j)=>{
+    const faits = d.acts.filter(id=>etat.reponses[id]||etat.done[id]);
+    if(!faits.length) return;
+    rien=false;
+    const bloc=document.createElement('div'); bloc.className='jr-jour';
+    const dates=[...new Set(d.acts.map(id=>etat.reponses[id]&&etat.reponses[id].date).filter(Boolean))];
+    bloc.innerHTML=`<h4>Jour ${j+1} — ${d.t} ${jourComplet(etat,j)?'☀️':''}</h4>
+      <div class="jr-date">${dates.length?('travaillé le '+dates.map(fmtDateFR).join(', ')):''}</div>`;
+    d.acts.forEach(id=>{
+      const a=ACTIVITES[id], r=etat.reponses[id];
+      if(!r && !etat.done[id]) return;
+      const pct = r?r.pct:(etat.done[id]?etat.done[id].pct:0);
+      const div=document.createElement('div'); div.className='jr-mission';
+      const aDetail = r && r.details && r.details.length;
+      div.innerHTML=`<div class="jr-mission-tete" ${aDetail?`onclick="this.parentNode.querySelector('.jr-detail').classList.toggle('ouvert')"`:''}>
+          <span>${MATIERES[a.mat].ico}</span><span>${a.titre}</span>
+          ${aDetail?'<span style="font-size:.75rem;color:#A08F63;">📋 voir mes réponses</span>':''}
+          <span class="pct ${pct<60?'rate':''}">${pct} %</span>
+        </div>
+        ${aDetail?`<div class="jr-detail">${r.details.map(x=>`
+          <div class="jr-q"><div class="q">${x.q}</div>
+            <div class="rep ${x.ok?'ok':'non'}">${x.ok?'✅':'❌'} Ta réponse : ${x.donnee}</div>
+            ${x.ok?'':`<div class="corr">→ Bonne réponse : ${x.bonne}</div>`}
+          </div>`).join('')}</div>`:''}`;
+      bloc.appendChild(div);
+    });
+    zj.appendChild(bloc);
+  });
+  if(rien) zj.innerHTML='<div class="jr-vide">Rien pour l’instant : ton travail apparaîtra ici au fil des jours. Au boulot, moussaillon ! ⛵</div>';
+  const zt=document.getElementById('journal-tables'); zt.innerHTML='';
+  if(!etat.histTables.length) zt.innerHTML='<div class="jr-vide">Tes tests de tables et récitations du jour s’afficheront ici.</div>';
+  etat.histTables.slice(0,12).forEach(h=>{
+    const quoi = h.mode==='defi' ? '🔥 Récitation du jour (palier '+h.palier+')' : (h.mode==='voix'?'🎤 Récitation':'✏️ Test')+' — table de '+h.table;
+    const div=document.createElement('div'); div.className='jr-hist';
+    div.onclick=()=>{ const dd=div.querySelector('.jr-detail'); if(dd) dd.classList.toggle('ouvert'); };
+    div.innerHTML=`<span class="quoi">${quoi}<br><small>${fmtDateFR(h.date)}</small></span>
+      <span style="font-family:'Fredoka';font-size:1.1rem;color:${h.score>=8?'#2E7D46':'#C0392B'};">${h.score}/10</span>
+      <div class="jr-detail" style="flex-basis:100%;">${(h.details||[]).map(x=>`
+        <div class="jr-q"><span class="${x.ok?'corr':'rep non'}">${x.ok?'✅':'❌'} ${x.t!=null?x.t:h.table} × ${x.n} = ${x.bon}</span></div>`).join('')}</div>`;
+    zt.appendChild(div);
+  });
+  const zr=document.getElementById('journal-redactions'); zr.innerHTML='';
+  const redFaites=['R1','R2','R3','R4','R5'].filter(k=>etat.redactions[k]);
+  if(!redFaites.length) zr.innerHTML='<div class="jr-vide">Tes textes rendus seront relisibles ici.</div>';
+  redFaites.forEach(id=>{
+    const a=ACTIVITES[id], r=etat.redactions[id];
+    const div=document.createElement('div'); div.className='mission francais';
+    div.onclick=()=>ouvrirActivite(id,'hub');
+    div.innerHTML=`<span class="ico">✍️</span><div><h3>${a.titre}</h3><small>${r.mots} mots · rendue le ${fmtDateFR(r.date)} — clique pour relire</small></div><span class="etat">📖</span>`;
+    zr.appendChild(div);
+  });
+  montrerVue('vue-journal');
 }
 let provenance='jour';
 function retourJour(){
@@ -1641,9 +1737,9 @@ function ouvrirActivite(id, prov='jour'){
 }
 
 /* ═══════ QUIZ ═══════ */
-let qIdx=0, qScore=0;
+let qIdx=0, qScore=0, quizReponses=[];
 function lancerQuiz(){
-  qIdx=0; qScore=0; afficherQuestion();
+  qIdx=0; qScore=0; quizReponses=[]; afficherQuestion();
 }
 function afficherQuestion(){
   const a = ACTIVITES[actCourante], q = a.questions[qIdx];
@@ -1662,6 +1758,7 @@ function afficherQuestion(){
 }
 function repondre(i){
   const a = ACTIVITES[actCourante], q = a.questions[qIdx];
+  quizReponses[qIdx]=i;
   const btns = document.querySelectorAll('#choix button');
   btns.forEach(b=>b.disabled=true);
   btns[q.a].classList.add('bon');
@@ -2123,6 +2220,13 @@ function terminerActivite(score, total, estJeu=false, jeuValide=null){
     const ancien = etat.done[actCourante];
     if(!ancien || pct>ancien.pct) etat.done[actCourante]={pct};
   }
+  const actJ = ACTIVITES[actCourante];
+  if(actJ.questions && !estJeu){
+    etat.reponses[actCourante] = {date:aujourdHui(), pct, valide,
+      details: actJ.questions.map((q,ix)=>({q:q.q, donnee:quizReponses[ix]!=null?q.c[quizReponses[ix]]:'—', bonne:q.c[q.a], ok:quizReponses[ix]===q.a}))};
+  } else {
+    etat.reponses[actCourante] = {date:aujourdHui(), pct, valide, jeu:true};
+  }
   sauver();
   const jourApres = enJour && jourComplet(etat, jourCourant);
   const nouveauxBadges = BADGES.filter(b=>!etat.badges.includes(b.id) && b.test(etat));
@@ -2183,6 +2287,7 @@ function ouvrirTables(){
         <span>🔥 <b>${q.serie}</b> jour${q.serie>1?'s':''}</span>
         <span>📈 palier <b>${q.palier}</b></span>
         <span>⏱ <b>${tempsDuPalier(q.palier)}</b> s/ligne</span>
+        <button class="btn-secondaire" style="padding:5px 10px;font-size:.72rem;" onclick="event.stopPropagation();lancerDefiQuotidienClavier()">⌨️ au clavier</button>
       </div>
     </div>`;
   const grid = document.getElementById('tables-grid'); grid.innerHTML='';
@@ -2200,7 +2305,7 @@ function ouvrirTables(){
     grid.appendChild(card);
   }
   document.getElementById('micro-note').innerHTML = SRClass
-    ? 'v17 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
+    ? 'v18 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
     : '⚠️ La récitation vocale a besoin de <b>Chrome</b>, <b>Edge</b> ou <b>Safari</b> — sur ce navigateur, seul le test écrit est disponible.';
   if(SRClass) verifierRecoLocale().then(st=>{
     const z=document.getElementById('zone-reco-locale');
@@ -2473,6 +2578,7 @@ function questionVoix(){
       <div class="micro-statut" id="micro-statut">${modeVoix==='defi'?'Récite chaque ligne dans l\u2019ordre — '+TEMPS_QUESTION.voix+' s par ligne au palier '+etat.quotidien.palier+' !':'Récite ta table à ton rythme (« '+tCourante+' fois 1, '+tCourante+'… ») — je coche au fur et à mesure !'}</div>
       <div class="mode-reco${modeLocal?' locale':''}">${modeLocal?'⚡ reconnaissance locale (rapide)':'☁️ reconnaissance en ligne'} <span id="latence-tag"></span></div>
       <div class="entendu" id="micro-entendu"></div>
+      <button class="btn-secondaire" style="padding:6px 14px;font-size:.8rem;margin-top:6px;" onclick="${modeVoix==='defi'?'stopVoix();lancerDefiClavier()':'stopVoix();lancerTestTable(tCourante)'}">⌨️ Le micro ne suit pas ? Réponds au clavier</button>
     </div>`;
   lancerCompteQ('voix', tempsEcouleVoix);
 }
@@ -2580,9 +2686,7 @@ function stopVoix(desactiver=true){
 }
 
 /* ── LA RÉCITATION DU JOUR 🔥 ── */
-function lancerDefiQuotidien(){
-  if(!SRClass){ alert('La reconnaissance vocale n\u2019est pas disponible sur ce navigateur. Essaie avec Chrome, Edge ou Safari !'); return; }
-  if(avertirAndroidFile('lancerDefiQuotidien()')) return;
+function genererPairesDefi(){
   // 10 multiplications mélangées de toutes les tables, produits tous différents
   const cands=[];
   for(let t=2;t<=9;t++) for(let n=1;n<=10;n++) cands.push([t,n]);
@@ -2592,6 +2696,17 @@ function lancerDefiQuotidien(){
     if(tPaires.length>=10) break;
     if(!produits.has(t*n)){ produits.add(t*n); tPaires.push([t,n]); }
   }
+}
+function lancerDefiQuotidienClavier(){
+  genererPairesDefi();
+  modeVoix='defi';
+  montrerVue('vue-table-jeu');
+  lancerDefiClavier();
+}
+function lancerDefiQuotidien(){
+  if(!SRClass){ lancerDefiQuotidienClavier(); return; }
+  if(avertirAndroidFile('lancerDefiQuotidien()')) return;
+  genererPairesDefi();
   tScore=0; tDetails=[]; voixActive=true; modeVoix='defi'; sessionsMuettes=0;
   TEMPS_QUESTION.voix = tempsDuPalier(etat.quotidien.palier);
   document.getElementById('tj-titre').textContent = '🔥 Récitation du jour — palier '+etat.quotidien.palier;
@@ -2664,6 +2779,8 @@ function tempsEcouleDefiClavier(){
 function finDefiQuotidien(){
   stopVoix();
   const pct = tScore*10, valide = pct>=80;
+  etat.histTables.unshift({date:aujourdHui(), mode:'defi', palier:etat.quotidien.palier, score:tScore, details:tDetails.slice()});
+  etat.histTables = etat.histTables.slice(0,40);
   const dejaFait = defiFaitAujourdhui();
   const q = etat.quotidien;
   let gainXP=0, palierMonte=false, ancienTemps=TEMPS_QUESTION.voix;
@@ -2711,6 +2828,8 @@ function finDefiQuotidien(){
 function finTable(mode){
   stopVoix();
   const pct = tScore*10, valide = pct>=80;
+  etat.histTables.unshift({date:aujourdHui(), mode, table:tCourante, score:tScore, details:tDetails.slice()});
+  etat.histTables = etat.histTables.slice(0,40);
   const d = etat.tables[tCourante] || (etat.tables[tCourante]={});
   const maitriseeAvant = tableMaitrisee(tCourante);
   const record = d[mode]==null || pct>d[mode];
