@@ -446,7 +446,7 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
     <div id="semaines"></div>
     <h3 class="badges-titre">🏆 Mes badges</h3>
     <div class="badges" id="badges"></div>
-    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v15 ·</b><br>
+    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v16 ·</b><br>
     <button onclick="toutEffacer()">Recommencer le cahier à zéro</button></p>
   </section>
 
@@ -1729,6 +1729,8 @@ function lancerFluence(){
     flReco = new SRClass();
     flReco.lang='fr-FR'; flReco.interimResults=true; flReco.maxAlternatives=1;
     flReco.continuous = !EST_ANDROID;
+    sessionsMuettes=0;
+    flReco.onspeechstart=()=>{ sessionsMuettes=0; };
     if(modeLocal){ try{ flReco.processLocally=true; }catch(e){ modeLocal=false; } }
     flReco.onresult = e=>{
       if(!flActive) return;
@@ -1740,6 +1742,14 @@ function lancerFluence(){
       if(flPos>=flMots.length) finFluence();
     };
     flReco.onerror = e=>{
+      if(e.error==='no-speech'||e.error==='audio-capture'){
+        sessionsMuettes++;
+        if(sessionsMuettes>=3){
+          const st=document.getElementById('micro-statut');
+          if(st) st.innerHTML='🔇 <b>Le micro ne capte aucun son.</b> Vérifie : Paramètres Android → Applications → <b>Chrome</b> → Autorisations → <b>Microphone</b> (et l\u2019app Google aussi). Teste la dictée 🎤 sur google.com pour confirmer.';
+        }
+        return;
+      }
       if(e.error==='not-allowed'||e.error==='service-not-allowed'){ flActive=false;
         const st=document.getElementById('micro-statut');
         if(st) st.innerHTML='⚠️ Reconnaissance bloquée ici.<br><b>PC :</b> ouvre le fichier directement dans Chrome/Edge. <b>Tablette :</b> Chrome → ⋮ → Paramètres des sites → Micro : autorisé (+ permission Micro de l\u2019app Google dans Android).';
@@ -2164,7 +2174,7 @@ function ouvrirTables(){
       <span class="defi-ico">${fait?'✅':'🔥'}</span>
       <div class="defi-txt">
         <h3>La récitation du jour</h3>
-        <p>${fait?'Faite pour aujourd\u2019hui — reviens demain pour continuer la série !':'10 multiplications mélangées, à réciter à voix haute.'}</p>
+        <p>${fait?'Faite pour aujourd\u2019hui — reviens demain pour continuer la série !':'10 multiplications mélangées — à la voix 🎤 ou au clavier ⌨️ si le micro fait des siennes.'}</p>
       </div>
       <div class="defi-stats">
         <span>🔥 <b>${q.serie}</b> jour${q.serie>1?'s':''}</span>
@@ -2187,7 +2197,7 @@ function ouvrirTables(){
     grid.appendChild(card);
   }
   document.getElementById('micro-note').innerHTML = SRClass
-    ? 'v15 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
+    ? 'v16 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
     : '⚠️ La récitation vocale a besoin de <b>Chrome</b>, <b>Edge</b> ou <b>Safari</b> — sur ce navigateur, seul le test écrit est disponible.';
   if(SRClass) verifierRecoLocale().then(st=>{
     const z=document.getElementById('zone-reco-locale');
@@ -2341,6 +2351,16 @@ function avertirAndroidFile(retryJS){
   return true;
 }
 let tPaires=[], modeVoix='table'; // 'table' = une table entière, 'defi' = récitation du jour (mixte)
+let sessionsMuettes=0;
+function alerteMicroMuet(){
+  const st=document.getElementById('micro-statut');
+  if(!st) return;
+  st.dataset.fige='1';
+  const secours = modeVoix==='defi'
+    ? '<button class="btn-secondaire" style="margin-top:8px;padding:8px 16px;" onclick="lancerDefiClavier()">⌨️ Continuer le défi au clavier</button>'
+    : '<button class="btn-secondaire" style="margin-top:8px;padding:8px 16px;" onclick="stopVoix();lancerTestTable(tCourante)">⌨️ Faire le test écrit à la place</button>';
+  st.innerHTML='🔇 <b>Le micro ne capte aucun son.</b><br>Vérifie sur la tablette : <b>Paramètres Android → Applications → Chrome → Autorisations → Microphone : Autoriser</b> (et pareil pour l\u2019application <b>Google</b>).<br>Test rapide : sur google.com, touche l\u2019icône 🎤 — si la dictée ne marche pas non plus, c\u2019est un réglage de la tablette, pas du cahier.<br>'+secours;
+}
 function demarrerVumetre(){
   if(!fluxMicro) return; // pas de flux direct (Android file://) : pas de vumètre, tout le reste fonctionne
   // Retour visuel INSTANTANÉ : la bulle micro réagit au volume de la voix,
@@ -2397,7 +2417,7 @@ async function installerRecoLocale(btn){
 function lancerVoixTable(t){
   if(!SRClass){ alert('La reconnaissance vocale n\u2019est pas disponible sur ce navigateur. Essaie avec Chrome, Edge ou Safari !'); return; }
   if(avertirAndroidFile('lancerVoixTable('+t+')')) return;
-  tCourante=t; tScore=0; tIdx=0; tDetails=[]; voixActive=true; modeVoix='table';
+  tCourante=t; tScore=0; tIdx=0; tDetails=[]; voixActive=true; modeVoix='table'; sessionsMuettes=0;
   TEMPS_QUESTION.voix = 15;
   tPaires=[1,2,3,4,5,6,7,8,9,10].map(n=>[t,n]); // récitation dans l'ordre, comme la vraie table
   document.getElementById('tj-titre').textContent = 'Je récite la table de '+t+' 🎤';
@@ -2525,7 +2545,12 @@ function demarrerReconnaissance(){
       if(statut) statut.innerHTML='⚠️ La reconnaissance vocale a besoin d\u2019Internet.<br>Vérifie ta connexion puis <button class="btn-secondaire" style="padding:6px 14px;font-size:.85rem;" onclick="questionVoix();demarrerReconnaissance()">réessaie 🎤</button>';
       return;
     }
+    if(e.error==='no-speech' || e.error==='audio-capture'){
+      sessionsMuettes++;
+      if(sessionsMuettes>=3) alerteMicroMuet();
+    }
   };
+  reco.onspeechstart = ()=>{ sessionsMuettes=0; }; // du son arrive : tout va bien
   reco.onend = ()=>{
     if(!voixActive) return;
     if(EST_ANDROID){
@@ -2559,7 +2584,7 @@ function lancerDefiQuotidien(){
     if(tPaires.length>=10) break;
     if(!produits.has(t*n)){ produits.add(t*n); tPaires.push([t,n]); }
   }
-  tScore=0; tDetails=[]; voixActive=true; modeVoix='defi';
+  tScore=0; tDetails=[]; voixActive=true; modeVoix='defi'; sessionsMuettes=0;
   TEMPS_QUESTION.voix = tempsDuPalier(etat.quotidien.palier);
   document.getElementById('tj-titre').textContent = '🔥 Récitation du jour — palier '+etat.quotidien.palier;
   montrerVue('vue-table-jeu');
@@ -2576,6 +2601,57 @@ function lancerDefiQuotidien(){
     questionVoix();
     demarrerReconnaissance();
   });
+}
+let dcIdx=0;
+function lancerDefiClavier(){
+  stopVoix();
+  modeVoix='defi';
+  dcIdx=0; tScore=0; tDetails=[];
+  document.getElementById('tj-titre').textContent = '🔥 Récitation du jour (clavier) — palier '+etat.quotidien.palier;
+  questionDefiClavier();
+}
+function questionDefiClavier(){
+  const [t,n]=tPaires[dcIdx];
+  document.getElementById('tj-contenu').innerHTML = `
+    <div class="quiz-barre"><div class="quiz-prog"><i style="width:${dcIdx*10}%"></i></div>
+    <span class="quiz-compteur">${dcIdx+1} / 10</span></div>
+    ${chronoQHTML('voix')}
+    <div class="grande-question">${t} × ${n} = ?</div>
+    <div class="reponse-input">
+      <input type="number" id="dc-rep" inputmode="numeric" autocomplete="off">
+      <button class="btn-principal" style="margin:0;width:auto;" onclick="validerDefiClavier()">OK ✔</button>
+    </div>
+    <div class="explication" id="dc-fb" style="max-width:420px;margin:14px auto 0;"></div>`;
+  const inp=document.getElementById('dc-rep');
+  inp.focus();
+  inp.addEventListener('keydown', e=>{ if(e.key==='Enter') validerDefiClavier(); });
+  lancerCompteQ('voix', tempsEcouleDefiClavier); // même chrono de palier que la version vocale
+}
+function validerDefiClavier(){
+  const inp=document.getElementById('dc-rep');
+  if(!inp || inp.disabled) return;
+  const val=parseInt(inp.value,10);
+  if(isNaN(val)){ inp.focus(); return; }
+  stopCompteQ();
+  const [t,n]=tPaires[dcIdx], bon=t*n, ok=val===bon;
+  if(ok) tScore++;
+  tDetails.push({t,n,bon,ok});
+  inp.disabled=true;
+  const fb=document.getElementById('dc-fb');
+  fb.innerHTML= ok ? '✅ <b>Oui !</b> '+t+' × '+n+' = '+bon : '❌ Non : '+t+' × '+n+' = <b>'+bon+'</b>';
+  fb.classList.add('visible');
+  setTimeout(()=>{ dcIdx++; dcIdx<10 ? questionDefiClavier() : finDefiQuotidien(); }, ok?600:1700);
+}
+function tempsEcouleDefiClavier(){
+  const inp=document.getElementById('dc-rep');
+  if(!inp || inp.disabled) return;
+  inp.disabled=true;
+  const [t,n]=tPaires[dcIdx], bon=t*n;
+  tDetails.push({t,n,bon,ok:false});
+  const fb=document.getElementById('dc-fb');
+  fb.innerHTML='⏱ <b>Temps écoulé !</b> '+t+' × '+n+' = <b>'+bon+'</b>';
+  fb.classList.add('visible');
+  setTimeout(()=>{ dcIdx++; dcIdx<10 ? questionDefiClavier() : finDefiQuotidien(); }, 1700);
 }
 function finDefiQuotidien(){
   stopVoix();
