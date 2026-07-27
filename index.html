@@ -424,6 +424,10 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
 .jr-hist{display:flex;gap:10px;align-items:center;background:#fff;border:2px solid #E8DDBF;border-radius:12px;padding:10px 14px;margin-bottom:8px;font-weight:800;color:#4A3E23;flex-wrap:wrap;cursor:pointer;}
 .jr-hist .quoi{flex:1;}
 .jr-hist small{font-weight:700;color:#A08F63;}
+.dictee-zone{max-width:460px;margin:10px auto 0;text-align:center;}
+.dictee-zone p{font-size:.82rem;font-weight:800;color:#6C519E;margin:0 0 6px;}
+.dictee-zone input{width:100%;box-sizing:border-box;font-family:'Nunito';font-size:1.05rem;padding:12px 14px;border:3px dashed #C9B8E8;border-radius:14px;background:#FDFBFF;color:#2A2416;text-align:center;}
+.dictee-zone input:focus{outline:none;border-color:#8B6FC7;border-style:solid;}
 </style>
 </head>
 <body>
@@ -471,7 +475,7 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
     <div id="semaines"></div>
     <h3 class="badges-titre">🏆 Mes badges</h3>
     <div class="badges" id="badges"></div>
-    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v18 ·</b><br>
+    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v19 ·</b><br>
     <button onclick="toutEffacer()">Recommencer le cahier à zéro</button></p>
   </section>
 
@@ -1703,6 +1707,10 @@ function ouvrirActivite(id, prov='jour'){
       <div class="micro-zone" id="fl-micro" style="display:none;">
         <div class="micro-bulle ecoute" id="micro-bulle">🎤</div>
         <div class="micro-statut" id="micro-statut">Lis à ton rythme, je te suis !</div>
+        <div class="dictee-zone">
+          <p>📱 Sur tablette : touche le champ, puis le <b>🎤 de ton clavier</b>, et lis le texte !</p>
+          <input type="text" id="fl-dictee" autocomplete="off" placeholder="🎤 la dictée du clavier écrit ici…">
+        </div>
       </div>
       <button class="btn-secondaire" id="fl-ecouter" onclick="lireTexteFR()">🔊 Écouter le texte lu par l’ordinateur</button>
       <button class="btn-principal" id="fl-start" onclick="lancerFluence()">Je lis à voix haute ! 🎙️</button>
@@ -1853,6 +1861,26 @@ function lancerFluence(){
         if(st) st.innerHTML='⚠️ Reconnaissance bloquée ici.<br><b>PC :</b> ouvre le fichier directement dans Chrome/Edge. <b>Tablette :</b> Chrome → ⋮ → Paramètres des sites → Micro : autorisé (+ permission Micro de l\u2019app Google dans Android).';
       }
     };
+    // Canal dictée clavier en parallèle
+    const fld=document.getElementById('fl-dictee');
+    if(fld){
+      let flDicteeTraite='', flDicteeTimer=null;
+      fld.addEventListener('input', ()=>{
+        clearTimeout(flDicteeTimer);
+        flDicteeTimer=setTimeout(()=>{
+          if(!flActive) return;
+          const v=fld.value;
+          if(!v.startsWith(flDicteeTraite)) flDicteeTraite='';
+          const nouveau=v.slice(flDicteeTraite.length);
+          flDicteeTraite=v;
+          nouveau.split(/\s+/).map(normMot).filter(Boolean).forEach(consommerMotLu);
+          const el=document.getElementById('fl-lus');
+          if(el) el.textContent=flCorrect;
+          if(flPos>=flMots.length) finFluence();
+          if(v.length>400){ fld.value=''; flDicteeTraite=''; }
+        },250);
+      });
+    }
     flReco.onend = ()=>{
       if(!flActive) return;
       if(EST_ANDROID){
@@ -2305,7 +2333,7 @@ function ouvrirTables(){
     grid.appendChild(card);
   }
   document.getElementById('micro-note').innerHTML = SRClass
-    ? 'v18 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
+    ? 'v19 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
     : '⚠️ La récitation vocale a besoin de <b>Chrome</b>, <b>Edge</b> ou <b>Safari</b> — sur ce navigateur, seul le test écrit est disponible.';
   if(SRClass) verifierRecoLocale().then(st=>{
     const z=document.getElementById('zone-reco-locale');
@@ -2579,8 +2607,35 @@ function questionVoix(){
       <div class="mode-reco${modeLocal?' locale':''}">${modeLocal?'⚡ reconnaissance locale (rapide)':'☁️ reconnaissance en ligne'} <span id="latence-tag"></span></div>
       <div class="entendu" id="micro-entendu"></div>
       <button class="btn-secondaire" style="padding:6px 14px;font-size:.8rem;margin-top:6px;" onclick="${modeVoix==='defi'?'stopVoix();lancerDefiClavier()':'stopVoix();lancerTestTable(tCourante)'}">⌨️ Le micro ne suit pas ? Réponds au clavier</button>
+    </div>
+    <div class="dictee-zone">
+      <p>📱 Sur tablette : touche le champ ci-dessous, puis le <b>🎤 de ton clavier</b>, et récite — je coche pareil !</p>
+      <input type="text" id="dictee-input" autocomplete="off" placeholder="🎤 la dictée du clavier écrit ici…">
     </div>`;
+  brancherDictee();
   lancerCompteQ('voix', tempsEcouleVoix);
+}
+let dicteeTraite='', dicteeTimer=null;
+function brancherDictee(){
+  // La dictée du CLAVIER (Gboard) passe par le moteur système de Google —
+  // celui qui fonctionne même quand l'API vocale du navigateur est muette.
+  const inp=document.getElementById('dictee-input');
+  if(!inp) return;
+  dicteeTraite='';
+  inp.addEventListener('input', ()=>{
+    clearTimeout(dicteeTimer);
+    dicteeTimer=setTimeout(()=>{
+      const v=inp.value;
+      if(!v.startsWith(dicteeTraite)) dicteeTraite=''; // champ modifié/effacé : on repart
+      const nouveau=v.slice(dicteeTraite.length);
+      dicteeTraite=v;
+      if(!nouveau.trim()) return;
+      const ent=document.getElementById('micro-entendu');
+      if(ent) ent.textContent='« '+(v.length>48?'…'+v.slice(-48):v).trim()+' »';
+      consommerNombres(extraireNombres(nouveau));
+      if(v.length>300){ inp.value=''; dicteeTraite=''; } // on repart léger de temps en temps
+    },250);
+  });
 }
 function produitAttendu(){ const p=tPaires[ligneIdx]; return p[0]*p[1]; }
 function consommerNombres(nums){
