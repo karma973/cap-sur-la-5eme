@@ -475,7 +475,7 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
     <div id="semaines"></div>
     <h3 class="badges-titre">🏆 Mes badges</h3>
     <div class="badges" id="badges"></div>
-    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v19 ·</b><br>
+    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v20 ·</b><br>
     <button onclick="toutEffacer()">Recommencer le cahier à zéro</button></p>
   </section>
 
@@ -1707,8 +1707,9 @@ function ouvrirActivite(id, prov='jour'){
       <div class="micro-zone" id="fl-micro" style="display:none;">
         <div class="micro-bulle ecoute" id="micro-bulle">🎤</div>
         <div class="micro-statut" id="micro-statut">Lis à ton rythme, je te suis !</div>
+        <button class="btn-principal" id="btn-vosk-fl" style="margin-top:8px;display:none;" onclick="activerVoskFluence()">🚀 Activer le micro nouvelle génération</button>
         <div class="dictee-zone">
-          <p>📱 Sur tablette : touche le champ, puis le <b>🎤 de ton clavier</b>, et lis le texte !</p>
+          <p>📱 Autre option : touche le champ, puis le <b>🎤 de ton clavier</b>, et lis le texte !</p>
           <input type="text" id="fl-dictee" autocomplete="off" placeholder="🎤 la dictée du clavier écrit ici…">
         </div>
       </div>
@@ -1824,6 +1825,7 @@ function lancerFluence(){
     modeLocal = (dispo==='available');
     flActive=true; flStart=Date.now();
     document.getElementById('fl-fin').style.display='';
+    if(EST_ANDROID){ const bv=document.getElementById('btn-vosk-fl'); if(bv) bv.style.display=''; }
     document.getElementById('fw-0').classList.add('courant');
     demarrerVumetre();
     flTimer=setInterval(()=>{
@@ -1923,6 +1925,7 @@ function consommerMotLu(tk){
 }
 function stopFluence(){
   flActive=false;
+  arreterVosk();
   clearInterval(flTimer); flTimer=null;
   if(flReco){ try{ flReco.onresult=null; flReco.onend=null; flReco.onerror=null; flReco.abort(); }catch(e){} flReco=null; }
   arreterVumetre();
@@ -2333,7 +2336,7 @@ function ouvrirTables(){
     grid.appendChild(card);
   }
   document.getElementById('micro-note').innerHTML = SRClass
-    ? 'v19 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
+    ? 'v20 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
     : '⚠️ La récitation vocale a besoin de <b>Chrome</b>, <b>Edge</b> ou <b>Safari</b> — sur ce navigateur, seul le test écrit est disponible.';
   if(SRClass) verifierRecoLocale().then(st=>{
     const z=document.getElementById('zone-reco-locale');
@@ -2487,6 +2490,113 @@ function avertirAndroidFile(retryJS){
   return true;
 }
 let tPaires=[], modeVoix='table'; // 'table' = une table entière, 'defi' = récitation du jour (mixte)
+
+/* ── MICRO NOUVELLE GÉNÉRATION 🚀 (Vosk WebAssembly) ──
+   Reconnaissance vocale DANS la page : micro → getUserMedia → moteur WASM.
+   Ne dépend plus du service vocal de Chrome/Google (en panne sur certaines tablettes). */
+const voskEtat={model:null, ctx:null, node:null, src:null, flux:null, reco:null, actif:false, dernierPartial:''};
+const GRAMMAIRE_NOMBRES = JSON.stringify(['[unk]','un','une','deux','trois','quatre','cinq','six','sept','huit','neuf','dix','onze','douze','treize','quatorze','quinze','seize','vingt','vingts','trente','quarante','cinquante','soixante','cent','et','fois','ça','fait','égale']);
+function chargerScript(url){
+  return new Promise((res,rej)=>{ const sc=document.createElement('script'); sc.src=url; sc.onload=res; sc.onerror=()=>rej(new Error('script')); document.head.appendChild(sc); });
+}
+async function chargerMoteurVosk(statutCb){
+  if(!window.Vosk){
+    statutCb('Chargement du moteur vocal…');
+    await chargerScript('https://cdn.jsdelivr.net/npm/vosk-browser@0.0.5/dist/vosk.js');
+  }
+  if(!voskEtat.model){
+    statutCb('Téléchargement du modèle de français (~40 Mo, une seule fois — il sera gardé en mémoire)…');
+    const urls=['modele-fr.tar.gz',
+      'https://ccoreilly.github.io/vosk-browser/models/vosk-model-small-fr-pguyot-0.3.tar.gz',
+      'https://ccoreilly.github.io/vosk-browser/models/vosk-model-small-fr-0.22.tar.gz'];
+    let derniereErreur=null;
+    for(const u of urls){
+      try{ voskEtat.model = await Vosk.createModel(u); derniereErreur=null; break; }
+      catch(e){ derniereErreur=e; }
+    }
+    if(!voskEtat.model) throw derniereErreur || new Error('modèle introuvable');
+  }
+}
+async function demarrerVosk(onTexte, avecGrammaire){
+  arreterVosk();
+  voskEtat.flux = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true, noiseSuppression:true, channelCount:1}});
+  voskEtat.ctx = new (window.AudioContext||window.webkitAudioContext)();
+  if(voskEtat.ctx.state==='suspended'){ try{ await voskEtat.ctx.resume(); }catch(e){} }
+  const sr = voskEtat.ctx.sampleRate;
+  voskEtat.reco = avecGrammaire ? new voskEtat.model.KaldiRecognizer(sr, GRAMMAIRE_NOMBRES)
+                                : new voskEtat.model.KaldiRecognizer(sr);
+  voskEtat.dernierPartial='';
+  const traiter=(txt, estFinal)=>{
+    // On ne transmet que le NOUVEAU morceau (les partiels répètent la phrase en cours)
+    let nouveau = txt;
+    if(txt.startsWith(voskEtat.dernierPartial)) nouveau = txt.slice(voskEtat.dernierPartial.length);
+    voskEtat.dernierPartial = estFinal ? '' : txt;
+    if(nouveau.trim() || estFinal) onTexte(nouveau, txt);
+  };
+  voskEtat.reco.on('partialresult', m=>{ if(m.result && m.result.partial) traiter(m.result.partial,false); });
+  voskEtat.reco.on('result', m=>{ if(m.result && m.result.text) traiter(m.result.text,true); });
+  voskEtat.src = voskEtat.ctx.createMediaStreamSource(voskEtat.flux);
+  voskEtat.node = voskEtat.ctx.createScriptProcessor(4096,1,1);
+  voskEtat.node.onaudioprocess = ev=>{ try{ voskEtat.reco.acceptWaveform(ev.inputBuffer); }catch(e){} };
+  voskEtat.src.connect(voskEtat.node);
+  voskEtat.node.connect(voskEtat.ctx.destination);
+  voskEtat.actif=true;
+}
+function arreterVosk(){
+  voskEtat.actif=false;
+  try{ if(voskEtat.node){ voskEtat.node.disconnect(); voskEtat.node.onaudioprocess=null; } }catch(e){}
+  try{ if(voskEtat.src) voskEtat.src.disconnect(); }catch(e){}
+  try{ if(voskEtat.ctx) voskEtat.ctx.close(); }catch(e){}
+  try{ if(voskEtat.flux) voskEtat.flux.getTracks().forEach(t=>t.stop()); }catch(e){}
+  voskEtat.node=voskEtat.src=voskEtat.ctx=voskEtat.flux=voskEtat.reco=null;
+}
+function stopSRSeul(){
+  // Coupe uniquement la reconnaissance du navigateur, sans toucher au chrono ni aux lignes
+  if(reco){ try{ reco.onresult=null; reco.onend=null; reco.onerror=null; reco.abort(); }catch(e){} reco=null; }
+}
+async function activerVoskRecitation(){
+  const btn=document.getElementById('btn-vosk');
+  if(btn) btn.disabled=true;
+  const statut=document.getElementById('micro-statut');
+  const majSt=t=>{ if(statut){ statut.dataset.fige='1'; statut.textContent=t; } };
+  try{
+    stopSRSeul();
+    await chargerMoteurVosk(majSt);
+    await demarrerVosk((nouveau, complet)=>{
+      if(!voixActive || ligneIdx>=10) return;
+      const ent=document.getElementById('micro-entendu');
+      if(ent && complet.trim()) ent.textContent='« '+(complet.length>48?'…'+complet.slice(-48):complet)+' »';
+      consommerNombres(extraireNombres(nouveau));
+    }, true);
+    majSt('🚀 Micro nouvelle génération actif — récite, tout se passe dans la page !');
+    if(btn) btn.style.display='none';
+  }catch(e){
+    majSt('⚠️ Impossible de démarrer le moteur ('+(e&&e.message||e)+'). Vérifie ta connexion et réessaie.');
+    if(btn) btn.disabled=false;
+  }
+}
+async function activerVoskFluence(){
+  const btn=document.getElementById('btn-vosk-fl');
+  if(btn) btn.disabled=true;
+  const statut=document.getElementById('micro-statut');
+  const majSt=t=>{ if(statut) statut.textContent=t; };
+  try{
+    if(flReco){ try{ flReco.onresult=null; flReco.onend=null; flReco.onerror=null; flReco.abort(); }catch(e){} flReco=null; }
+    await chargerMoteurVosk(majSt);
+    await demarrerVosk((nouveau)=>{
+      if(!flActive) return;
+      nouveau.split(/\s+/).map(normMot).filter(Boolean).forEach(consommerMotLu);
+      const el=document.getElementById('fl-lus');
+      if(el) el.textContent=flCorrect;
+      if(flPos>=flMots.length) finFluence();
+    }, false);
+    majSt('🚀 Moteur local actif — lis le texte, je te suis !');
+    if(btn) btn.style.display='none';
+  }catch(e){
+    majSt('⚠️ Impossible de démarrer le moteur ('+(e&&e.message||e)+').');
+    if(btn) btn.disabled=false;
+  }
+}
 let sessionsMuettes=0;
 function alerteMicroMuet(){
   const st=document.getElementById('micro-statut');
@@ -2608,8 +2718,10 @@ function questionVoix(){
       <div class="entendu" id="micro-entendu"></div>
       <button class="btn-secondaire" style="padding:6px 14px;font-size:.8rem;margin-top:6px;" onclick="${modeVoix==='defi'?'stopVoix();lancerDefiClavier()':'stopVoix();lancerTestTable(tCourante)'}">⌨️ Le micro ne suit pas ? Réponds au clavier</button>
     </div>
+    ${EST_ANDROID?`<button class="btn-principal" id="btn-vosk" style="margin-top:8px;" onclick="activerVoskRecitation()">🚀 Activer le micro nouvelle génération</button>
+    <p style="font-size:.75rem;color:#8A7A50;font-weight:700;text-align:center;margin:4px 0 0;">Moteur vocal intégré à la page — recommandé sur tablette (téléchargement unique ~40 Mo).</p>`:''}
     <div class="dictee-zone">
-      <p>📱 Sur tablette : touche le champ ci-dessous, puis le <b>🎤 de ton clavier</b>, et récite — je coche pareil !</p>
+      <p>📱 Autre option : touche le champ ci-dessous, puis le <b>🎤 de ton clavier</b>, et récite — je coche pareil !</p>
       <input type="text" id="dictee-input" autocomplete="off" placeholder="🎤 la dictée du clavier écrit ici…">
     </div>`;
   brancherDictee();
@@ -2735,6 +2847,7 @@ function demarrerReconnaissance(){
 function stopVoix(desactiver=true){
   stopCompteQ();
   arreterVumetre();
+  arreterVosk();
   if(reco){ try{ reco.onresult=null; reco.onend=null; reco.onerror=null; reco.abort(); }catch(e){} reco=null; }
   if(fluxMicro){ try{ fluxMicro.getTracks().forEach(tr=>tr.stop()); }catch(e){} fluxMicro=null; }
   if(desactiver) voixActive=false;
