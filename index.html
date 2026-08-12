@@ -428,6 +428,11 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
 .dictee-zone p{font-size:.82rem;font-weight:800;color:#6C519E;margin:0 0 6px;}
 .dictee-zone input{width:100%;box-sizing:border-box;font-family:'Nunito';font-size:1.05rem;padding:12px 14px;border:3px dashed #C9B8E8;border-radius:14px;background:#FDFBFF;color:#2A2416;text-align:center;}
 .dictee-zone input:focus{outline:none;border-color:#8B6FC7;border-style:solid;}
+.mission.espagnol{border-left-color:#D94F30;}
+.mission.espagnol .ico{background:#FBE9E3;}
+.chip.espagnol{background:#FBE9E3;color:#B23A1D;}
+.es-banniere{background:linear-gradient(120deg,#D94F30,#B23A1D);box-shadow:0 6px 16px rgba(217,79,48,.35);margin-top:12px;position:relative;overflow:hidden;}
+.es-banniere::after{content:'¡NUEVO!';position:absolute;top:10px;right:-26px;background:#F2C14E;color:#7A5A10;font-size:.6rem;font-weight:900;padding:3px 30px;transform:rotate(35deg);letter-spacing:1px;}
 </style>
 </head>
 <body>
@@ -467,6 +472,12 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
       <div class="tb-prog"><b id="lecture-compteur">0/15</b><small>missions<br>faites</small></div>
       <span class="tb-fleche">→</span>
     </div>
+    <div class="tables-banniere es-banniere" onclick="ouvrirEspagnol()">
+      <span class="tb-ico">🇪🇸</span>
+      <div class="tb-txt"><h3>¡Hola España! — spécial août</h3><p>Débute l’espagnol avant la 5ᵉ : 10 missions pour tout comprendre dès la rentrée</p></div>
+      <div class="tb-prog"><b id="es-compteur">0/10</b><small>missions<br>réussies</small></div>
+      <span class="tb-fleche">→</span>
+    </div>
     <div class="tables-banniere journal-banniere" onclick="ouvrirJournal()">
       <span class="tb-ico">📔</span>
       <div class="tb-txt"><h3>Mon journal de bord</h3><p>Revois le travail des jours passés et toutes tes réponses</p></div>
@@ -475,7 +486,7 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
     <div id="semaines"></div>
     <h3 class="badges-titre">🏆 Mes badges</h3>
     <div class="badges" id="badges"></div>
-    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v22 ·</b><br>
+    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v23 ·</b><br>
     <button onclick="toutEffacer()">Recommencer le cahier à zéro</button></p>
   </section>
 
@@ -484,6 +495,14 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
     <button class="btn-retour" onclick="montrerVue('vue-home')">← Retour au cahier</button>
     <div class="jour-entete"><h2 id="jour-titre"></h2><p id="jour-theme"></p></div>
     <div class="missions" id="missions"></div>
+  </section>
+
+  <!-- ═══════ VUE ESPAGNOL ═══════ -->
+  <section class="vue" id="vue-espagnol">
+    <button class="btn-retour" onclick="montrerVue('vue-home');renduGlobal()">← Retour au cahier</button>
+    <div class="jour-entete"><h2>🇪🇸 ¡Hola España!</h2>
+      <p>Ton programme d’août pour débuter l’espagnol, dans l’ordre du programme de 5ᵉ. Fais les missions dans l’ordre : chacune s’appuie sur la précédente. Avec l’audio 🔊 pour entendre la vraie prononciation !</p></div>
+    <div class="missions" id="es-missions"></div>
   </section>
 
   <!-- ═══════ VUE JOURNAL DE BORD ═══════ -->
@@ -1324,7 +1343,7 @@ const JOURS = [
 {t:'Problèmes & fables 🦊',acts:['M14','A14','F14']},
 {t:'Les grands défis finaux 🏁',acts:['M15','A15','F15']}];
 
-const MATIERES = {maths:{nom:'Maths',ico:'📐'},anglais:{nom:'Anglais',ico:'🇬🇧'},francais:{nom:'Français',ico:'📖'}};
+const MATIERES = {maths:{nom:'Maths',ico:'📐'},anglais:{nom:'Anglais',ico:'🇬🇧'},francais:{nom:'Français',ico:'📖'},espagnol:{nom:'Espagnol',ico:'🇪🇸'}};
 
 /* ── LIRE & ÉCRIRE 📚 ── */
 const LECTURE = {
@@ -1424,6 +1443,149 @@ texte:`La maison de tante Rose sentait la cire et les vieux livres. Interdiction
 };
 Object.assign(ACTIVITES, FLUENCE);
 
+/* ── ¡HOLA ESPAÑA! 🇪🇸 — spécial août, débuter l’espagnol (programme 5ème LV2) ── */
+const ESPAGNOL = {
+E1:{hub:true,mat:'espagnol',langue:'es-ES',titre:'¡Hola! Saluer et se présenter',duree:'15 min',type:'quiz',
+lecon:`<h3>👋 Tes premiers mots en espagnol</h3>
+<p><b>Saluer :</b> ¡Hola! (salut) · Buenos días (bonjour, le matin) · Buenas tardes (bonjour, l’après-midi) · Buenas noches (bonsoir/bonne nuit) · ¡Adiós! (au revoir) · ¡Hasta luego! (à plus tard)</p>
+<p><b>Se présenter :</b> Me llamo Lisa (je m’appelle…) · ¿Cómo te llamas? (comment t’appelles-tu ?) · ¿Qué tal? (ça va ?) · Muy bien, gracias (très bien, merci) · ¿Y tú? (et toi ?)</p>
+<div class="astuce">💡 En espagnol, les questions et exclamations s’ouvrent avec un signe <b>à l’envers</b> : ¿Qué tal? ¡Hola! — c’est la première chose qui surprend… et qu’on adore !</div>`,
+questions:[
+{q:'Comment dit-on « salut » en espagnol ?',say:'hola',c:['¡Hola!','¡Adiós!','Gracias','Buenas noches'],a:0,e:'¡Hola! est le salut passe-partout, à toute heure. ¡Adiós! = au revoir.'},
+{q:'« Buenos días » se dit…',say:'buenos días',c:['le soir','le matin','à minuit','pour dire au revoir'],a:1,e:'Buenos días = bonjour du matin. L’après-midi, on passe à « buenas tardes ».'},
+{q:'« ¿Cómo te llamas? » veut dire…',say:'¿cómo te llamas?',c:['Comment vas-tu ?','Comment t’appelles-tu ?','Où habites-tu ?','Quel âge as-tu ?'],a:1,e:'Llamarse = s’appeler. Réponse : « Me llamo… » (je m’appelle…).'},
+{q:'Pour répondre « je m’appelle Awa », je dis :',say:'me llamo Awa',c:['Te llamas Awa','Me llamo Awa','Se llama Awa','Yo Awa'],a:1,e:'Me llamo = je m’appelle. « Te llamas » = tu t’appelles, « se llama » = il/elle s’appelle.'},
+{q:'« ¿Qué tal? » signifie…',say:'¿qué tal?',c:['Quoi de neuf ? / Ça va ?','Quelle heure est-il ?','Qui es-tu ?','Où vas-tu ?'],a:0,e:'¿Qué tal? est la façon la plus courante de demander « ça va ? ».'},
+{q:'On me demande « ¿Qué tal? ». Je réponds :',say:'muy bien, gracias',c:['Muy bien, gracias','Me llamo Pablo','Buenas noches','Hasta luego'],a:0,e:'Muy bien, gracias = très bien, merci. Et on peut renvoyer la question : « ¿Y tú? »'},
+{q:'Quel signe ouvre une question en espagnol ?',c:['¿','!','¡','?'],a:0,e:'Le point d’interrogation inversé ¿ ouvre la question, le ? normal la ferme : ¿Qué tal?'},
+{q:'Comment dit-on « à plus tard » ?',say:'hasta luego',c:['¡Hasta luego!','¡Hola!','Buenos días','Por favor'],a:0,e:'¡Hasta luego! = à plus tard. Tu entendras aussi « hasta mañana » (à demain).'}]},
+E2:{hub:true,mat:'espagnol',langue:'es-ES',titre:'L’alphabet et les sons espagnols',duree:'15 min',type:'quiz',
+lecon:`<h3>🔤 L’espagnol se prononce comme il s’écrit !</h3>
+<p>Bonne nouvelle : en espagnol, presque tout se prononce, et toujours pareil. Quelques sons à apprivoiser :</p>
+<p>• <b>ñ</b> → « gn » comme dans oignon : Espa<b>ñ</b>a, ni<b>ñ</b>o (enfant)<br>
+• <b>ll</b> → « y » : me <b>ll</b>amo (mé-ya-mo), pae<b>ll</b>a<br>
+• <b>j</b> (la jota) → un « r » soufflé du fond de la gorge : <b>j</b>amón (jambon), Tra-ba<b>j</b>o<br>
+• <b>rr</b> → un r roulé : pe<b>rr</b>o (chien)<br>
+• <b>u</b> → toujours « ou » : t<b>ú</b> (toi) se dit « tou »<br>
+• <b>z</b> et <b>c</b> (devant e, i) → comme le « th » anglais en Espagne : <b>z</b>apato, gra<b>c</b>ias</p>
+<div class="astuce">💡 La lettre <b>h</b> est toujours muette : « hola » se dit « ola » !</div>`,
+questions:[
+{q:'Comment se prononce le ñ de « España » ?',say:'España',c:['comme « n »','comme « gn » d’oignon','comme « ni »','il est muet'],a:1,e:'ñ = « gn ». España se dit « Espagna ». C’est LA lettre emblème de l’espagnol.'},
+{q:'Dans « me llamo », le « ll » se prononce…',say:'me llamo',c:['« l »','« y »','« j »','« li »'],a:1,e:'ll = « y » : on dit « mé yamo ».'},
+{q:'La lettre « h » de « hola »…',say:'hola',c:['se prononce fort','est muette','se dit « ch »','se dit « r »'],a:1,e:'Le h espagnol est toujours muet : hola = « ola ».'},
+{q:'La « jota » (lettre j) de « jamón » ressemble à…',say:'jamón',c:['un j français','un r soufflé du fond de la gorge','un y','un s'],a:1,e:'La jota est un son raclé, comme un gros « rrh » soufflé : « rha-món ».'},
+{q:'Comment se prononce le « u » de « tú » (toi) ?',say:'tú',c:['« u » comme en français','« ou »','« o »','« eu »'],a:1,e:'Le u espagnol se dit toujours « ou » : tú = « tou », uno = « ouno ».'},
+{q:'Le « rr » de « perro » (chien) est…',say:'perro',c:['muet','roulé','doux comme en français','prononcé « l »'],a:1,e:'Le rr se roule ! Perro (chien) ≠ pero (mais) — un seul r change le mot.'},
+{q:'« Gracias » (merci) se prononce en Espagne…',say:'gracias',c:['gra-sias','gra-thias (c comme le th anglais)','gra-kias','gra-chias'],a:1,e:'Devant i ou e, le c se dit comme le « th » anglais en Espagne (en Amérique latine, on dit « s »).'},
+{q:'Pourquoi dit-on que l’espagnol est facile à lire ?',c:['Il n’a pas de lettres','Il se prononce comme il s’écrit','Il ressemble au chinois','Toutes les lettres sont muettes'],a:1,e:'Chaque lettre se prononce presque toujours de la même façon : lire l’espagnol, c’est presque automatique !'}]},
+E3:{hub:true,mat:'espagnol',langue:'es-ES',titre:'Les nombres de 1 à 15',duree:'15 min',type:'quiz',
+lecon:`<h3>🔢 Los números</h3>
+<p>1 <b>uno</b> · 2 <b>dos</b> · 3 <b>tres</b> · 4 <b>cuatro</b> · 5 <b>cinco</b> · 6 <b>seis</b> · 7 <b>siete</b> · 8 <b>ocho</b> · 9 <b>nueve</b> · 10 <b>diez</b></p>
+<p>11 <b>once</b> · 12 <b>doce</b> · 13 <b>trece</b> · 14 <b>catorce</b> · 15 <b>quince</b></p>
+<div class="astuce">💡 Pour donner ton âge : « Tengo once años » = j’ai onze ans (mot à mot : « je tiens onze ans » !). Retiens : <b>tengo … años</b>.</div>`,
+questions:[
+{q:'Comment dit-on « 4 » ?',say:'cuatro',c:['cinco','cuatro','catorce','seis'],a:1,e:'Cuatro = 4. Attention au piège : catorce = 14 !'},
+{q:'« Siete » c’est…',say:'siete',c:['6','7','8','16'],a:1,e:'Siete = 7. Seis = 6, ocho = 8.'},
+{q:'Le nombre 10 se dit…',say:'diez',c:['doce','diez','dos','trece'],a:1,e:'Diez = 10. Doce = 12, dos = 2 — trois sosies à ne pas mélanger !'},
+{q:'« Once » veut dire…',say:'once',c:['1','11','12','15'],a:1,e:'Once = 11 (uno = 1). En espagnol, 11 à 15 ont leurs mots à eux : once, doce, trece, catorce, quince.'},
+{q:'Comment dit-on « 15 » ?',say:'quince',c:['catorce','quince','cinco','cincuenta'],a:1,e:'Quince = 15. Cinco = 5. Le son « qu » se dit « k » : « kinne-cé ».'},
+{q:'« Tengo doce años » signifie…',say:'tengo doce años',c:['J’ai douze ans','Il est midi','J’ai deux frères','Je compte jusqu’à douze'],a:0,e:'Tengo (j’ai) + doce (12) + años (ans) : c’est LA phrase pour donner son âge.'},
+{q:'Quel est le résultat de « tres + cinco » ?',c:['siete','ocho','nueve','seis'],a:1,e:'3 + 5 = 8 = ocho. Les maths en espagnol, ça marche aussi ! 😄'},
+{q:'« Nueve » c’est…',say:'nueve',c:['nouveau','9','19','neuf heures'],a:1,e:'Nueve = 9. Ça ressemble à « neuf » en français — les deux langues sont cousines (langues latines) !'}]},
+E4:{hub:true,mat:'espagnol',langue:'es-ES',titre:'Memory ¡En español!',duree:'10 min',type:'memory',
+consigne:'Retrouve les paires espagnol 🇪🇸 – français 🇫🇷 ! Touche une carte espagnole pour l’entendre. Trouve les 8 paires en moins de 16 coups pour les étoiles !',
+paires:[['hola','salut'],['gracias','merci'],['adiós','au revoir'],['por favor','s’il te plaît'],['sí','oui'],['no','non'],['buenos días','bonjour'],['hasta luego','à plus tard']]},
+E5:{hub:true,mat:'espagnol',langue:'es-ES',titre:'Les jours et les mois',duree:'15 min',type:'quiz',
+lecon:`<h3>📅 Los días y los meses</h3>
+<p><b>Les jours :</b> lunes (lundi) · martes · miércoles · jueves · viernes · sábado · domingo</p>
+<p><b>Les mois :</b> enero, febrero, marzo, abril, mayo, junio, julio, <b>agosto</b>, septiembre, octubre, noviembre, diciembre</p>
+<p><b>La date :</b> Hoy es <b>martes 12 de agosto</b> (aujourd’hui, c’est mardi 12 août).</p>
+<div class="astuce">💡 En espagnol, jours et mois s’écrivent <b>sans majuscule</b> — comme en français, et contrairement à l’anglais !</div>`,
+questions:[
+{q:'Comment dit-on « lundi » ?',say:'lunes',c:['domingo','lunes','martes','luna'],a:1,e:'Lunes = lundi, le jour de la Lune (luna). Toute la semaine espagnole vient des astres !'},
+{q:'« Miércoles » c’est…',say:'miércoles',c:['mardi','mercredi','jeudi','un dessert'],a:1,e:'Miércoles = mercredi. Mardi = martes, jeudi = jueves.'},
+{q:'Le week-end espagnol, c’est…',say:'sábado y domingo',c:['viernes y sábado','sábado y domingo','domingo y lunes','jueves y viernes'],a:1,e:'Sábado (samedi) et domingo (dimanche) : el fin de semana !'},
+{q:'Nous sommes en vacances. Quel mois sommes-nous ? « Estamos en… »',say:'agosto',c:['abril','agosto','octubre','enero'],a:1,e:'Agosto = août, le mois de ton cahier d’espagnol ! ☀️'},
+{q:'« Enero » est le mois de…',say:'enero',c:['janvier','juin','mars','septembre'],a:0,e:'Enero = janvier. Junio = juin, marzo = mars.'},
+{q:'Comment s’écrivent les jours et les mois en espagnol ?',c:['Avec une majuscule','Sans majuscule','En lettres capitales','Toujours abrégés'],a:1,e:'Sans majuscule : lunes, agosto… Un point commun avec le français, un piège de moins !'},
+{q:'« Hoy es viernes » signifie…',say:'hoy es viernes',c:['Hier c’était vendredi','Aujourd’hui c’est vendredi','Demain c’est vendredi','Il pleut vendredi'],a:1,e:'Hoy = aujourd’hui. Demain = mañana, hier = ayer.'},
+{q:'Pour dire la date du 3 juillet : « el … »',c:['tres de julio','julio de tres','tres julio de','de julio tres'],a:0,e:'La date : el + nombre + de + mois → el tres de julio. Simple et régulier !'}]},
+E6:{hub:true,mat:'espagnol',langue:'es-ES',titre:'La classe : el, la, un, una',duree:'15 min',type:'quiz',
+lecon:`<h3>🎒 El material escolar</h3>
+<p><b>Le matériel :</b> el libro (le livre) · el cuaderno (le cahier) · el bolígrafo (le stylo) · el lápiz (le crayon) · la mochila (le sac à dos) · la regla (la règle) · la goma (la gomme) · el estuche (la trousse)</p>
+<p><b>Les articles :</b> le/la → <b>el / la</b> · un/une → <b>un / una</b> · les → <b>los / las</b></p>
+<div class="astuce">💡 Repère facile : les mots en <b>-o</b> sont presque toujours masculins (el libro), ceux en <b>-a</b> presque toujours féminins (la mochila). Attention : certains mots changent de genre entre les langues — <b>la</b> clase (la classe) mais <b>el</b> lápiz !</div>`,
+questions:[
+{q:'« Le livre » se dit…',say:'el libro',c:['la libro','el libro','un libra','los libro'],a:1,e:'Libro finit en -o → masculin → el libro.'},
+{q:'« La mochila », c’est…',say:'la mochila',c:['la moto','le sac à dos','la trousse','la règle'],a:1,e:'La mochila = le sac à dos. En espagnol, ce mot est féminin !'},
+{q:'Complète : « … goma » (la gomme)',say:'la goma',c:['el','la','los','un'],a:1,e:'Goma finit en -a → féminin → la goma.'},
+{q:'« Un stylo » se dit…',say:'un bolígrafo',c:['una bolígrafo','un bolígrafo','el bolígrafa','unos bolígrafo'],a:1,e:'Bolígrafo est masculin → un bolígrafo (souvent raccourci en « boli » !).'},
+{q:'« Les livres » (pluriel) se dit…',say:'los libros',c:['el libros','los libros','las libros','les libros'],a:1,e:'Masculin pluriel : los + libros. Féminin pluriel : las (las mochilas).'},
+{q:'Quel mot désigne « la trousse » ?',say:'el estuche',c:['el estuche','la regla','el cuaderno','la goma'],a:0,e:'El estuche = la trousse (masculin en espagnol !). La regla = la règle.'},
+{q:'« El lápiz » est…',say:'el lápiz',c:['le crayon','le stylo','le cahier','le tableau'],a:0,e:'El lápiz = le crayon. Le stylo = el bolígrafo.'},
+{q:'En général, un mot espagnol en -a est…',c:['masculin','féminin','pluriel','invariable'],a:1,e:'-a → féminin (la), -o → masculin (el). Un repère qui marche presque tout le temps !'}]},
+E7:{hub:true,mat:'espagnol',langue:'es-ES',titre:'Les couleurs et l’accord',duree:'15 min',type:'quiz',
+lecon:`<h3>🎨 Los colores</h3>
+<p>rojo (rouge) · azul (bleu) · verde (vert) · amarillo (jaune) · negro (noir) · blanco (blanc) · naranja (orange) · rosa (rose) · gris · marrón</p>
+<p><b>L’accord :</b> les couleurs en -o s’accordent : el libro roj<b>o</b> → la mochila roj<b>a</b> → los libros roj<b>os</b>. Celles en -e ou consonne ne changent pas au féminin : la regla verde, azul.</p>
+<div class="astuce">💡 En espagnol, la couleur se place <b>après</b> le nom : « el bolígrafo azul » (le stylo bleu) — comme souvent en français, contrairement à l’anglais !</div>`,
+questions:[
+{q:'« Amarillo » c’est…',say:'amarillo',c:['orange','jaune','marron','violet'],a:1,e:'Amarillo = jaune (avec le ll qui se dit « y » : ama-ri-yo).'},
+{q:'« Vert » se dit…',say:'verde',c:['verde','vierde','verte','verdo'],a:0,e:'Verde = vert. Il ne change pas au féminin : la regla verde.'},
+{q:'Accorde : « la mochila … » (rouge)',say:'la mochila roja',c:['rojo','roja','rojos','roje'],a:1,e:'Mochila est féminin → rojo devient roj<b>a</b>.'},
+{q:'« Le chat noir » se dit « el gato … »',say:'el gato negro',c:['negra','negro','negros','noir'],a:1,e:'Gato est masculin singulier → negro.'},
+{q:'« Blanco » veut dire…',say:'blanco',c:['bleu','blanc','noir','gris'],a:1,e:'Blanco = blanc. Bleu = azul (comme la Costa Azul !).'},
+{q:'Accorde au pluriel : « los cuadernos … » (jaune)',say:'los cuadernos amarillos',c:['amarillo','amarilla','amarillos','amarillas'],a:2,e:'Masculin pluriel → amarillos. Le -s du pluriel s’ajoute aussi à la couleur.'},
+{q:'Où se place la couleur en espagnol ?',c:['Avant le nom','Après le nom','Au début de la phrase','N’importe où'],a:1,e:'Après le nom : el gato negro, la mochila roja.'},
+{q:'« Azul » s’accorde-t-il en « azula » au féminin ?',say:'azul',c:['Oui','Non, il reste azul','Il devient azules','Il devient azula seulement au pluriel'],a:1,e:'Les couleurs qui ne finissent pas en -o gardent la même forme : la regla azul. (Au pluriel : azules.)'}]},
+E8:{hub:true,mat:'espagnol',langue:'es-ES',titre:'La famille + le verbe tener',duree:'15 min',type:'quiz',
+lecon:`<h3>👨‍👩‍👧 Mi familia</h3>
+<p>el padre (le père) · la madre (la mère) · el hermano (le frère) · la hermana (la sœur) · el abuelo (le grand-père) · la abuela (la grand-mère) · el primo / la prima (cousin·e) · el tío / la tía (oncle/tante) · los padres (les parents)</p>
+<p><b>Tener (avoir) :</b> yo <b>tengo</b> · tú <b>tienes</b> · él/ella <b>tiene</b></p>
+<p>Tengo una hermana = j’ai une sœur · ¿Tienes hermanos? = as-tu des frères et sœurs ?</p>
+<div class="astuce">💡 « Mi » = mon/ma : mi madre, mi hermano. Au pluriel : « mis » — mis padres (mes parents).</div>`,
+questions:[
+{q:'« La hermana » c’est…',say:'la hermana',c:['la mère','la sœur','la tante','la cousine'],a:1,e:'Hermana = sœur, hermano = frère. Le h est muet : « ermana ».'},
+{q:'« El abuelo » veut dire…',say:'el abuelo',c:['l’oncle','le grand-père','le cousin','le voisin'],a:1,e:'Abuelo = grand-père, abuela = grand-mère.'},
+{q:'« J’ai un frère » se dit…',say:'tengo un hermano',c:['Tienes un hermano','Tengo un hermano','Tiene un hermano','Tengo una hermana'],a:1,e:'Yo tengo = j’ai. « Tengo una hermana » serait « j’ai une sœur ».'},
+{q:'« ¿Tienes primos? » signifie…',say:'¿tienes primos?',c:['As-tu des cousins ?','A-t-il des cousins ?','Aimes-tu les prunes ?','As-tu des frères ?'],a:0,e:'Tú tienes = tu as. Primos = cousins.'},
+{q:'« Mes parents » se dit…',say:'mis padres',c:['mi padres','mis padres','los mi padres','mes padres'],a:1,e:'Mi devient « mis » au pluriel : mis padres, mis hermanos.'},
+{q:'Complète : « Ella … diez años » (elle a dix ans)',say:'ella tiene diez años',c:['tengo','tienes','tiene','tener'],a:2,e:'Él/ella tiene. Et rappelle-toi : l’âge se dit avec tener !'},
+{q:'« El tío » c’est…',say:'el tío',c:['le grand-père','l’oncle','le frère','le parrain'],a:1,e:'Tío = oncle, tía = tante. (En Espagne, « ¡tío! » se dit aussi entre copains, comme « mec » !)'},
+{q:'« Ma mère » se dit…',say:'mi madre',c:['la mi madre','mi madre','mis madre','me madre'],a:1,e:'Mi madre — pas d’article devant mi : on ne dit pas « la mi madre ».'}]},
+E9:{hub:true,mat:'espagnol',langue:'es-ES',titre:'Ser et llamarse : je suis, je m’appelle',duree:'15 min',type:'quiz',
+lecon:`<h3>⭐ Le verbe ser (être)</h3>
+<p>yo <b>soy</b> (je suis) · tú <b>eres</b> (tu es) · él/ella <b>es</b> (il/elle est)</p>
+<p>Soy francesa (je suis française) · Soy de Guyana Francesa (je suis de Guyane) · Eres simpático (tu es sympa) · Ella es mi hermana (c’est ma sœur)</p>
+<h3>Llamarse (s’appeler)</h3>
+<p>me llamo · te llamas · se llama — Mi madre <b>se llama</b> Karma.</p>
+<div class="astuce">💡 En espagnol, on ne met presque jamais « yo, tú… » : le verbe suffit ! « Soy Lisa » = je suis Lisa. La terminaison dit qui parle.</div>`,
+questions:[
+{q:'« Je suis » se dit…',say:'soy',c:['eres','soy','es','ser'],a:1,e:'Yo soy. Tú eres, él/ella es. Ser = être (l’infinitif).'},
+{q:'« Tú … mi amigo » (tu es mon ami)',say:'eres',c:['soy','eres','es','está'],a:1,e:'Tú eres. On reconnaît la personne à la terminaison !'},
+{q:'« Soy de Cayena » signifie…',say:'soy de Cayena',c:['Je vais à Cayenne','Je suis de Cayenne','Je connais Cayenne','J’aime Cayenne'],a:1,e:'Ser + de = venir de : soy de… (je suis de/originaire de).'},
+{q:'« Il s’appelle Pablo » se dit…',say:'se llama Pablo',c:['Me llamo Pablo','Te llamas Pablo','Se llama Pablo','Es llamo Pablo'],a:2,e:'Él/ella se llama. Me llamo = JE m’appelle, te llamas = TU t’appelles.'},
+{q:'Pourquoi dit-on juste « Soy Lisa » sans « yo » ?',c:['C’est une erreur','La terminaison du verbe indique déjà qui parle','Yo est interdit','Pour aller plus vite seulement'],a:1,e:'Le -oy de « soy » dit déjà « je » : le pronom est le plus souvent inutile. On l’ajoute pour insister : « ¡YO soy la mejor! »'},
+{q:'« Ella es mi prima » veut dire…',say:'ella es mi prima',c:['Elle est ma cousine','Elle est la première','Elle est ma sœur','C’est ma copine'],a:0,e:'Es (elle est) + mi prima (ma cousine).'},
+{q:'Complète : « Mi abuela … llama Rose »',say:'mi abuela se llama Rose',c:['me','te','se','le'],a:2,e:'Il/elle → se llama. Mi abuela se llama Rose = ma grand-mère s’appelle Rose.'},
+{q:'« Eres muy simpática » se dit à…',say:'eres muy simpática',c:['un garçon','une fille','plusieurs personnes','un adulte uniquement'],a:1,e:'Eres = tu es, et simpátic<b>a</b> avec -a → on parle à une fille. À un garçon : simpático.'}]},
+E10:{hub:true,mat:'espagnol',langue:'es-ES',titre:'Gran final : ¡el mundo hispano!',duree:'20 min',type:'quiz',
+lecon:`<h3>🌎 L’espagnol dans le monde — et ton grand quiz !</h3>
+<p>L’espagnol est parlé par <b>près de 500 millions</b> de personnes : en Espagne bien sûr, mais surtout en Amérique latine — Mexique, Colombie, Argentine, Pérou, Chili… Et juste à côté de chez toi : le <b>Venezuela</b> et la <b>Colombie</b> ne sont pas loin de la Guyane !</p>
+<p>Ce grand final mélange tout ce que tu as appris : salutations, nombres, jours, matériel, couleurs, famille, ser et tener. ¡Buena suerte! 🍀</p>`,
+questions:[
+{q:'Dans combien de pays environ l’espagnol est-il langue officielle ?',c:['3','une vingtaine','2','une centaine'],a:1,e:'Une vingtaine de pays, sur deux continents ! C’est la 2ᵉ langue maternelle la plus parlée au monde.'},
+{q:'Quel pays voisin de l’Amérique du Sud parle espagnol ?',c:['Le Brésil','La Colombie','Le Suriname','La Jamaïque'],a:1,e:'La Colombie (et le Venezuela) — le Brésil, lui, parle portugais.'},
+{q:'« Buenas tardes » se dit…',say:'buenas tardes',c:['le matin','l’après-midi','à minuit','en partant'],a:1,e:'Buenas tardes = bonjour de l’après-midi (après le déjeuner et jusqu’au soir).'},
+{q:'Combien font « seis + siete » ?',c:['doce','trece','catorce','once'],a:1,e:'6 + 7 = 13 = trece.'},
+{q:'« Hoy es jueves » : quel jour sommes-nous ?',say:'hoy es jueves',c:['mardi','mercredi','jeudi','vendredi'],a:2,e:'Jueves = jeudi (le jour de Jupiter !).'},
+{q:'« La trousse verte » se dit…',say:'el estuche verde',c:['la estuche verde','el estuche verde','el estuche verda','verde el estuche'],a:1,e:'Estuche est masculin (el) et verde ne s’accorde pas : el estuche verde.'},
+{q:'« Tengo dos hermanas » signifie…',say:'tengo dos hermanas',c:['J’ai deux frères','J’ai deux sœurs','J’ai douze ans','Tu as deux sœurs'],a:1,e:'Tengo (j’ai) + dos (2) + hermanas (sœurs).'},
+{q:'« Mi padre se llama Juan y es simpático. » Que sait-on ?',say:'mi padre se llama Juan y es simpático',c:['Le père s’appelle Juan et il est sympa','Juan est le frère','Juan a un père sympa','Le père de Juan est sympa'],a:0,e:'Mi padre (mon père) se llama Juan (s’appelle Juan) y es simpático (et il est sympa). Tu as tout compris ! 🎉'},
+{q:'Pour finir : « ¡Hasta mañana! » veut dire…',say:'¡hasta mañana!',c:['Bonne nuit !','À demain !','Bon appétit !','Bienvenue !'],a:1,e:'Hasta mañana = à demain. Et demain… la suite de tes aventures en espagnol ! 🇪🇸'}]}
+};
+Object.assign(ACTIVITES, ESPAGNOL);
+
 const BADGES = [
 {id:'premier',ico:'🌅',nom:'Premier pas',desc:'1 mission validée',test:s=>Object.keys(s.done).length>=1},
 {id:'jour1',ico:'📮',nom:'Premier tampon',desc:'1 journée complète',test:s=>nbTampons(s)>=1},
@@ -1439,6 +1601,7 @@ const BADGES = [
 {id:'lectrice',ico:'🔍',nom:'Fine lectrice',desc:'Les 5 textes de compréhension réussis',test:s=>['C1','C2','C3','C4','C5'].every(k=>s.done[k])},
 {id:'ecrivaine',ico:'🖋️',nom:'Écrivaine en herbe',desc:'Les 5 rédactions rendues',test:s=>s.redactions&&['R1','R2','R3','R4','R5'].every(k=>s.redactions[k])},
 {id:'fluence130',ico:'🎙️',nom:'Lecture de 5ᵉ',desc:'Lire à 130 mots par minute',test:s=>s.fluence&&Object.values(s.fluence).some(f=>f.mclm>=130)},
+{id:'ole',ico:'🇪🇸',nom:'¡Olé!',desc:'Les 10 missions d’espagnol réussies',test:s=>['E1','E2','E3','E4','E5','E6','E7','E8','E9','E10'].every(k=>s.done[k])},
 {id:'cap',ico:'🎓',nom:'Cap sur la 5ème !',desc:'Les 15 tampons du cahier',test:s=>nbTampons(s)>=15}];
 
 /* ═══════════════════════════════════════════════
@@ -1471,12 +1634,14 @@ function nbTampons(s){ return JOURS.reduce((n,_,j)=>n+(jourComplet(s,j)?1:0),0);
 function niveau(xp){ return Math.floor(xp/200)+1; }
 
 /* ── Audio anglais ── */
-function parler(txt){
+function parler(txt, lang){
   if(!('speechSynthesis' in window)) return;
+  lang = lang || 'en-GB';
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(txt);
-  u.lang='en-GB'; u.rate=0.85;
-  const v = speechSynthesis.getVoices().find(v=>v.lang.startsWith('en'));
+  u.lang=lang; u.rate=0.85;
+  const pref = lang.slice(0,2);
+  const v = speechSynthesis.getVoices().find(v=>v.lang.startsWith(pref));
   if(v) u.voice=v;
   speechSynthesis.speak(u);
 }
@@ -1548,10 +1713,24 @@ function ouvrirJournal(){
   });
   montrerVue('vue-journal');
 }
+function ouvrirEspagnol(){
+  const cont=document.getElementById('es-missions'); cont.innerHTML='';
+  ['E1','E2','E3','E4','E5','E6','E7','E8','E9','E10'].forEach((id,ix)=>{
+    const a=ACTIVITES[id], fait=etat.done[id];
+    const div=document.createElement('div');
+    div.className='mission espagnol';
+    div.onclick=()=>ouvrirActivite(id,'es');
+    div.innerHTML=`<span class="ico">${a.type==='memory'?'🎴':'🇪🇸'}</span>
+      <div><h3>${ix+1}. ${a.titre}</h3><small>${a.duree}${fait?` · réussi à ${fait.pct} %`:''}</small></div>
+      <span class="etat">${fait?'✅':'▶️'}</span>`;
+    cont.appendChild(div);
+  });
+  montrerVue('vue-espagnol');
+}
 let provenance='jour';
 function retourJour(){
   if(typeof stopFluence==='function') stopFluence();
-  provenance==='hub' ? ouvrirLecture() : ouvrirJour(jourCourant);
+  provenance==='hub' ? ouvrirLecture() : provenance==='es' ? ouvrirEspagnol() : ouvrirJour(jourCourant);
 }
 function ouvrirLecture(){
   const rend=(ids,cont,estRed)=>{
@@ -1600,6 +1779,8 @@ function renduGlobal(){
     + ['R1','R2','R3','R4','R5'].filter(k=>etat.redactions[k]).length
     + ['L1','L2','L3','L4','L5'].filter(k=>etat.fluence[k]&&etat.fluence[k].mclm>=90).length;
   const zl=document.getElementById('lecture-compteur'); if(zl) zl.textContent=nLect+'/15';
+  const nEs=['E1','E2','E3','E4','E5','E6','E7','E8','E9','E10'].filter(k=>etat.done[k]).length;
+  const ze=document.getElementById('es-compteur'); if(ze) ze.textContent=nEs+'/10';
   const zs = document.getElementById('tb-serie');
   if(zs){
     const q=etat.quotidien;
@@ -1774,10 +1955,11 @@ function repondre(i){
   if(i===q.a){ qScore++; }
   else { btns[i].classList.add('faux'); }
   const ex = document.getElementById('explication');
-  const audio = q.say?` <button class="btn-audio" onclick="parler('${q.say.replace(/'/g,"\\'")}')" title="Écouter la prononciation">🔊 Écouter</button>`:'';
+  const lng = a.langue || 'en-GB';
+  const audio = q.say?` <button class="btn-audio" onclick="parler('${q.say.replace(/'/g,"\\'")}','${lng}')" title="Écouter la prononciation">🔊 Écouter</button>`:'';
   ex.innerHTML = (i===q.a?'✅ <b>Bravo !</b> ':'❌ <b>Pas tout à fait…</b> ')+q.e+audio;
   ex.classList.add('visible');
-  if(i===q.a && q.say) parler(q.say);
+  if(i===q.a && q.say) parler(q.say, lng);
   const btn = document.getElementById('btn-suivant');
   btn.style.display='block';
   if(qIdx===a.questions.length-1) btn.textContent='Voir mon résultat 🎉';
@@ -2124,7 +2306,7 @@ function lancerMemory(){
 function retournerCarte(el,c){
   if(memoLock || el.classList.contains('retournee') || el.classList.contains('trouvee')) return;
   el.classList.add('retournee');
-  if(c.en) parler(c.t);
+  if(c.en) parler(c.t, ACTIVITES[actCourante].langue || 'en-GB');
   memoOuvertes.push(el);
   if(memoOuvertes.length===2){
     memoLock=true; memoCoups++;
@@ -2292,6 +2474,7 @@ function fermerModale(retenter=false){
   renduGlobal();
   if(retenter){ ouvrirActivite(actCourante, provenance); }
   else if(provenance==='hub'){ ouvrirLecture(); }
+  else if(provenance==='es'){ ouvrirEspagnol(); }
   else { ouvrirJour(jourCourant); }
 }
 
@@ -2336,7 +2519,7 @@ function ouvrirTables(){
     grid.appendChild(card);
   }
   document.getElementById('micro-note').innerHTML = SRClass
-    ? 'v22 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
+    ? 'v23 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
     : '⚠️ La récitation vocale a besoin de <b>Chrome</b>, <b>Edge</b> ou <b>Safari</b> — sur ce navigateur, seul le test écrit est disponible.';
   if(SRClass) verifierRecoLocale().then(st=>{
     const z=document.getElementById('zone-reco-locale');
