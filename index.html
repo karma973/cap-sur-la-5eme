@@ -486,7 +486,7 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
     <div id="semaines"></div>
     <h3 class="badges-titre">🏆 Mes badges</h3>
     <div class="badges" id="badges"></div>
-    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v23 ·</b><br>
+    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v24 ·</b><br>
     <button onclick="toutEffacer()">Recommencer le cahier à zéro</button></p>
   </section>
 
@@ -501,7 +501,9 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
   <section class="vue" id="vue-espagnol">
     <button class="btn-retour" onclick="montrerVue('vue-home');renduGlobal()">← Retour au cahier</button>
     <div class="jour-entete"><h2>🇪🇸 ¡Hola España!</h2>
-      <p>Ton programme d’août pour débuter l’espagnol, dans l’ordre du programme de 5ᵉ. Fais les missions dans l’ordre : chacune s’appuie sur la précédente. Avec l’audio 🔊 pour entendre la vraie prononciation !</p></div>
+      <p>Ton programme d’août pour débuter l’espagnol, dans l’ordre du programme de 5ᵉ. Fais les missions dans l’ordre : chacune s’appuie sur la précédente. Avec l’audio 🔊 pour entendre la vraie prononciation !</p>
+      <button class="btn-secondaire" style="padding:8px 16px;font-size:.85rem;" onclick="testerAudioES()">🔊 Tester l’audio espagnol sur cet appareil</button>
+      <div id="es-audio-note" style="display:none;margin-top:10px;font-size:.85rem;font-weight:700;background:#FBF7EC;border-radius:12px;padding:10px 14px;color:#5A4A20;"></div></div>
     <div class="missions" id="es-missions"></div>
   </section>
 
@@ -1634,18 +1636,32 @@ function nbTampons(s){ return JOURS.reduce((n,_,j)=>n+(jourComplet(s,j)?1:0),0);
 function niveau(xp){ return Math.floor(xp/200)+1; }
 
 /* ── Audio anglais ── */
+let voixDispo=[];
+function chargerVoix(){ try{ voixDispo = speechSynthesis.getVoices()||[]; }catch(e){ voixDispo=[]; } }
+if('speechSynthesis' in window){
+  chargerVoix();
+  // Android charge les voix en différé : on écoute leur arrivée
+  speechSynthesis.onvoiceschanged = chargerVoix;
+}
+function meilleureVoix(lang){
+  const pref = lang.slice(0,2).toLowerCase();
+  if(!voixDispo.length) chargerVoix();
+  return voixDispo.find(v=>v.lang && v.lang.toLowerCase()===lang.toLowerCase())
+      || voixDispo.find(v=>v.lang && v.lang.toLowerCase().startsWith(pref))
+      || null;
+}
 function parler(txt, lang){
   if(!('speechSynthesis' in window)) return;
   lang = lang || 'en-GB';
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(txt);
   u.lang=lang; u.rate=0.85;
-  const pref = lang.slice(0,2);
-  const v = speechSynthesis.getVoices().find(v=>v.lang.startsWith(pref));
-  if(v) u.voice=v;
+  const v = meilleureVoix(lang);
+  if(v){ u.voice=v; u.lang=v.lang; }
   speechSynthesis.speak(u);
+  // Contournement d'un bug Chrome : la synthèse démarre parfois en pause
+  setTimeout(()=>{ try{ if(speechSynthesis.paused) speechSynthesis.resume(); }catch(e){} }, 150);
 }
-if('speechSynthesis' in window) speechSynthesis.getVoices();
 
 /* ── Navigation ── */
 function montrerVue(id){
@@ -1712,6 +1728,29 @@ function ouvrirJournal(){
     zr.appendChild(div);
   });
   montrerVue('vue-journal');
+}
+function testerAudioES(){
+  chargerVoix();
+  const z=document.getElementById('es-audio-note');
+  z.style.display='';
+  const faireTest=()=>{
+    const v = meilleureVoix('es-ES');
+    if(v){
+      z.innerHTML='✅ Voix espagnole trouvée : <b>'+v.name+'</b>. Écoute : « ¡Hola! ¿Qué tal? »';
+      parler('¡Hola! ¿Qué tal? Me llamo tu cuaderno de español.','es-ES');
+    } else {
+      z.innerHTML='🔇 <b>Aucune voix espagnole installée sur cet appareil</b> — l\u2019audio 🔊 restera muet ou parlera avec un accent français.<br>'
+        +'📲 <b>Pour l\u2019installer (2 minutes, gratuit)</b> : Paramètres Android → recherche « <b>Synthèse vocale</b> » (ou Système → Langues et saisie → Sortie de la synthèse vocale) → moteur <b>Synthèse vocale Google</b> → ⚙️ → <b>Installer les données vocales</b> → <b>Español (España)</b>.<br>'
+        +'Ensuite ferme et rouvre Chrome, reviens ici et refais le test.<br>'
+        +'<small>Astuce : pendant l\u2019installation, on peut aussi ajouter l\u2019anglais 🇬🇧 si les cartes du memory anglais sont muettes.</small>';
+      // On tente quand même : certains moteurs savent lire l\u2019espagnol sans voix listée
+      parler('hola','es-ES');
+    }
+  };
+  if(!voixDispo.length){
+    z.textContent='Je cherche les voix installées…';
+    setTimeout(faireTest, 600); // laisse le temps à Android de livrer la liste
+  } else faireTest();
 }
 function ouvrirEspagnol(){
   const cont=document.getElementById('es-missions'); cont.innerHTML='';
@@ -2519,7 +2558,7 @@ function ouvrirTables(){
     grid.appendChild(card);
   }
   document.getElementById('micro-note').innerHTML = SRClass
-    ? 'v23 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
+    ? 'v24 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
     : '⚠️ La récitation vocale a besoin de <b>Chrome</b>, <b>Edge</b> ou <b>Safari</b> — sur ce navigateur, seul le test écrit est disponible.';
   if(SRClass) verifierRecoLocale().then(st=>{
     const z=document.getElementById('zone-reco-locale');
