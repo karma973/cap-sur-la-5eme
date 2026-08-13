@@ -486,7 +486,7 @@ mark{background:#FFE9A8;border-radius:4px;padding:0 4px;}
     <div id="semaines"></div>
     <h3 class="badges-titre">🏆 Mes badges</h3>
     <div class="badges" id="badges"></div>
-    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v24 ·</b><br>
+    <p class="pied">Ta progression est enregistrée automatiquement sur cet appareil. <b>· v25 ·</b><br>
     <button onclick="toutEffacer()">Recommencer le cahier à zéro</button></p>
   </section>
 
@@ -1588,6 +1588,61 @@ questions:[
 };
 Object.assign(ACTIVITES, ESPAGNOL);
 
+/* Version audio des leçons : alternance voix française (explications) / voix espagnole (modèles) */
+const AUDIO_LECONS = {
+E1:[['fr','Leçon une : saluer et se présenter. Écoute, puis répète chaque phrase à voix haute. Pour dire salut, à toute heure :'],['es','¡Hola!'],
+['fr','Le matin, bonjour se dit :'],['es','Buenos días.'],['fr','L’après-midi :'],['es','Buenas tardes.'],['fr','Et le soir :'],['es','Buenas noches.'],
+['fr','Pour dire au revoir :'],['es','¡Adiós!'],['fr','Et à plus tard :'],['es','¡Hasta luego!'],
+['fr','Je m’appelle, se dit :'],['es','Me llamo.'],['fr','Par exemple :'],['es','Me llamo Lisa.'],
+['fr','Pour demander comment t’appelles-tu :'],['es','¿Cómo te llamas?'],
+['fr','Ça va ? se dit :'],['es','¿Qué tal?'],['fr','Et on répond : très bien, merci, et toi ?'],['es','Muy bien, gracias. ¿Y tú?'],
+['fr','À toi : redis chaque phrase avec l’accent !']],
+E2:[['fr','Leçon deux : les sons de l’espagnol. Écoute bien et répète après la voix. La lettre ñ se prononce gne, comme dans :'],['es','España. Niño.'],
+['fr','Les deux L se prononcent ye :'],['es','Me llamo. Paella.'],
+['fr','La jota, un r soufflé du fond de la gorge :'],['es','Jamón. Julio.'],
+['fr','Le double R se roule :'],['es','Perro. Guitarra.'],
+['fr','Le U se dit toujours ou :'],['es','Tú. Uno.'],
+['fr','Le H est complètement muet :'],['es','Hola. Hermano.'],
+['fr','Et le C devant I ou E, comme dans merci :'],['es','Gracias.'],
+['fr','Bravo ! Réécoute et répète chaque mot jusqu’à l’avoir dans l’oreille.']],
+E3:[['fr','Leçon trois : les nombres. Compte avec moi sur tes doigts. De un à cinq :'],['es','Uno, dos, tres, cuatro, cinco.'],
+['fr','De six à dix :'],['es','Seis, siete, ocho, nueve, diez.'],
+['fr','Et de onze à quinze :'],['es','Once, doce, trece, catorce, quince.'],
+['fr','Pour donner ton âge, on dit : j’ai onze ans :'],['es','Tengo once años.'],
+['fr','À toi de compter à voix haute, dans l’ordre puis à l’envers !']],
+E4:[['fr','Avant de jouer au memory, écoute les huit mots espagnols :'],
+['es','Hola. Gracias. Adiós. Por favor. Sí. No. Buenos días. Hasta luego.'],
+['fr','Retourne les cartes et retrouve les paires. Bonne chance !']],
+E5:[['fr','Leçon cinq : les jours et les mois. Les sept jours de la semaine :'],['es','Lunes, martes, miércoles, jueves, viernes, sábado, domingo.'],
+['fr','Les mois, de janvier à juin :'],['es','Enero, febrero, marzo, abril, mayo, junio.'],
+['fr','Et de juillet à décembre :'],['es','Julio, agosto, septiembre, octubre, noviembre, diciembre.'],
+['fr','Pour dire la date, par exemple : aujourd’hui c’est mardi douze août :'],['es','Hoy es martes doce de agosto.'],
+['fr','Rappelle-toi : jours et mois s’écrivent sans majuscule !']],
+E6:[['fr','Leçon six : le matériel scolaire. Écoute et répète. Le livre :'],['es','El libro.'],['fr','Le cahier :'],['es','El cuaderno.'],
+['fr','Le stylo :'],['es','El bolígrafo.'],['fr','Le crayon :'],['es','El lápiz.'],['fr','Le sac à dos :'],['es','La mochila.'],
+['fr','La règle :'],['es','La regla.'],['fr','La gomme :'],['es','La goma.'],['fr','La trousse :'],['es','El estuche.'],
+['fr','Astuce : les mots en O prennent el, les mots en A prennent la. Un stylo :'],['es','Un bolígrafo.'],['fr','Une gomme :'],['es','Una goma.']],
+E7:[['fr','Leçon sept : les couleurs. Rouge :'],['es','Rojo.'],['fr','Bleu :'],['es','Azul.'],['fr','Vert :'],['es','Verde.'],
+['fr','Jaune :'],['es','Amarillo.'],['fr','Noir :'],['es','Negro.'],['fr','Blanc :'],['es','Blanco.'],
+['fr','Orange :'],['es','Naranja.'],['fr','Rose :'],['es','Rosa.'],
+['fr','La couleur s’accorde et se place après le nom. Le livre rouge :'],['es','El libro rojo.'],['fr','Le sac à dos rouge :'],['es','La mochila roja.']],
+E8:[['fr','Leçon huit : la famille. Le père :'],['es','El padre.'],['fr','La mère :'],['es','La madre.'],
+['fr','Le frère et la sœur :'],['es','El hermano. La hermana.'],['fr','Les grands-parents :'],['es','El abuelo. La abuela.'],
+['fr','L’oncle et la tante :'],['es','El tío. La tía.'],
+['fr','Le verbe avoir : j’ai, tu as, il ou elle a :'],['es','Tengo, tienes, tiene.'],
+['fr','J’ai une sœur :'],['es','Tengo una hermana.'],['fr','As-tu des frères et sœurs ?'],['es','¿Tienes hermanos?']],
+E9:[['fr','Leçon neuf : le verbe être, ser. Je suis, tu es, il ou elle est :'],['es','Soy, eres, es.'],
+['fr','Je suis de Cayenne :'],['es','Soy de Cayena.'],
+['fr','Tu es très sympa :'],['es','Eres muy simpática.'],
+['fr','Et s’appeler : je m’appelle, tu t’appelles, il ou elle s’appelle :'],['es','Me llamo, te llamas, se llama.'],
+['fr','Ma grand-mère s’appelle Rose :'],['es','Mi abuela se llama Rose.'],
+['fr','Souviens-toi : pas besoin du pronom, le verbe dit tout !']],
+E10:[['fr','Dernière leçon : l’espagnol dans le monde. Près de cinq cents millions de personnes le parlent, en Espagne et dans toute l’Amérique latine — Mexique, Colombie, Argentine… La Colombie et le Venezuela sont presque tes voisins ! Avant le grand quiz, un dernier encouragement :'],
+['es','¡Buena suerte! ¡Tú puedes!'],
+['fr','Bonne chance, tu peux le faire. Et pour te dire à demain :'],['es','¡Hasta mañana!']]
+};
+for(const [k,v] of Object.entries(AUDIO_LECONS)){ if(ACTIVITES[k]) ACTIVITES[k].audioLecon=v; }
+
 const BADGES = [
 {id:'premier',ico:'🌅',nom:'Premier pas',desc:'1 mission validée',test:s=>Object.keys(s.done).length>=1},
 {id:'jour1',ico:'📮',nom:'Premier tampon',desc:'1 journée complète',test:s=>nbTampons(s)>=1},
@@ -1636,6 +1691,33 @@ function nbTampons(s){ return JOURS.reduce((n,_,j)=>n+(jourComplet(s,j)?1:0),0);
 function niveau(xp){ return Math.floor(xp/200)+1; }
 
 /* ── Audio anglais ── */
+let leconAudioActive=false, leconResume=null;
+function jouerLecon(){
+  const a=ACTIVITES[actCourante];
+  if(leconAudioActive){ arreterLecon(); return; }
+  if(!a || !a.audioLecon || !('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  leconAudioActive=true;
+  const btn=document.getElementById('btn-lecon-audio');
+  if(btn) btn.textContent='⏹ Arrêter la lecture';
+  a.audioLecon.forEach((seg,ix)=>{
+    const lang = seg[0]==='es' ? 'es-ES' : 'fr-FR';
+    const u=new SpeechSynthesisUtterance(seg[1]);
+    u.lang=lang; u.rate= seg[0]==='es' ? 0.78 : 1.0; // l’espagnol ralenti pour bien entendre
+    const v=meilleureVoix(lang); if(v){ u.voice=v; u.lang=v.lang; }
+    if(ix===a.audioLecon.length-1) u.onend=()=>arreterLecon(false);
+    speechSynthesis.speak(u);
+  });
+  // Anti-bug Chrome : la file audio se met parfois en pause toute seule
+  leconResume=setInterval(()=>{ try{ if(speechSynthesis.paused) speechSynthesis.resume(); }catch(e){} },4000);
+}
+function arreterLecon(annuler=true){
+  clearInterval(leconResume); leconResume=null;
+  leconAudioActive=false;
+  if(annuler){ try{ speechSynthesis.cancel(); }catch(e){} }
+  const btn=document.getElementById('btn-lecon-audio');
+  if(btn) btn.textContent='🎧 Écouter la leçon';
+}
 let voixDispo=[];
 function chargerVoix(){ try{ voixDispo = speechSynthesis.getVoices()||[]; }catch(e){ voixDispo=[]; } }
 if('speechSynthesis' in window){
@@ -1768,6 +1850,7 @@ function ouvrirEspagnol(){
 }
 let provenance='jour';
 function retourJour(){
+  if(typeof arreterLecon==='function') arreterLecon();
   if(typeof stopFluence==='function') stopFluence();
   provenance==='hub' ? ouvrirLecture() : provenance==='es' ? ouvrirEspagnol() : ouvrirJour(jourCourant);
 }
@@ -1911,7 +1994,8 @@ function ouvrirActivite(id, prov='jour'){
   const cont = document.getElementById('act-contenu');
   if(a.type==='quiz'){
     cont.innerHTML = `<div class="lecon">${a.lecon}</div>
-      <button class="btn-principal" onclick="lancerQuiz()">C'est parti pour les exercices ! ✏️</button>`;
+      ${a.audioLecon?'<button class="btn-secondaire" id="btn-lecon-audio" onclick="jouerLecon()">🎧 Écouter la leçon</button>':''}
+      <button class="btn-principal" onclick="arreterLecon();lancerQuiz()">C'est parti pour les exercices ! ✏️</button>`;
   } else if(a.type==='fluence'){
     const rec = etat.fluence[id];
     cont.innerHTML = `<div class="lecon">
@@ -1957,7 +2041,8 @@ function ouvrirActivite(id, prov='jour'){
     majRedaction();
   } else if(a.type==='memory'){
     cont.innerHTML = `<div class="lecon"><p>${a.consigne}</p></div>
-      <button class="btn-principal" onclick="lancerMemory()">Jouer ! 🎴</button>`;
+      ${a.audioLecon?'<button class="btn-secondaire" id="btn-lecon-audio" onclick="jouerLecon()">🎧 Écouter les mots avant de jouer</button>':''}
+      <button class="btn-principal" onclick="arreterLecon();lancerMemory()">Jouer ! 🎴</button>`;
   } else {
     cont.innerHTML = `<div class="lecon"><p>${a.consigne}</p></div>
       <button class="btn-principal" onclick="${a.type==='chrono-tables'?'lancerTables()':'lancerHomophones()'}">Lancer le chrono ! ⏱️</button>`;
@@ -2558,7 +2643,7 @@ function ouvrirTables(){
     grid.appendChild(card);
   }
   document.getElementById('micro-note').innerHTML = SRClass
-    ? 'v24 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
+    ? 'v25 — 🔥 <b>Récite tous les jours</b> pour faire grandir ta série : à chaque palier franchi, le chrono par ligne diminue (de 15 s jusqu\u2019à 6 s) !<br>⏱ <b>10 secondes</b> par réponse au test écrit (le chrono se met en pause pendant que tu parles en récitation).<br>🗣️ En récitation, la table entière s\u2019affiche : récite à ton rythme sans t\u2019arrêter, les lignes se cochent toutes seules !<br>🎤 Le micro est demandé <b>une seule fois</b> au début de la récitation, puis reste ouvert pour toute la table.<br>💡 Si le micro est signalé comme bloqué : sur PC, ouvre ce fichier <b>directement dans Chrome ou Edge</b> ; sur tablette Android, autorise le micro dans Chrome (⋮ → Paramètres des sites → Micro) <b>et</b> pour l\u2019application Google. Le plus fiable sur tablette : ouvrir le cahier depuis une adresse en ligne (https).<span id="zone-reco-locale"></span>'
     : '⚠️ La récitation vocale a besoin de <b>Chrome</b>, <b>Edge</b> ou <b>Safari</b> — sur ce navigateur, seul le test écrit est disponible.';
   if(SRClass) verifierRecoLocale().then(st=>{
     const z=document.getElementById('zone-reco-locale');
